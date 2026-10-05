@@ -10,15 +10,7 @@ Mobile-first. The phone is the primary experience; desktop is an expanded versio
 
 ## Stack
 
-Not final. Direction set by the user: as little backend setup, administration and maintenance as possible. This is a personal product, not a high-scale SaaS platform.
-
-The user wants:
-- simple deployment, a managed database, managed file and document storage, easy-to-maintain authentication, automatic backups where available, simple environment configuration, a clean data model that can grow;
-- no complicated backend architecture, no multiple independently deployed services, no self-hosted infrastructure, no Kubernetes, no queues unless genuinely necessary, no microservices, no infrastructure needing regular manual maintenance.
-
-Room must remain for later OCR and document extraction, notifications, SMS alerts, and AI-assisted document parsing. None of them are built now.
-
-Recommended architecture (pending the user's confirmation): one front-end deployment plus one managed backend-as-a-service providing relational Postgres, authentication, and private file storage (Supabase is the leading candidate), with no custom server of our own. Future extraction and alerts would hang off the same platform's serverless functions and scheduled jobs. Earlier "plain static HTML/CSS/JS" and "browser-only storage" recommendations are withdrawn: they cannot hold documents and photos reliably across devices.
+Decided and built: Vite + React + TypeScript front end (mobile-first, installable manifest), plain CSS with design tokens, and **Supabase** as the whole backend: managed Postgres with row-level security (per-user isolation from day one), Supabase Auth (email and password, plus an email sign-in link), and private Supabase Storage buckets for documents and photos served through signed URLs. No server of our own, no queues, one static deployment. Future OCR, notifications and SMS hang off the same platform (Edge Functions, scheduled jobs); none is built. See README.md for setup and the decisions taken along the way.
 
 ## Users
 
@@ -116,25 +108,26 @@ Typical moments: standing at a petrol pump to log a reading; at the service cent
 - Current odometer is the latest recorded reading.
 - Next service due is computed from the vehicle's own configured interval, by date and by odometer.
 
-## Open Decisions
+## Decisions
 
-Unresolved product facts. Resolve these before building; do not guess them silently.
+Resolved by the owner's build brief:
+- **Backend:** managed Supabase (above).
+- **Device:** phone first, desktop as an expanded version of the same product.
+- **Vehicle types:** cars, SUVs, motorcycles, scooters, other two-wheelers, other.
+- **Fuel types:** Petrol, Diesel, CNG, Petrol + CNG, Electric, Hybrid, Other.
+- **Locale:** kilometres, rupees, Indian digit grouping, dates written with a spelled-out month.
+- **Access:** private, per-user data; personal use first, multi-user ready. No social login.
+- **Documents:** RC, Insurance, PUC, Warranty, Extended warranty, Accessory warranty, CNG certificate, Other; each shows whether a field is "From the document" or "Entered by you".
+- **Pit Board priority:** expired or overdue first, then important upcoming expiry, then service due, then open issues, then a calm all-clear. Distance claims honour the Freshness Rule.
 
-1. **Backend platform.** Confirm the recommended managed backend-as-a-service approach (see Stack) before building.
-2. **Offline and poor-connectivity behaviour.** Petrol pumps, basements and service centres often have poor signal. Must documents and the open-issues list be available offline, and must readings logged offline sync later? Decides whether this is an installable offline-capable web app or a plain mobile website.
-3. **Access and sharing.** Single user only, or should a family member be able to view the same garage? Authentication method (email link, Google sign-in, phone OTP).
-4. **Fuel type list.** Confirm the list (Petrol, Diesel, CNG, Petrol+CNG, EV, Hybrid, others).
-5. **Registration number handling.** Validation and formatting, uniqueness, vehicles without a registration yet, and BH-series numbers.
-6. **Insurance model.** Which policy types and terms to represent (for example third-party only, comprehensive, standalone own damage, multi-year terms) and which dates matter.
-7. **Service interval model.** Assumed: per vehicle by distance and by time, whichever comes first, with a sensible default for new vehicles; some two-wheelers may use different patterns.
-8. **"Due soon" thresholds.** How early a date or reading counts as upcoming. Assumed: sensible defaults, adjustable.
-9. **Document renewals and history.** Assumed: older insurance and PUC documents kept as history, with the latest valid one shown as current.
-10. **Warranty expiry.** Date, kilometres, or whichever comes first.
-11. **Known issue lifecycle.** Assumed: open and resolved, linkable to the service record where it was fixed.
-12. **Service record versus odometer reading.** Assumed: a service record's odometer also appears in the reading history without double entry.
-13. **Vehicle image.** Owner-uploaded photo with a graceful fallback when none exists, never a fake 3D render.
-14. **Currency, units, and formats.** Assumed km, INR, Indian number grouping and DD/MM/YYYY dates.
-15. **Initial data.** No real vehicles or documents exist yet; any seed or demo data must be clearly marked as sample.
+Decided by the builder and documented in README.md (change on request): registration and variant are optional at creation; service intervals default by vehicle type and are editable per vehicle (whichever of km or months comes first); no schedule until a first service is logged; "address next time" lines become open issues; a service record's odometer is also logged as a reading; lapsed warranties are "Ended", not alarming; older insurance, PUC, RC and CNG documents move to History.
+
+Still open:
+1. **Offline and poor connectivity.** Not built. Pages need a connection; unsent entries are not queued.
+2. **Sharing.** Single owner for now; the data model is ready for more users but there is no invitation or shared-garage flow.
+3. **Insurance terms.** Policy type and term are not modelled beyond the dates, issuer and policy number.
+4. **Warranty by distance.** Warranties expire by date only.
+5. **Reminders.** Out of scope for the MVP (V2 alerts).
 
 ## Brand Commitments
 
