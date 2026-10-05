@@ -73,7 +73,7 @@ export function IssueSheet() {
             <TextArea
               {...p}
               rows={3}
-              autoFocus
+              data-autofocus
               enterKeyHint="done"
               placeholder="AC makes a rattling noise"
               value={description}

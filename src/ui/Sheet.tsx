@@ -30,6 +30,9 @@ export function Sheet({ title, onClose: onCloseProp, children, footer, tall, qui
     const d = ref.current;
     if (!d) return;
     if (!d.open) d.showModal();
+    // showModal() focuses the first focusable element (the close button). Where a sheet is one
+    // quick field (an odometer reading, an issue), land in that field so the keypad is up at once.
+    d.querySelector<HTMLElement>('[data-autofocus]')?.focus();
     return () => {
       if (d.open) d.close();
     };

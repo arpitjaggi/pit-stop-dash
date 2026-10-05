@@ -76,7 +76,7 @@ function ReadingForm({ vehicleId }: { vehicleId: string }) {
               inputMode="numeric"
               enterKeyHint="done"
               autoComplete="off"
-              autoFocus
+              data-autofocus
               placeholder={v.current_odometer_km != null ? formatNumber(v.current_odometer_km) : 'e.g. 45,210'}
               value={raw}
               onChange={(e) => {
