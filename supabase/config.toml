@@ -1,0 +1,15 @@
+# Settings for local development with the Supabase CLI (`supabase start`). Optional: the app works the
+# same against a hosted project. Defaults are used for everything not listed here.
+project_id = "pit-stop-dash"
+
+[auth]
+site_url = "http://localhost:5173"
+additional_redirect_urls = ["http://localhost:5173"]
+enable_signup = true
+
+[auth.email]
+# Personal app: sign up with email and password straight away. Turn on to require email confirmation.
+enable_confirmations = false
+
+[storage]
+file_size_limit = "15MiB"

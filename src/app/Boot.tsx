@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { createClient, type SupabaseClient } from '@supabase/supabase-js';
+import type { SupabaseClient } from '@supabase/supabase-js';
 import { ApiContext, type Api } from '@/data/api';
 import { createSupabaseApi } from '@/data/supabaseApi';
 import { SessionContext, type Session } from '@/auth/session';
@@ -33,19 +33,28 @@ function Splash() {
 // ---------------------------------------------------------------- Supabase
 
 function SupabaseBoot() {
-  const client = useMemo<SupabaseClient>(
-    () => createClient(SUPABASE_URL as string, SUPABASE_ANON_KEY as string, { auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true } }),
-    [],
-  );
+  // The Supabase client is fetched only when a backend is configured, keeping it off the demo's path.
+  const [client, setClient] = useState<SupabaseClient | null>(null);
   const [state, setState] = useState<{ ready: boolean; email: string | null; userId: string | null }>({ ready: false, email: null, userId: null });
 
   useEffect(() => {
-    client.auth.getSession().then(({ data }) => setState({ ready: true, email: data.session?.user.email ?? null, userId: data.session?.user.id ?? null }));
-    const { data } = client.auth.onAuthStateChange((_e, s) => setState({ ready: true, email: s?.user.email ?? null, userId: s?.user.id ?? null }));
-    return () => data.subscription.unsubscribe();
-  }, [client]);
+    let live = true;
+    let unsubscribe = () => {};
+    import('@supabase/supabase-js').then(({ createClient }) => {
+      if (!live) return;
+      const c = createClient(SUPABASE_URL as string, SUPABASE_ANON_KEY as string, { auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true } });
+      setClient(c);
+      c.auth.getSession().then(({ data }) => live && setState({ ready: true, email: data.session?.user.email ?? null, userId: data.session?.user.id ?? null }));
+      const { data } = c.auth.onAuthStateChange((_e, s) => setState({ ready: true, email: s?.user.email ?? null, userId: s?.user.id ?? null }));
+      unsubscribe = () => data.subscription.unsubscribe();
+    });
+    return () => {
+      live = false;
+      unsubscribe();
+    };
+  }, []);
 
-  if (!state.ready) return <Splash />;
+  if (!client || !state.ready) return <Splash />;
   if (!state.userId) return <SignIn client={client} />;
   // Re-key by user so one person's cache can never be shown to the next sign-in.
   return <SignedIn key={state.userId} client={client} email={state.email} />;
