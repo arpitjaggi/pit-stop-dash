@@ -1,0 +1,120 @@
+/* Pit Stop Dash design tokens. Values come from DESIGN.md ("The Well-Kept Garage").
+   Light is the default (outdoor use); dark follows the system and is a tuned theme, not an inversion. */
+
+@font-face {
+  font-family: 'Barlow Fallback';
+  src: local('Arial Narrow'), local('Roboto Condensed'), local('Arial');
+  size-adjust: 88%;
+}
+
+:root {
+  color-scheme: light dark;
+
+  /* Raw palette: light */
+  --concrete: #f4f5f2;
+  --chalk: #ffffff;
+  --slab: #e9ece6;
+  --seam: #dfe2dc;
+  --seam-strong: #c3c8bf;
+  --control-edge: #7f877f;
+  --tyre: #111613;
+  --asphalt: #454d47;
+  --gravel: #646c66;
+  --petrol: #0f4a47;
+  --petrol-deep: #0a3836;
+  --petrol-wash: #dceBe8;
+
+  /* Semantic roles (components use only these) */
+  --bg: var(--concrete);
+  --surface: var(--chalk);
+  --sunk: var(--slab);
+  --line: var(--seam);
+  --line-strong: var(--seam-strong);
+  --edge: var(--control-edge);
+  --ink: var(--tyre);
+  --ink-2: var(--asphalt);
+  --ink-3: var(--gravel);
+  --accent: var(--petrol);
+  --accent-press: var(--petrol-deep);
+  --accent-wash: var(--petrol-wash);
+  --on-accent: #ffffff;
+  --scrim: rgb(17 22 19 / 0.4);
+
+  --clear: #2a7048;
+  --clear-wash: #e1f0e6;
+  --soon: #8a4f00;
+  --soon-mark: #d98a00;
+  --soon-wash: #fbe7bf;
+  --overdue: #b83220;
+  --overdue-wash: #fbe3de;
+
+  --shadow-pop: 0 8px 24px rgb(17 22 19 / 0.12);
+  --shadow-sheet: 0 -8px 32px rgb(17 22 19 / 0.14);
+
+  /* Type */
+  --font-ui: 'Geist Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-fig: 'Barlow Semi Condensed', 'Barlow Fallback', ui-sans-serif, system-ui, sans-serif;
+
+  /* Space: 4px base */
+  --sp-0: 2px;
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 24px;
+  --sp-6: 32px;
+  --sp-7: 48px;
+  --sp-8: 72px;
+
+  /* Shape */
+  --r-doc: 2px;
+  --r-plate: 4px;
+  --r-ctl: 6px;
+  --r-pop: 8px;
+  --r-sheet: 14px;
+
+  /* Sizing */
+  --gutter: 16px;
+  --tap: 44px;
+  --ctl-h: 44px;
+  --bar-h: 56px;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0d1110;
+    --surface: #141a18;
+    --sunk: #1c2421;
+    --line: #26302c;
+    --line-strong: #34403b;
+    --edge: #6b756e;
+    --ink: #eceFea;
+    --ink-2: #a5aea7;
+    --ink-3: #8a948d;
+    --accent: #58c2b8;
+    --accent-press: #7ad3ca;
+    --accent-wash: #12302d;
+    --on-accent: #06201e;
+    --scrim: rgb(0 0 0 / 0.6);
+
+    --clear: #5cc48a;
+    --clear-wash: #14301f;
+    --soon: #f0b050;
+    --soon-mark: #f0b050;
+    --soon-wash: #33270f;
+    --overdue: #ff7a63;
+    --overdue-wash: #3a1a15;
+
+    --shadow-pop: 0 0 0 1px var(--line);
+    --shadow-sheet: 0 0 0 1px var(--line);
+  }
+}
+
+@media (min-width: 1024px) and (pointer: fine) {
+  :root {
+    --ctl-h: 32px;
+    --tap: 32px;
+    --gutter: 24px;
+  }
+}

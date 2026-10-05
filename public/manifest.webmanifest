@@ -1,0 +1,10 @@
+{
+  "name": "Pit Stop Dash",
+  "short_name": "Pit Stop",
+  "description": "Everything you need to know about your vehicles, in one place.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F4F5F2",
+  "theme_color": "#0F4A47",
+  "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
+}

@@ -1,0 +1,145 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  background: var(--bg);
+  scrollbar-color: var(--line-strong) transparent;
+  scrollbar-width: thin;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  line-height: 1.5;
+  font-feature-settings: 'tnum' 0, 'cv11' 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overscroll-behavior-y: none;
+  accent-color: var(--accent);
+  caret-color: var(--accent);
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (min-width: 1024px) and (pointer: fine) {
+  body {
+    font-size: 0.875rem;
+    line-height: 1.43;
+  }
+}
+
+h1, h2, h3, h4, p, ul, ol, dl, dd, figure, blockquote { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+img, svg, canvas { display: block; max-width: 100%; }
+button, input, select, textarea { font: inherit; color: inherit; letter-spacing: inherit; }
+button { cursor: pointer; background: none; border: 0; padding: 0; text-align: inherit; }
+a { color: inherit; text-decoration: none; }
+a:not([class]) { color: var(--accent); text-decoration: underline; text-underline-offset: 0.2em; text-decoration-thickness: 1px; }
+:where(h1, h2, h3) { text-wrap: balance; }
+:where(p) { text-wrap: pretty; }
+[hidden] { display: none !important; }
+
+::selection {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+::placeholder {
+  color: var(--ink-3);
+  opacity: 1;
+}
+
+/* Visible focus on every interactive element, always. */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: var(--r-ctl);
+}
+
+/* Themed scrollbars (desktop). */
+@media (pointer: fine) {
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 10px; border: 2px solid var(--bg); }
+  ::-webkit-scrollbar-thumb:hover { background: var(--edge); }
+  ::-webkit-scrollbar-track { background: transparent; }
+}
+
+.sr-only {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  z-index: 100;
+  padding: 8px 12px;
+  background: var(--accent);
+  color: var(--on-accent);
+  border-radius: var(--r-ctl);
+  transform: translateY(-200%);
+}
+.skip-link:focus { transform: none; }
+
+/* ------------------------------------------------------------ type roles */
+
+.t-display { font-size: 2.125rem; line-height: 2.25rem; font-weight: 700; letter-spacing: -0.025em; }
+.t-board   { font-size: 1.625rem; line-height: 1.875rem; font-weight: 650; letter-spacing: -0.02em; }
+.t-section { font-size: 1.5rem; line-height: 1.75rem; font-weight: 700; letter-spacing: -0.02em; }
+.t-title   { font-size: 1.0625rem; line-height: 1.375rem; font-weight: 600; letter-spacing: -0.005em; }
+.t-body    { font-size: 1rem; line-height: 1.5rem; }
+.t-label   { font-size: 0.8125rem; line-height: 1rem; font-weight: 500; }
+.t-ink-2   { color: var(--ink-2); }
+.t-ink-3   { color: var(--ink-3); }
+
+/* Instrument figures: Barlow Semi Condensed, tabular lining numerals. */
+.fig {
+  font-family: var(--font-fig);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: 'tnum' 1, 'lnum' 1;
+  letter-spacing: 0;
+}
+.fig-xl { font-size: 3.5rem; line-height: 3.25rem; }
+.fig-m  { font-size: 1.75rem; line-height: 1.75rem; }
+.fig-s  { font-size: 1.25rem; line-height: 1.25rem; }
+.fig-unit { font-family: var(--font-ui); font-size: 0.8125rem; font-weight: 500; color: var(--ink-3); letter-spacing: 0; margin-left: 0.25em; }
+
+@media (min-width: 1024px) and (pointer: fine) {
+  .t-display { font-size: 2.75rem; line-height: 2.875rem; }
+  .t-board   { font-size: 2rem; line-height: 2.25rem; }
+  .t-section { font-size: 1.625rem; line-height: 1.875rem; }
+  .t-title   { font-size: 0.9375rem; line-height: 1.25rem; }
+  .t-body    { font-size: 0.875rem; line-height: 1.25rem; }
+  .t-label   { font-size: 0.75rem; }
+  .fig-xl { font-size: 4.5rem; line-height: 4rem; }
+  .fig-m  { font-size: 1.5rem; line-height: 1.5rem; }
+}
+
+/* ------------------------------------------------------------ motion */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
