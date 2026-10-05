@@ -19,7 +19,7 @@ export function VehicleImage({ vehicle, variant, className, eager }: { vehicle: 
   const style = paint ? ({ '--paint': paint } as React.CSSProperties) : undefined;
 
   return (
-    <div className={cx('vimg', `vimg--${variant}`, paint && 'vimg--paint', paint && (light ? 'vimg--light' : 'vimg--dark'), className)} style={style}>
+    <div className={cx('vimg', `vimg--${variant}`, !path && variant !== 'thumb' && 'vimg--band', paint && 'vimg--paint', paint && (light ? 'vimg--light' : 'vimg--dark'), className)} style={style}>
       {path ? (
         url && (
           <img
@@ -38,7 +38,6 @@ export function VehicleImage({ vehicle, variant, className, eager }: { vehicle: 
         </span>
       ) : variant === 'hero' ? null : (
         <span className="vimg__name" aria-hidden="true">
-          <span className="vimg__make">{vehicle.make}</span>
           <span className="vimg__model">{vehicle.model}</span>
         </span>
       )}

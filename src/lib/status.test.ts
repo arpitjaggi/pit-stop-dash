@@ -107,7 +107,8 @@ describe('Pit Board', () => {
     expect(items.map((i) => i.id.split('-')[0])).toEqual(['doc', 'doc', 'service', 'issues']);
     expect(items[0].sentence).toBe('PUC expired 3 days ago.');
     expect(items[0].severity).toBe('overdue');
-    expect(pitBoard(b, TODAY).more).toBe(3);
+    // Obligations only: the other expiring document and the service. Workshop issues are not counted.
+    expect(pitBoard(b, TODAY).more).toBe(2);
   });
   it('counts open issues only, in plain words', () => {
     const b = bundle({ documents: [pucFine], issues: [issue(), issue({ status: 'resolved', resolved_on: '2026-09-02' }), issue()] });
@@ -142,6 +143,30 @@ describe('Pit Board', () => {
   it('uses no F1 wink inside warnings', () => {
     const b = bundle({ documents: [doc({ doc_type: 'insurance', expires_on: '2026-10-01' })] });
     expect(pitBoard(b, TODAY).sentence).not.toMatch(/flag|pit window|box/i);
+  });
+});
+
+describe('Pit Board actions and dates', () => {
+  it('says what to do about an expired document', () => {
+    const b = bundle({ documents: [doc({ doc_type: 'puc', expires_on: '2026-10-02' })] });
+    const p = pitBoard(b, TODAY);
+    expect(p.action).toEqual({ kind: 'upload-document', docType: 'puc', label: 'Upload the new PUC' });
+  });
+  it('offers the renewal for something expiring soon', () => {
+    const p = pitBoard(bundle({ documents: [doc({ doc_type: 'insurance', expires_on: '2026-10-23' })] }), TODAY);
+    expect(p.action?.label).toBe('Upload the renewed insurance');
+  });
+  it('offers the workshop list when issues lead, and a document prompt when nothing is tracked', () => {
+    expect(pitBoard(bundle({ documents: [doc({ doc_type: 'puc', expires_on: '2027-03-14' })], issues: [issue()] }), TODAY).action?.kind).toBe('workshop');
+    expect(pitBoard(bundle(), TODAY).action?.kind).toBe('add-documents');
+  });
+  it('prefers updating the odometer when a distance claim leans on an old reading', () => {
+    const b = bundle({ vehicle: vehicle({ current_odometer_km: 48500, odometer_read_on: '2026-09-13' }), documents: [doc({ doc_type: 'puc', expires_on: '2027-03-14' })], services: [service()] });
+    expect(pitBoard(b, TODAY).action?.kind).toBe('reading');
+  });
+  it('gives the date beside a relative phrase', () => {
+    expect(documentStatus(doc({ expires_on: '2026-10-23' }), TODAY).dateText).toBe('23 Oct 2026');
+    expect(documentStatus(doc({ expires_on: '2027-03-14' }), TODAY).dateText).toBeNull();
   });
 });
 

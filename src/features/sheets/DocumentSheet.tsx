@@ -170,8 +170,6 @@ export function DocumentSheet({ editing }: { editing?: boolean }) {
             {(p) => <Input {...p} placeholder={type === 'other' ? 'Pollution receipt, AMC, fitness certificate' : 'Optional'} value={title} onChange={(e) => setTitle(e.target.value)} />}
           </Field>
         )}
-        <Field label="Issued by (optional)">{(p) => <Input {...p} placeholder="Insurer, RTO, test centre, dealer" value={issuer} onChange={(e) => setIssuer(e.target.value)} />}</Field>
-        <Field label={type === 'insurance' ? 'Policy number (optional)' : 'Reference number (optional)'}>{(p) => <Input {...p} autoCapitalize="characters" value={reference} onChange={(e) => setReference(e.target.value)} />}</Field>
         <div className="field-row">
           <Field label="Issue date">{(p) => <Input {...p} type="date" max={today} value={issued} onChange={(e) => setIssued(e.target.value)} />}</Field>
           {hasExpiry && <Field label="Expiry date" hint={type ? DATE_HINT[type] : undefined}>{(p) => <Input {...p} type="date" value={expires} onChange={(e) => setExpires(e.target.value)} />}</Field>}
@@ -182,7 +180,14 @@ export function DocumentSheet({ editing }: { editing?: boolean }) {
             <span>This RC shows a validity date</span>
           </label>
         )}
-        <Field label="Notes (optional)">{(p) => <TextArea {...p} rows={2} value={notes} onChange={(e) => setNotes(e.target.value)} />}</Field>
+        <details className="vform__more" open={Boolean(existing && (existing.issuer || existing.reference_number || existing.notes))}>
+          <summary className="t-title">More details (issuer, number, notes)</summary>
+          <div className="vform__morebody">
+            <Field label="Issued by">{(p) => <Input {...p} placeholder="Insurer, RTO, test centre, dealer" value={issuer} onChange={(e) => setIssuer(e.target.value)} />}</Field>
+            <Field label={type === 'insurance' ? 'Policy number' : 'Reference number'}>{(p) => <Input {...p} autoCapitalize="characters" value={reference} onChange={(e) => setReference(e.target.value)} />}</Field>
+            <Field label="Notes">{(p) => <TextArea {...p} rows={2} value={notes} onChange={(e) => setNotes(e.target.value)} />}</Field>
+          </div>
+        </details>
         {error && <Notice tone="error">{error}</Notice>}
       </form>
     </Sheet>

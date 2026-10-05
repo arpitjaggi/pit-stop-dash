@@ -47,6 +47,7 @@ export function IssuesTab() {
         <Button variant="ghost" className="btn--inline" onClick={() => sheet.open('issue', { v: v.id })}>
           Add with detail or date
         </Button>
+        <p className="t-ink-3 issues__hint">Open issues come up when you log your next service, and in the workshop list.</p>
       </section>
 
       <section className="block">
@@ -70,7 +71,7 @@ export function IssuesTab() {
                 <div className="issue__main">
                   <p className="issue__text">{i.description}</p>
                   {i.note && <p className="t-ink-2 issue__note">{i.note}</p>}
-                  <p className="t-ink-3 issue__meta">Noticed {ago(i.added_on, today)}. Will come up at the next service.</p>
+                  <p className="t-ink-3 issue__meta">Noticed {ago(i.added_on, today)}.</p>
                 </div>
                 <button type="button" className="icon-btn" aria-label={`Edit: ${i.description}`} onClick={() => sheet.open('issue', { v: v.id, id: i.id })}>
                   <PencilSimple size={18} aria-hidden />

@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useDeleteService, useGarage, useSaveService, useUpdateService } from '@/data/hooks';
 import { formatDate, todayISO } from '@/lib/dates';
-import { formatNumber, parseNumber } from '@/lib/format';
+import { formatKm, formatNumber, parseNumber } from '@/lib/format';
 import { openIssues } from '@/lib/status';
 import { Button, Choice, Field, Input, Notice, TextArea, friendlyError } from '@/ui/atoms';
 import { rememberVehicle, useSheet, useToast } from '@/ui/hooks';
@@ -93,7 +93,9 @@ export function ServiceSheet({ editing }: { editing?: boolean }) {
         <p className="t-ink-2">{v.make} {v.model}</p>
         <div className="field-row">
           <Field label="Date">{(p) => <Input {...p} type="date" max={today} value={date} onChange={(e) => setDate(e.target.value || today)} />}</Field>
-          <Field label="Odometer (km)">{(p) => <Input {...p} inputMode="numeric" value={odo} onChange={(e) => setOdo(e.target.value)} />}</Field>
+          <Field label="Odometer (km)" hint={v.current_odometer_km != null ? `Last reading: ${formatKm(v.current_odometer_km)}` : undefined}>
+            {(p) => <Input {...p} inputMode="numeric" value={odo} onChange={(e) => setOdo(e.target.value)} />}
+          </Field>
         </div>
         <Field label="Workshop or service centre">
           {(p) => (

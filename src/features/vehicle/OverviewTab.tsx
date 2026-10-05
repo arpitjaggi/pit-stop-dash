@@ -1,4 +1,5 @@
-import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { docTypeLabel } from '@/data/types';
 import { todayISO } from '@/lib/dates';
 import { pitBoard, upcomingItems } from '@/lib/status';
@@ -11,10 +12,16 @@ import { useVehicleBundle } from './useVehicleBundle';
 export function OverviewTab() {
   const bundle = useVehicleBundle();
   const sheet = useSheet();
+  const { hash } = useLocation();
   const today = todayISO();
   const board = pitBoard(bundle, today);
-  const upcoming = upcomingItems(bundle, today);
+  // Things already on the list above are not repeated under Coming up.
+  const upcoming = upcomingItems(bundle, today).filter((u) => !board.items.some((i) => i.docId === u.id || (u.id === 'service' && i.id === 'service')));
   const rest = board.items.slice(1);
+
+  useEffect(() => {
+    if (hash === '#also') document.getElementById('also')?.scrollIntoView({ block: 'start' });
+  }, [hash]);
 
   const wanted = (['rc', 'insurance', 'puc'] as const).filter((t) => !(t === 'puc' && bundle.vehicle.fuel_type === 'electric'));
   const missing = wanted.filter((t) => !bundle.documents.some((d) => d.doc_type === t));
@@ -22,8 +29,8 @@ export function OverviewTab() {
   return (
     <div className="overview">
       {rest.length > 0 && (
-        <section className="block">
-          <h2 className="t-section">Also on the list</h2>
+        <section className="block" id="also" aria-labelledby="also-h">
+          <h2 className="t-section" id="also-h">Also on the list</h2>
           <ul className="rows">
             {rest.map((i) => (
               <li key={i.id}>
@@ -71,10 +78,10 @@ export function OverviewTab() {
         </section>
       )}
 
-      <section className="block block--narrow">
-        <h2 className="t-section">Details</h2>
+      <details className="block block--narrow fold">
+        <summary className="t-section">Details</summary>
         <VehicleDetails bundle={bundle} />
-      </section>
+      </details>
     </div>
   );
 }

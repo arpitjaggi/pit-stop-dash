@@ -33,7 +33,7 @@ export function ServiceTab() {
     <div className="service">
       <div className="sectionhead">
         <h2 className="t-section">Service</h2>
-        <Button variant={desktop ? 'secondary' : 'ghost'} onClick={() => sheet.open('service', { v: v.id })}>
+        <Button variant="secondary" className="desktop-only" onClick={() => sheet.open('service', { v: v.id })}>
           <Plus size={18} aria-hidden /> Log a service
         </Button>
       </div>

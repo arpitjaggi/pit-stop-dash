@@ -27,9 +27,16 @@ export function GaragePage() {
       <header className="garage__head">
         <h1 className="t-section garage__title">My Garage</h1>
         {!desktop && (
-          <button type="button" className="icon-btn" aria-label="Account" onClick={() => sheet.open('account')}>
-            <User size={20} aria-hidden />
-          </button>
+          <div className="garage__tools">
+            {vehicles.length > 0 && (
+              <LinkButton variant="ghost" to="/vehicles/new">
+                <Plus size={16} aria-hidden /> Vehicle
+              </LinkButton>
+            )}
+            <button type="button" className="icon-btn" aria-label="Account" onClick={() => sheet.open('account')}>
+              <User size={20} aria-hidden />
+            </button>
+          </div>
         )}
         {desktop && vehicles.length > 0 && (
           <LinkButton variant="secondary" to="/vehicles/new">
@@ -72,10 +79,10 @@ export function GaragePage() {
       ) : (
         <>
           {attention.length > 0 && (
-            <details className="needs">
+            <details className="needs" open={attention.some((a) => a.i.severity === 'overdue') || undefined}>
               <summary>
                 <span className="needs__count fig fig-s">{attention.length}</span>
-                <span className="needs__text t-title">{attention.length === 1 ? 'Thing needs you' : 'Things need you'}</span>
+                <span className="needs__text t-title">{attention.length === 1 ? 'thing needs you' : 'things need you'}</span>
                 <CaretDown size={16} aria-hidden className="needs__caret" />
               </summary>
               <ul className="needs__list">

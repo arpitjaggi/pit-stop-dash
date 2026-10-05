@@ -49,7 +49,7 @@ export function OdometerTab() {
         )}
         {v.odometer_read_on && <p className="t-ink-2">As of {formatDate(v.odometer_read_on)}, {ago(v.odometer_read_on, today)}.</p>}
         {stale && <Notice>This reading is a few weeks old, so distances to service are estimates. A fresh one keeps them honest.</Notice>}
-        <Button variant="primary" onClick={() => sheet.open('reading', { v: v.id })}>
+        <Button variant="primary" className="desktop-only" onClick={() => sheet.open('reading', { v: v.id })}>
           <Plus size={18} aria-hidden /> Add reading
         </Button>
       </section>

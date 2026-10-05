@@ -54,7 +54,10 @@ export function DocViewer({ doc, onClose }: { doc: VDocument; onClose?: () => vo
         )}
         <div className="docview__title">
           <h2 className="t-title">{docLabel(doc)}</h2>
-          <StatusLine severity={status.severity}>{status.label}</StatusLine>
+          <StatusLine severity={status.severity}>
+            {status.label}
+            {status.dateText && <span className="status__date"> · {status.dateText}</span>}
+          </StatusLine>
         </div>
         <button type="button" className="icon-btn" aria-label="Edit document details" onClick={() => sheet.open('document-edit', { v: doc.vehicle_id, id: doc.id })}>
           <PencilSimple size={20} aria-hidden />

@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { useGarage, useAddReading, useReadings } from '@/data/hooks';
-import { todayISO, formatDate } from '@/lib/dates';
+import { ago, todayISO, formatDate } from '@/lib/dates';
 import { formatKm, formatNumber, parseNumber } from '@/lib/format';
 import { Button, Field, Input } from '@/ui/atoms';
 import { rememberVehicle, useSheet, useToast } from '@/ui/hooks';
@@ -68,7 +68,17 @@ function ReadingForm({ vehicleId }: { vehicleId: string }) {
     >
       <form id="reading-form" className="stack" onSubmit={save} noValidate>
         <p className="t-ink-2">{v.make} {v.model}</p>
-        <Field label="Odometer (km)" error={error ?? problem} hint={delta != null && delta >= 0 && !problem ? `${delta === 0 ? 'No change' : `+${formatNumber(delta)} km`} since the last reading.` : undefined}>
+        <Field
+          label="Odometer (km)"
+          error={error ?? problem}
+          hint={
+            delta != null && delta >= 0 && !problem
+              ? `${delta === 0 ? 'No change' : `+${formatNumber(delta)} km`} since the last reading.`
+              : v.current_odometer_km != null && v.odometer_read_on
+                ? `Last reading: ${formatKm(v.current_odometer_km)}, ${ago(v.odometer_read_on, today)}.`
+                : undefined
+          }
+        >
           {(p) => (
             <Input
               {...p}
@@ -77,7 +87,6 @@ function ReadingForm({ vehicleId }: { vehicleId: string }) {
               enterKeyHint="done"
               autoComplete="off"
               data-autofocus
-              placeholder={v.current_odometer_km != null ? formatNumber(v.current_odometer_km) : 'e.g. 45,210'}
               value={raw}
               onChange={(e) => {
                 setRaw(e.target.value);
@@ -86,6 +95,11 @@ function ReadingForm({ vehicleId }: { vehicleId: string }) {
             />
           )}
         </Field>
+        {raw === '' && v.current_odometer_km != null && (
+          <Button variant="secondary" className="btn--inline-block" onClick={() => setRaw(String(v.current_odometer_km))}>
+            Same as last: {formatNumber(v.current_odometer_km)}
+          </Button>
+        )}
         <Field label="Date">{(p) => <Input {...p} type="date" max={today} value={date} onChange={(e) => setDate(e.target.value || today)} />}</Field>
         {showNote ? (
           <Field label="Note or source">{(p) => <Input {...p} placeholder="At the petrol pump" value={note} onChange={(e) => setNote(e.target.value)} />}</Field>

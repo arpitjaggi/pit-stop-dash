@@ -327,3 +327,40 @@ details > summary::-webkit-details-marker { display: none; }
 .vhead__addphoto { position: absolute; left: var(--gutter); bottom: var(--gutter); display: inline-flex; align-items: center; gap: 6px; min-height: var(--tap); padding: 0 var(--sp-3); border-radius: var(--r-ctl); background: var(--surface); color: var(--ink); font-size: 0.875rem; font-weight: 600; border: 1px solid var(--line-strong); }
 .vhead__addphoto:hover { background: var(--sunk); }
 @media (min-width: 1024px) { .vhead__addphoto { left: var(--sp-3); bottom: var(--sp-3); } }
+
+/* ------------------------------------------------------------ review refinements */
+
+.garage__tools { display: flex; align-items: center; gap: var(--sp-1); }
+.vtabs ul { justify-content: space-between; padding: 0 var(--sp-1); }
+.vtabs__link { padding: 0 6px; font-size: 0.875rem; }
+.vtabs.fade-end ul { -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 32px), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 32px), transparent); }
+.vtabs__link[aria-current='page']::after { left: 6px; right: 6px; }
+.vhead__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-1) var(--sp-4); }
+.vhead__actions .linkbtn { min-height: var(--tap); }
+.issues__hint { font-size: 0.8125rem; line-height: 1.125rem; }
+.logentry__found { color: var(--ink-2); }
+.logentry__found::first-line { font-weight: 500; }
+.svc-summary__col .row__detail, .row--split > .t-title { white-space: nowrap; }
+.docrow__meta { white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.vhead__addphoto { min-height: var(--tap); font-size: 0.8125rem; background: transparent; border-color: transparent; color: inherit; text-decoration: underline; text-underline-offset: 3px; padding: 0 var(--sp-2); left: calc(var(--gutter) - 8px); }
+.vhead__addphoto:hover { background: color-mix(in srgb, var(--surface) 70%, transparent); }
+
+@media (max-width: 379px) { .vtabs__link { padding: 0 4px; } }
+@media (min-width: 400px) { .vtabs__link { padding: 0 8px; } }
+
+@media (min-width: 1024px) {
+  .vtabs ul { justify-content: flex-start; padding: 0; }
+  .vtabs__link { padding: 0 var(--sp-3); }
+  .vtabs__link[aria-current='page']::after { left: var(--sp-3); right: var(--sp-3); }
+
+  /* Beyond the Overview the identity block shrinks to one strip, so the work starts higher. */
+  .vhead--strip { grid-template-columns: 112px minmax(0, 1fr); column-gap: var(--sp-5); align-items: center; }
+  .vhead--strip .vhead__make, .vhead--strip .vhead__variant, .vhead--strip .vhead__fuel { display: none; }
+  .vhead--strip .vhead__model { font-size: 1.75rem; line-height: 2rem; }
+  .vhead--strip .vhead__facts { margin-top: var(--sp-2); }
+  .vhead--strip .vhead__board { padding-top: var(--sp-2); }
+  .vhead--strip .t-board { font-size: 1.0625rem; line-height: 1.5rem; }
+  .vhead--strip .vhead__actions { display: none; }
+  .vhead--strip + .vtabs { margin-top: var(--sp-5); }
+  .overview { max-width: 760px; }
+}

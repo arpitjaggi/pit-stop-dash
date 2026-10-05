@@ -51,6 +51,8 @@ export interface DocStatus {
   days: number | null;
   /** Short status for a row: "Expires in 18 days", "Valid until 14 Mar 2027", "Permanent document". */
   label: string;
+  /** The calendar date, when the label is relative ("23 Oct 2026"), so detail screens give both. */
+  dateText: string | null;
 }
 
 export function documentStatus(doc: VDocument, today: string): DocStatus {
@@ -60,6 +62,7 @@ export function documentStatus(doc: VDocument, today: string): DocStatus {
       severity: 'clear',
       days: null,
       label: doc.doc_type === 'rc' ? 'Permanent document' : 'No expiry date',
+      dateText: null,
     };
   }
   const days = diffDays(doc.expires_on, today);
@@ -68,13 +71,14 @@ export function documentStatus(doc: VDocument, today: string): DocStatus {
     const when = ago <= LONG_RANGE_DAYS ? pastDays(ago) : `on ${formatDate(doc.expires_on)}`;
     if (WARRANTY_TYPES.has(doc.doc_type)) {
       // A warranty running out is normal, not a problem.
-      return { state: 'ended', severity: 'neutral', days, label: `Ended ${when}` };
+      return { state: 'ended', severity: 'neutral', days, label: `Ended ${when}`, dateText: ago <= LONG_RANGE_DAYS ? formatDate(doc.expires_on) : null };
     }
-    return { state: 'expired', severity: 'overdue', days, label: `Expired ${when}` };
+    return { state: 'expired', severity: 'overdue', days, label: `Expired ${when}`, dateText: ago <= LONG_RANGE_DAYS ? formatDate(doc.expires_on) : null };
   }
-  if (days <= SOON_DAYS) return { state: 'soon', severity: 'soon', days, label: `Expires ${inDays(days)}` };
-  if (days <= LONG_RANGE_DAYS) return { state: 'valid', severity: 'clear', days, label: `Expires ${inDays(days)}` };
-  return { state: 'valid', severity: 'clear', days, label: `Valid until ${formatDate(doc.expires_on)}` };
+  const dateText = formatDate(doc.expires_on);
+  if (days <= SOON_DAYS) return { state: 'soon', severity: 'soon', days, label: `Expires ${inDays(days)}`, dateText };
+  if (days <= LONG_RANGE_DAYS) return { state: 'valid', severity: 'clear', days, label: `Expires ${inDays(days)}`, dateText };
+  return { state: 'valid', severity: 'clear', days, label: `Valid until ${dateText}`, dateText: null };
 }
 
 /** Splits a vehicle's documents into what is in force now and what has been superseded. */
@@ -241,6 +245,7 @@ export interface AttentionItem {
   sentence: string;
   tab: Tab;
   docId?: string;
+  docType?: DocType;
   order: number;
 }
 
@@ -264,6 +269,7 @@ export function attentionItems(b: VehicleBundle, today: string): AttentionItem[]
         sentence: ago <= LONG_RANGE_DAYS ? `${name} expired ${pastDays(ago)}.` : `${name} expired on ${formatDate(d.expires_on as string)}.`,
         tab: 'glovebox',
         docId: d.id,
+        docType: d.doc_type,
         order: ORDER[d.doc_type] ?? 9,
       });
     } else if (st.state === 'soon') {
@@ -274,6 +280,7 @@ export function attentionItems(b: VehicleBundle, today: string): AttentionItem[]
         sentence: `${name} expires ${inDays(st.days as number)}.`,
         tab: 'glovebox',
         docId: d.id,
+        docType: d.doc_type,
         order: ORDER[d.doc_type] ?? 9,
       });
     }
@@ -307,6 +314,13 @@ export function attentionItems(b: VehicleBundle, today: string): AttentionItem[]
   return items.sort((a, b) => a.tier - b.tier || a.order - b.order);
 }
 
+/** The one thing to do about the verdict, offered as a button beside it. */
+export interface PitAction {
+  kind: 'upload-document' | 'log-service' | 'workshop' | 'reading' | 'add-documents';
+  label: string;
+  docType?: DocType;
+}
+
 export interface PitBoard {
   kind: 'attention' | 'clear' | 'empty';
   sentence: string;
@@ -314,8 +328,9 @@ export interface PitBoard {
   /** Where tapping the sentence should lead. */
   tab: Tab;
   items: AttentionItem[];
-  /** Number of further items beyond the one shown. */
+  /** Further obligations beyond the one shown (expiries and service). Workshop issues are counted by the Issues tab, not here. */
   more: number;
+  action: PitAction | null;
   /** True when a distance claim leans on an old reading, so "Update odometer" should be offered. */
   needsOdometer: boolean;
 }
@@ -327,7 +342,8 @@ export function pitBoard(b: VehicleBundle, today: string): PitBoard {
 
   if (items.length > 0) {
     const top = items[0];
-    return { kind: 'attention', sentence: top.sentence, severity: top.severity, tab: top.tab, items, more: items.length - 1, needsOdometer };
+    const more = items.slice(1).filter((i) => i.tier <= 3).length;
+    return { kind: 'attention', sentence: top.sentence, severity: top.severity, tab: top.tab, items, more, action: actionFor(top, needsOdometer), needsOdometer };
   }
 
   if (b.documents.length === 0 && b.services.length === 0) {
@@ -338,6 +354,7 @@ export function pitBoard(b: VehicleBundle, today: string): PitBoard {
       tab: 'glovebox',
       items,
       more: 0,
+      action: { kind: 'add-documents', label: 'Add a document' },
       needsOdometer,
     };
   }
@@ -350,8 +367,20 @@ export function pitBoard(b: VehicleBundle, today: string): PitBoard {
     tab: next?.tab ?? 'overview',
     items,
     more: 0,
+    action: needsOdometer ? { kind: 'reading', label: 'Update odometer' } : null,
     needsOdometer,
   };
+}
+
+function actionFor(top: AttentionItem, needsOdometer: boolean): PitAction | null {
+  if (top.docType) {
+    // "insurance" reads naturally mid-sentence; "PUC" and "RC" stay as written.
+    const name = docTypeLabel(top.docType).replace(/^([A-Z])([a-z])/, (_m, a: string, b: string) => a.toLowerCase() + b);
+    return { kind: 'upload-document', docType: top.docType, label: top.tier === 1 ? `Upload the new ${name}` : `Upload the renewed ${name}` };
+  }
+  if (top.id === 'service') return needsOdometer ? { kind: 'reading', label: 'Update odometer' } : { kind: 'log-service', label: 'Log the service' };
+  if (top.id === 'issues') return { kind: 'workshop', label: 'Open the workshop list' };
+  return null;
 }
 
 function nextUp(b: VehicleBundle, sched: ServiceSchedule, today: string): { sentence: string; tab: Tab } | null {
@@ -388,7 +417,7 @@ export function upcomingItems(b: VehicleBundle, today: string, limit = 5): Upcom
   for (const d of current) {
     const st = documentStatus(d, today);
     if (st.days === null || st.days < 0) continue;
-    out.push({ id: d.id, title: docLabel(d), detail: st.label, tab: 'glovebox', days: st.days });
+    out.push({ id: d.id, title: docLabel(d), detail: st.dateText ? `${st.label} · ${st.dateText}` : st.label, tab: 'glovebox', days: st.days });
   }
   const sched = serviceSchedule(b.vehicle, b.services, today);
   if (sched.state !== 'unknown' && sched.state !== 'overdue') {

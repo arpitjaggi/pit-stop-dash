@@ -41,7 +41,10 @@ export function CommandPalette({ onClose }: { onClose: () => void }) {
   }, []);
 
   const commands = useMemo<Cmd[]>(() => {
-    const out: Cmd[] = [{ id: 'garage', group: 'Go to', label: 'My Garage', run: () => navigate('/') }];
+    const out: Cmd[] = [{ id: 'garage', group: 'Go to', label: 'My Garage', hint: 'G', run: () => navigate('/') }];
+    if (onVehicle && active) {
+      TABS.forEach((t, i) => out.push({ id: `tab-${t.path}`, group: 'Go to', label: `${active.model}: ${t.label}`, hint: String(i + 1), run: () => navigate(`/vehicles/${active.id}${t.path}`) }));
+    }
     if (active) {
       const act = (name: SheetName) => () => {
         rememberVehicle(active.id);
@@ -57,9 +60,6 @@ export function CommandPalette({ onClose }: { onClose: () => void }) {
       );
     }
     out.push({ id: 'a-vehicle', group: 'Add', label: 'Add vehicle', keywords: 'new car bike scooter', run: () => navigate('/vehicles/new') });
-    if (onVehicle && active) {
-      for (const t of TABS) out.push({ id: `tab-${t.path}`, group: 'Go to', label: `${active.model}: ${t.label}`, run: () => navigate(`/vehicles/${active.id}${t.path}`) });
-    }
     for (const v of vehicles) {
       out.push({
         id: `v-${v.id}`,
@@ -182,6 +182,11 @@ export function CommandPalette({ onClose }: { onClose: () => void }) {
           );
         })}
       </ul>
+      <p className="cmdk__foot t-label" aria-hidden="true">
+        <span><kbd>↑</kbd><kbd>↓</kbd> to move</span>
+        <span><kbd>↵</kbd> to open</span>
+        <span>Outside this box: <kbd>g</kbd> garage, <kbd>a</kbd> add, <kbd>1</kbd>–<kbd>5</kbd> sections</span>
+      </p>
     </dialog>
   );
 }

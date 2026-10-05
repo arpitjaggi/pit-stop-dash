@@ -85,7 +85,8 @@ await run('mobile', { width: 390, height: 844 }, true, async (page) => {
   await page.locator('dialog[open] input[type=file][accept*="pdf"]').setInputFiles('.impeccable/review/test-doc.png');
   await page.locator('dialog[open]').getByRole('radio', { name: 'PUC', exact: true }).check({ force: true });
   await page.locator('dialog[open]').getByLabel('Expiry date').fill('2027-04-01');
-  await page.locator('dialog[open]').getByLabel('Issued by (optional)').fill('Test Centre');
+  await page.locator('dialog[open]').getByText('More details (issuer, number, notes)').click();
+  await page.locator('dialog[open]').getByLabel('Issued by').fill('Test Centre');
   await page.getByRole('button', { name: 'Save to Glovebox' }).click();
   await page.getByText('Filed in the Glovebox.').waitFor();
   ok(await page.getByText('Valid until 1 Apr 2027').first().isVisible(), 'uploaded PUC shows as valid until its expiry date, as the current PUC');
@@ -97,7 +98,7 @@ await run('mobile', { width: 390, height: 844 }, true, async (page) => {
 
   // service: log a record, resolve an issue, raise a new one for next time
   await page.getByRole('link', { name: /^Service/ }).click();
-  await page.getByRole('button', { name: /Log a service/ }).click();
+  await page.getByRole('button', { name: /Log service/ }).click();
   await page.locator('dialog[open]').getByLabel('Workshop or service centre').fill('Sai Auto Works, Koramangala');
   await page.locator('dialog[open]').getByLabel('Work performed').fill('Oil and filter, AC checked');
   await page.locator('dialog[open]').getByLabel(/AC makes a rattling noise/).check();
@@ -129,7 +130,8 @@ await run('mobile', { width: 390, height: 844 }, true, async (page) => {
   await page.locator('.vhead__facts').getByLabel('Registration number KA 05 ZZ 1234').waitFor({ timeout: 5000 });
   ok(true, 'registration is shown grouped as on a plate');
   await page.getByRole('link', { name: /^Service/ }).click();
-  ok(await page.getByText(/5,000 km or 6 months/).isVisible(), 'a motorcycle starts with a 5,000 km / 6 month interval');
+  await page.getByText(/5,000 km or 6 months/).waitFor({ timeout: 5000 });
+  ok(true, 'a motorcycle starts with a 5,000 km / 6 month interval');
 });
 
 await run('desktop', { width: 1440, height: 900 }, false, async (page) => {

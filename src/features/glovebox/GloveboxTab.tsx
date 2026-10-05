@@ -34,7 +34,7 @@ export function GloveboxTab() {
         <div className="sectionhead">
           <h2 className="t-section">Glovebox</h2>
           {documents.length > 0 && (
-            <Button variant={desktop ? 'secondary' : 'ghost'} onClick={upload}>
+            <Button variant="secondary" className="desktop-only" onClick={upload}>
               <UploadSimple size={18} aria-hidden /> Upload
             </Button>
           )}
@@ -102,7 +102,10 @@ function DocRow({ doc, active, today, to, quiet }: { doc: VDocument; active: boo
       <DocThumb doc={doc} />
       <span className="docrow__text">
         <span className="t-title docrow__title">{docLabel(doc)}</span>
-        <StatusLine severity={status.severity} className="docrow__status">{status.label}</StatusLine>
+        <StatusLine severity={status.severity} className="docrow__status">
+          {status.label}
+          {status.dateText && <span className="status__date"> · {status.dateText}</span>}
+        </StatusLine>
         {secondary && <span className="docrow__meta t-ink-3">{secondary}</span>}
       </span>
       <CaretRight size={16} aria-hidden className="row__go" />
