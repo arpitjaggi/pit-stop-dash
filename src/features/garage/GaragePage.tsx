@@ -17,10 +17,13 @@ export function GaragePage() {
   const desktop = useDesktop();
   const sheet = useSheet();
 
-  const attention = vehicles.flatMap((v) => {
-    const b = bundles.get(v.id);
-    return b ? attentionItems(b, today).filter((i) => i.tier <= 3).map((i) => ({ v, i })) : [];
-  });
+  // Across the whole garage, the most pressing thing first.
+  const attention = vehicles
+    .flatMap((v) => {
+      const b = bundles.get(v.id);
+      return b ? attentionItems(b, today).filter((i) => i.tier <= 3).map((i) => ({ v, i })) : [];
+    })
+    .sort((a, b) => a.i.tier - b.i.tier || a.i.order - b.i.order);
 
   return (
     <div className="page garage">
@@ -79,18 +82,22 @@ export function GaragePage() {
       ) : (
         <>
           {attention.length > 0 && (
-            <details className="needs" open={attention.some((a) => a.i.severity === 'overdue') || undefined}>
+            <details className="needs">
               <summary>
                 <span className="needs__count fig fig-s">{attention.length}</span>
-                <span className="needs__text t-title">{attention.length === 1 ? 'thing needs you' : 'things need you'}</span>
+                <span className={`needs__lead needs__sentence--${attention[0].i.severity}`}>
+                  <span className="sr-only">{attention.length === 1 ? 'Thing needs you. ' : 'Things need you. '}</span>
+                  {attention[0].v.model}: {attention[0].i.sentence}
+                </span>
                 <CaretDown size={16} aria-hidden className="needs__caret" />
               </summary>
               <ul className="needs__list">
                 {attention.map(({ v, i }) => (
                   <li key={`${v.id}-${i.id}`}>
-                    <Link to={`/vehicles/${v.id}${i.tab === 'overview' ? '' : `/${i.tab}`}`} className="needs__row">
-                      <span className="needs__veh t-label t-ink-2">{v.model}</span>
-                      <span className={`needs__sentence needs__sentence--${i.severity}`}>{i.sentence}</span>
+                    <Link to={`/vehicles/${v.id}${i.docId ? `/glovebox/${i.docId}` : i.tab === 'overview' ? '' : `/${i.tab}`}`} className="needs__row">
+                      <span className={`needs__sentence needs__sentence--${i.severity}`}>
+                        {v.model}: {i.sentence}
+                      </span>
                     </Link>
                   </li>
                 ))}

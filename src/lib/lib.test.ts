@@ -54,3 +54,16 @@ describe('registration numbers', () => {
     expect(looksLikeRegistration('TEMP123')).toBe(false);
   });
 });
+
+import { mutedPaint } from './colour';
+describe('paint colours', () => {
+  it('calms a loud red but leaves greys and quiet paints alone', () => {
+    expect(mutedPaint('#2B2F2D')).toBe('#2b2f2d');
+    expect(mutedPaint('#E4E6E0')).toBe('#e4e6e0');
+    const red = mutedPaint('#9A2F2A');
+    expect(red).not.toBe('#9a2f2a');
+    const [r, g, b] = [1, 3, 5].map((i) => parseInt(red.slice(i, i + 2), 16));
+    expect(r).toBeGreaterThan(g); // still reads as a reddish paint
+    expect((Math.max(r, g, b) - Math.min(r, g, b)) / 255).toBeLessThan(0.3);
+  });
+});

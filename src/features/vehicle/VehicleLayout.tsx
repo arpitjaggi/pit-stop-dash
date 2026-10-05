@@ -134,9 +134,8 @@ export function VehicleLayout() {
                 )}
               </div>
               <div className="vhead__id" ref={sentinel}>
-                <p className="vhead__make t-label t-ink-2">{v.make}</p>
                 <h1 className="t-display vhead__model">{v.model}</h1>
-                {v.variant && <p className="vhead__variant t-ink-2">{v.variant}</p>}
+                <p className="vhead__variant t-ink-2">{[v.make, v.variant].filter(Boolean).join(' · ')}</p>
                 <div className="vhead__facts">
                   {v.registration_number ? <Plate value={v.registration_number} size={desktop && !strip ? 'lg' : 'md'} /> : <span className="t-label t-ink-3">Not registered yet</span>}
                   <span className="vhead__fuel t-ink-2">{fuelLabel(v.fuel_type)}</span>

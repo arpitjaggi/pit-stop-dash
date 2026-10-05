@@ -262,8 +262,8 @@ body:has(dialog[open]) { overflow: hidden; }
   display: inline-flex;
   align-items: center;
   gap: var(--sp-2);
-  height: 52px;
-  padding: 0 20px 0 16px;
+  height: 48px;
+  padding: 0 18px 0 14px;
   border-radius: var(--r-ctl);
   background: var(--accent);
   color: var(--on-accent);
@@ -325,8 +325,8 @@ body:has(dialog[open]) { overflow: hidden; }
 /* Actions that the docked button already covers on a phone. */
 @media (max-width: 1023px) { .desktop-only { display: none !important; } }
 
-/* No photo: paint is quieter than status, and light paint still has an edge. */
-.vimg--paint { background: color-mix(in srgb, var(--paint) 84%, var(--sunk)); }
+/* No photo: paint is quieter than status (its saturation is capped in code), and light paint still has an edge. */
+.vimg--paint { background: var(--paint); }
 .vimg--paint.vimg--light { box-shadow: inset 0 0 0 1px var(--line-strong); }
 @media (max-width: 1023px) {
   .vimg--band { aspect-ratio: auto; height: 104px; }

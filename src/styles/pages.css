@@ -15,7 +15,9 @@
 .needs__caret { margin-left: auto; color: var(--ink-3); transition: transform 0.15s var(--ease); }
 .needs[open] .needs__caret { transform: rotate(180deg); }
 .needs__list { padding-bottom: var(--sp-2); }
-.needs__row { display: grid; gap: 2px; padding: var(--sp-2) 0; min-height: var(--tap); }
+.needs__row { display: flex; align-items: center; padding: var(--sp-2) 0; min-height: var(--tap); }
+.needs__lead { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 600; }
+.needs__sentence { overflow-wrap: anywhere; }
 .needs__sentence--overdue { color: var(--overdue); }
 .needs__sentence--soon { color: var(--soon); }
 .needs__row:hover .needs__sentence { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
@@ -100,7 +102,7 @@ details > summary::-webkit-details-marker { display: none; }
 
 .vhead__loading { height: 320px; }
 .vhead__id { padding: var(--sp-3) var(--gutter) 0; }
-.vhead__model { margin-top: 2px; }
+.vhead__model { margin-top: 0; }
 .vhead__variant { font-size: 1.0625rem; line-height: 1.5rem; margin-top: 2px; }
 .vhead__facts { display: flex; align-items: center; flex-wrap: wrap; gap: var(--sp-2) var(--sp-3); margin-top: var(--sp-3); }
 .vhead__odo { display: inline-flex; align-items: baseline; margin-left: auto; }
@@ -355,7 +357,7 @@ details > summary::-webkit-details-marker { display: none; }
 
   /* Beyond the Overview the identity block shrinks to one strip, so the work starts higher. */
   .vhead--strip { grid-template-columns: 112px minmax(0, 1fr); column-gap: var(--sp-5); align-items: center; }
-  .vhead--strip .vhead__make, .vhead--strip .vhead__variant, .vhead--strip .vhead__fuel { display: none; }
+  .vhead--strip .vhead__variant, .vhead--strip .vhead__fuel { display: none; }
   .vhead--strip .vhead__model { font-size: 1.75rem; line-height: 2rem; }
   .vhead--strip .vhead__facts { margin-top: var(--sp-2); }
   .vhead--strip .vhead__board { padding-top: var(--sp-2); }

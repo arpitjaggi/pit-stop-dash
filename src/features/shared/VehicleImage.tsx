@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useSignedUrl } from '@/data/hooks';
 import type { Vehicle } from '@/data/types';
+import { mutedPaint } from '@/lib/colour';
 import { isLightColour } from '@/lib/image';
 import { cx } from '@/ui/atoms';
 
@@ -14,7 +15,7 @@ export function VehicleImage({ vehicle, variant, className, eager }: { vehicle: 
   const path = variant === 'thumb' ? vehicle.photo_thumb_path ?? vehicle.photo_path : vehicle.photo_path;
   const url = useSignedUrl('photos', path);
   const [loaded, setLoaded] = useState(false);
-  const paint = vehicle.colour_hex ?? null;
+  const paint = vehicle.colour_hex ? mutedPaint(vehicle.colour_hex) : null;
   const light = paint ? isLightColour(paint) : true;
   const style = paint ? ({ '--paint': paint } as React.CSSProperties) : undefined;
 
