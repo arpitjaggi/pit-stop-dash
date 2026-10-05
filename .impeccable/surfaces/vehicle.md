@@ -5,6 +5,13 @@ primary_target: "vehicle"
 related_targets: []
 ---
 
+---
+version: 1
+slug: "vehicle"
+primary_target: "vehicle"
+related_targets: []
+---
+
 # Surface brief: Vehicle page
 
 Mode: Operate. Mobile-first; desktop uses a sidebar, tabs, a properties rail and master-detail panes.
@@ -24,7 +31,7 @@ Identity header: vehicle photo, make, model, variant, plate, registration date, 
 THESIS: One vehicle, one coherent record, opened like a logbook. It refuses five unrelated dashboard modules; the identity header and the Pit Board tie every section together, and the sections read as chapters of the same book.
 OWN-WORLD: The Garage world: Concrete ground, Tyre ink, Petrol for action, status words for state, Geist plus Barlow Semi Condensed figures, hairlines not boxes, plate chip as identity. Document thumbnails at 2px as paper; the logbook's odometer margin is the page's recognisable detail.
 STORY: The owner understands the vehicle's standing in a glance, reaches any document in two taps, goes to the workshop knowing what was last done and what to raise, and logs a reading or an issue without friction.
-FIRST VIEWPORT: Phone, 390 wide. A full-bleed photo (or paint-colour field) at about 220px, the make in Label, the model in Display, the variant in Asphalt, the plate chip beside the current odometer in Figure XL's smaller sibling. Under it the Pit Board sentence at 26/30. The sticky header condenses to the plate and model on scroll. The five-tab bar and the docked Add button anchor the bottom. Desktop: a header strip with the photo beside the identity, then tabs, the main column and a 320px properties rail.
+FIRST VIEWPORT: Phone, 390 wide. A full-bleed photo (or a slim paint band when there is none), the model in Display with make and variant beneath it, the plate chip beside the current odometer, then the Pit Board sentence at 26/32 with its one action button (for example "Upload the new PUC"). A segmented five-label section strip sits under the compact sticky header (the user asked for this instead of a bottom tab bar); one docked Add button does the obvious thing for the tab. On a sub-tab the identity block gives way so the list is on screen at once. Desktop: a header with the photo beside the identity, tabs, the main column and a 300px properties rail; on sub-tabs the header becomes a one-line strip.
 FORM: Pinned by the user, so no direction roll was run. Concept seed key b257424e was printed by an unscoped seed run and does not bind this surface.
 SIGNATURE MOVE: The Pit Board, plus the odometer figure ticking to its new value and the Glovebox list dropping in like a compartment.
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance

@@ -1,194 +1,346 @@
 ---
 name: Pit Stop Dash
 description: A beautifully designed digital garage for Indian vehicle owners. Linear's discipline, a confident automotive voice, and a quiet F1 wink.
+colors:
+  concrete: "#f4f5f2"
+  chalk: "#ffffff"
+  slab: "#e9ece6"
+  seam: "#dfe2dc"
+  seam-strong: "#c3c8bf"
+  control-edge: "#7f877f"
+  tyre: "#111613"
+  asphalt: "#454d47"
+  gravel: "#5e665f"
+  petrol: "#0f4a47"
+  petrol-deep: "#0a3836"
+  petrol-wash: "#dcebe8"
+  clear: "#2a7048"
+  clear-wash: "#e1f0e6"
+  soon: "#8a4f00"
+  soon-mark: "#d98a00"
+  soon-wash: "#fbe7bf"
+  overdue: "#b83220"
+  overdue-wash: "#fbe3de"
+  garage-night: "#0d1110"
+  night-surface: "#141a18"
+  night-raised: "#1c2421"
+  night-seam: "#26302c"
+  night-ink: "#ecefea"
+  petrol-lit: "#58c2b8"
+typography:
+  display:
+    fontFamily: "Geist Variable, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "2.125rem"
+    fontWeight: 700
+    lineHeight: "2.25rem"
+    letterSpacing: "-0.025em"
+  pit-board:
+    fontFamily: "Geist Variable, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "1.625rem"
+    fontWeight: 650
+    lineHeight: "2rem"
+    letterSpacing: "-0.02em"
+  section:
+    fontFamily: "Geist Variable, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "1.5rem"
+    fontWeight: 700
+    lineHeight: "1.75rem"
+    letterSpacing: "-0.02em"
+  title:
+    fontFamily: "Geist Variable, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "1.0625rem"
+    fontWeight: 600
+    lineHeight: "1.375rem"
+    letterSpacing: "-0.005em"
+  body:
+    fontFamily: "Geist Variable, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "1rem"
+    fontWeight: 400
+    lineHeight: "1.5rem"
+  label:
+    fontFamily: "Geist Variable, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "0.8125rem"
+    fontWeight: 500
+    lineHeight: "1rem"
+  figure-xl:
+    fontFamily: "Barlow Semi Condensed, Barlow Fallback, sans-serif"
+    fontSize: "3.5rem"
+    fontWeight: 600
+    lineHeight: "3.25rem"
+    fontFeature: "'tnum' 1, 'lnum' 1"
+  figure-m:
+    fontFamily: "Barlow Semi Condensed, Barlow Fallback, sans-serif"
+    fontSize: "1.75rem"
+    fontWeight: 600
+    lineHeight: "1.75rem"
+    fontFeature: "'tnum' 1, 'lnum' 1"
+  plate:
+    fontFamily: "Barlow Semi Condensed, Barlow Fallback, sans-serif"
+    fontSize: "1.0625rem"
+    fontWeight: 600
+    lineHeight: 1
+    letterSpacing: "0.08em"
+rounded:
+  doc: "2px"
+  plate: "4px"
+  control: "6px"
+  popover: "8px"
+  sheet: "14px"
+spacing:
+  "0": "2px"
+  "1": "4px"
+  "2": "8px"
+  "3": "12px"
+  "4": "16px"
+  "5": "24px"
+  "6": "32px"
+  "7": "48px"
+  "8": "72px"
+components:
+  button-primary:
+    backgroundColor: "{colors.petrol}"
+    textColor: "{colors.chalk}"
+    rounded: "{rounded.control}"
+    padding: "0 16px"
+    height: "44px"
+  button-primary-hover:
+    backgroundColor: "{colors.petrol-deep}"
+  button-secondary:
+    backgroundColor: "{colors.chalk}"
+    textColor: "{colors.tyre}"
+    rounded: "{rounded.control}"
+    padding: "0 16px"
+    height: "44px"
+  button-ghost:
+    textColor: "{colors.petrol}"
+    rounded: "{rounded.control}"
+    padding: "0 8px"
+  button-danger:
+    backgroundColor: "{colors.chalk}"
+    textColor: "{colors.overdue}"
+    rounded: "{rounded.control}"
+  button-docked-add:
+    backgroundColor: "{colors.petrol}"
+    textColor: "{colors.chalk}"
+    rounded: "{rounded.control}"
+    padding: "0 18px 0 14px"
+    height: "48px"
+  input:
+    backgroundColor: "{colors.chalk}"
+    textColor: "{colors.tyre}"
+    rounded: "{rounded.control}"
+    padding: "0 12px"
+    height: "44px"
+  plate-chip:
+    backgroundColor: "{colors.chalk}"
+    textColor: "{colors.tyre}"
+    typography: "{typography.plate}"
+    rounded: "{rounded.plate}"
+    height: "32px"
+  sheet:
+    backgroundColor: "{colors.chalk}"
+    textColor: "{colors.tyre}"
+    rounded: "{rounded.sheet}"
+  selected-row:
+    backgroundColor: "{colors.petrol-wash}"
+    textColor: "{colors.tyre}"
 ---
-
-<!-- SEED: established with the user before implementation; re-run /impeccable document once there's code to capture the actual tokens and components. -->
 
 # Design System: Pit Stop Dash
 
-Every value below is a proposed seed value, chosen with reasoning and checked for contrast, but not yet proven in a build. The first build is allowed to move a value when a screen proves it wrong; it is not allowed to move a principle without asking.
+Every value below was read from the shipped stylesheets and components (`src/styles/*.css`, `src/features/*`, `src/ui/*`, `src/lib/colour.ts`). Where the build moved a seed value, the build is recorded here.
 
 ## Overview
 
-**Creative North Star: The Well-Kept Garage.** The product should feel like the garage of someone who loves their cars and keeps a good logbook: orderly, a little proud, nothing in the wrong place, and every drawer opens at once. It is a working tool first (Operate mode), so the world lends four things only: type, palette, density and one signature move. It never supplies the layout, navigation model or controls, which stay as standard and legible as the best tools in the category.
+**Creative North Star: The Well-Kept Garage.** The product feels like the garage of someone who loves their cars and keeps a good logbook: orderly, a little proud, nothing in the wrong place, and every drawer opens at once. It is a working tool first (Operate mode), so the world lends four things only: type, palette, density and one signature move. It never supplies the layout, navigation model or controls, which stay as standard and legible as the best tools in the category.
 
-**"Bold Linear", defined.** Take Linear's discipline: strict hierarchy, hairline borders, flat quiet surfaces, tight spacing, fast and exact interactions. Then turn four things up: type scale (louder headings, instrument-sized numerals), contrast (true ink on a tinted ground), vehicle imagery (the vehicles are the hero objects, full-bleed on phones), and personality (microcopy and motion, never ornament). Boldness comes from typography, spacing, scale, contrast and composition, not decoration.
+**"Bold Linear", defined.** Linear's discipline (strict hierarchy, hairline borders, flat quiet surfaces, tight spacing, fast and exact interactions) with four things turned up: type scale (louder headings, instrument-sized numerals), contrast (true ink on a tinted ground), vehicle imagery (the vehicle is the hero, full-bleed on phones), and personality (microcopy, never ornament). Boldness comes from typography, spacing, scale, contrast and composition, not decoration.
 
-**Where each reference lends something (principles only, nothing copied).**
-- *Linear:* hierarchy, navigation, density, hairline surfaces, the list-plus-properties-rail structure of a detail view.
-- *Raycast:* a command palette, compact actions, keyboard-first flows, a utility with a sense of humour.
-- *My Porsche:* the single vehicle as the hero of its own page, and plain maintenance status.
-- *Turo:* managing several vehicles, each with its own record and practical to-dos.
-These were studied from general knowledge of the products, not from a live inspection of them.
+**Light by default, dark by system.** The owner is on a phone in direct sun, so light is the default theme. A tuned dark theme follows the system setting; it is a re-lit palette, not an inversion. Both ship.
 
-**Physical scene, which forces light by default.** The owner is on a phone, one-handed, in direct Indian sunlight at a petrol pump or in the glare of a workshop forecourt. Dark interfaces wash out in sun, so **light is the default theme**. A full dark theme follows the system setting, for the garage at night and for desktop evenings. Both ship; neither is an afterthought.
+**Signature move: the Pit Board.** Each vehicle carries one sentence of verdict at display scale, leading each bay and each vehicle page. It is the one thing to know this lap, made typographic. The press-settle on a bay photograph is its physical companion.
 
-**Signature move: the Pit Board.** Every vehicle carries one sentence of plain-language verdict, set at display scale, the way a pit board gives a driver the one thing to know this lap: "Insurance expires in 18 days." or "All clear. Service in 2,340 km." It leads each vehicle tile and each vehicle page. It is the product's thesis, "what do I need to know or do?", made typographic.
+**Supporting primitive: the Plate.** The registration number is set as a plate chip in plate lettering. It names a vehicle in the sidebar, switcher, palette, toasts and document headers. No other element imitates a physical object.
 
-**Supporting identity primitive: the Plate.** The registration number is the vehicle's real-world identity in India, so it is set as a plate-form chip with plate-style lettering. It is how a vehicle is named in the switcher, the command palette, toasts and document headers. Beyond that it is the only place a lettered "object" appears; no other element imitates a physical thing.
-
-**Imagery stance.** Real photographs the owner uploads, shown large and uncropped as far as the frame allows. No renders, no cut-outs, no stock cars, no 3D. A vehicle with no photo falls back to a flat field of its paint colour (the owner picks a swatch) with the model name set large on it, which is honest and distinctive rather than a placeholder silhouette.
-
-**Motion grammar.** Fast and exact (120 to 220 ms, ease-out, no bounce). Four deliberate moments: the odometer figure ticks to its new value when a reading is logged; the Glovebox list drops in as if a compartment opened; a pressed vehicle image settles slightly (a 1.5% scale) before navigating; the Pit Board sentence cross-fades when its verdict changes. Everything respects reduced-motion by becoming instant.
-
-**Voice (lives in the design because status language is part of the interface).** Plain, specific, present tense, in the owner's units. "Insurance expires in 18 days", "Service due in 740 km", "PUC expired 3 days ago". Never "18D", never "92%", never database field names. The F1 flavour is a seasoning with a rule: at most one wink per screen, and never inside a warning. Examples of the allowed register: "Green flag" as an optional label for All clear, "Pit window opens at 48,420 km", "Filed in the Glovebox", "Empty garage. Wheel something in."
-
-**The Freshness Rule.** A distance statement is only as true as the last odometer reading. When the latest reading is older than a threshold (set during implementation), distance-based lines say so: "About 740 km to service, going by your reading on 14 Sep", with a one-tap "Update odometer".
+**Key Characteristics:**
+- Flat, hairline-driven, content directly on the canvas; no cards.
+- One brand colour (Petrol), three status colours, a green-grey tinted neutral ground.
+- Geist for voice, Barlow Semi Condensed only for readings and plates.
+- Photographs edge to edge on phones; an owner-chosen, calmed paint field when there is no photo.
+- Phone designed first; desktop re-composes with a sidebar, palette, properties rail and master-detail panes.
 
 ## Colors
 
-**Strategy: Restrained shell, committed jobs.** One brand colour, a tinted neutral ground, and three status colours. Each colour has exactly one job, and no colour is decorative. Paint colour appears only inside vehicle imagery.
+A restrained shell with committed jobs: one brand colour, a cool concrete neutral set, three status colours. Paint colour appears only inside vehicle imagery.
 
-All pairs below meet WCAG AA for their use (ratios measured against the stated ground).
+### Primary
+- **Petrol** (#0f4a47): the one brand colour. Primary buttons, links, selection, the focus ring, the active-tab underline, the docked Add button. **Petrol Deep** (#0a3836) is the pressed and hover state; **Petrol Wash** (#dcebe8) is the selected-row, active-pane and current-sidebar tint.
 
-### Light theme (default)
+### Neutral
+- **Concrete** (#f4f5f2): the canvas, cool and green-grey, never cream, never pure white.
+- **Chalk** (#ffffff): raised surfaces only: sheets, popovers, inputs, secondary buttons, document paper.
+- **Slab** (#e9ece6): sunk wells, hover rows, pressed states, loading skeletons.
+- **Seam** (#dfe2dc): hairline dividers. **Seam Strong** (#c3c8bf): outlines on non-interactive objects and document edges.
+- **Control Edge** (#7f877f): the border of inputs, choice faces and secondary buttons.
+- **Tyre** (#111613): primary text, plate lettering and the toast ground.
+- **Asphalt** (#454d47): secondary text.
+- **Gravel** (#5e665f): tertiary text, timestamps, captions, placeholders. Darkened from the seed (#646c66) so it clears 4.5:1 on Petrol Wash and Slab selected states.
 
-- **Concrete** (#F4F5F2): the canvas. A cool green-grey tinted toward garage concrete, never cream, never pure white.
-- **Chalk** (#FFFFFF): raised surfaces only: sheets, popovers, inputs, document previews.
-- **Slab** (#E9ECE6): sunk wells and pressed states.
-- **Seam** (#DFE2DC): hairline dividers. **Seam Strong** (#C3C8BF): quiet outlines on non-interactive objects.
-- **Control Edge** (#7F877F): the border of inputs and secondary buttons (3.7:1 on Chalk, 3.4:1 on Concrete, as required for control boundaries).
-- **Tyre** (#111613): primary text and plate lettering (16.7:1 on Concrete).
-- **Asphalt** (#454D47): secondary text (8.0:1).
-- **Gravel** (#646C66): tertiary text, timestamps, captions (4.95:1 on Concrete, 4.5:1 on Slab; never below 13px).
-- **Petrol** (#0F4A47): the single brand colour. Primary buttons, links, selection, focus ring, the active tab. White on Petrol is 10.0:1. **Petrol Deep** (#0A3836) is its pressed state; **Petrol Wash** (#DCEBE8) its selected-row tint.
-- **Status.** Always paired with words, never colour alone:
-  - **Clear** moss (#2A7048, wash #E1F0E6).
-  - **Due soon** amber (text #8A4F00, mark #D98A00, wash #FBE7BF).
-  - **Expired or overdue** vermilion (#B83220, wash #FBE3DE). The only red in the product, reserved for genuinely expired or overdue, and used as text and a small mark, not as a field.
-  - **Unknown or no record** Gravel text with a hollow mark.
+### Status
+Status is always paired with words, never colour alone.
+- **Clear** moss (#2a7048, wash #e1f0e6): a mark only; the sentence stays ink.
+- **Due soon** amber (text #8a4f00, mark #d98a00, wash #fbe7bf): coloured sentence text and mark.
+- **Overdue** vermilion (#b83220, wash #fbe3de): coloured sentence text and mark; also error text and the destructive label.
+- **Info** is an ink mark with an ink sentence. **Neutral** is Asphalt text with a hollow ring mark.
 
 ### Dark theme (follows system)
+Concrete becomes **Garage Night** (#0d1110); surfaces step lighter, not shadowed: Surface (#141a18), Sunk (#1c2421), Seam (#26302c), Seam Strong (#34403b), Control Edge (#6b756e). Ink (#ecefea), Ink-2 (#a5aea7), Ink-3 (#8a948d). Petrol lifts to **Petrol Lit** (#58c2b8) with pressed #7ad3ca, wash #12302d, and button text #06201e. Status: moss #5cc48a, amber #f0b050, vermilion #ff7a63. No neon, no glow.
 
-Concrete becomes **Garage Night** (#0D1110); surfaces step lighter by lightness, not shadow: Surface (#141A18), Raised (#1C2421); Seam (#26302C); Control Edge (#6B756E); text Ink (#ECEFEA), Ink-2 (#A5AEA7), Ink-3 (#8A948D). Petrol lifts to **Petrol Lit** (#58C2B8), and a primary button becomes Petrol Lit with text #06201E (8.0:1). Status: moss #5CC48A, amber #F0B050, vermilion #FF7A63. No neon, no glow.
+### Named Rules
+**The One Job Rule.** Petrol marks what you can act on. Status colours mark state. Paint colour lives in vehicle imagery. Plate colours live in the plate chip. A colour doing a second job is wrong.
 
-**The One Job Rule.** Petrol marks what you can act on. Status colours mark state. Paint colour lives in vehicle imagery. Plate colours live in the plate chip. If a colour is doing a second job, it is wrong.
+**The Quiet Red Rule.** Red appears only when something is expired or overdue (or an input error). Nothing is red for being automotive or urgent-looking.
 
-**The Quiet Red Rule.** Red appears only when something is actually expired or overdue. Nothing in the product is red for being automotive, urgent-looking, or branded.
+**The Sentence-Only Rule.** Colour reaches the words of a status sentence only for soon and overdue. Clear, info and neutral sentences stay ink (or Asphalt) and carry their state in the 8px mark.
+
+**The Calmed Paint Rule.** A paint field never outshouts a status colour: its saturation is capped at 30% in code, hue and lightness kept.
 
 ## Typography
 
-Two faces, one job each. Both are free, self-hostable families; loading strategy and exact subsetting are [to be resolved during implementation].
+**UI Font:** Geist Variable (with ui-sans-serif, system-ui, Segoe UI, Roboto)
+**Figure Font:** Barlow Semi Condensed 500/600/700 (with a size-adjusted Arial Narrow / Roboto Condensed fallback)
 
-- **Geist** (variable) is the voice: headings, UI, body. It is a clean workhorse with a confident bold, set with tight tracking at display sizes for the Linear discipline.
-- **Barlow Semi Condensed** is the instrument: every number that reads as a reading (odometer, distances remaining) and the registration plate. Barlow is drawn from highway signage and number plates, so the face already belongs to the subject. It appears only on figures and plates, never on prose, and never in all-caps shouting.
+**Character:** Geist is the confident workhorse voice, tight-tracked at display sizes. Barlow, drawn from highway signage and number plates, is the instrument: it sets readings and plates and never prose. Latin script only.
 
-Latin script only for the MVP. Hindi or other Indian-language UI is an open question (see flags).
+### Hierarchy
+Phone size first, then the desktop value at 1024px and above with a fine pointer.
+- **Display** (700, 34/36, -0.025em; desktop 44/46): vehicle model on its page.
+- **Pit Board** (650, 26/30, -0.02em; desktop 32/40): the one-sentence verdict. Long sentences step down to 20/28 (desktop 22/30).
+- **Section** (700, 24/28, -0.02em; desktop 26/30): section headings in real words.
+- **Title** (600, 17/22; desktop 15/20): row titles, document names.
+- **Body** (400, 16/24; desktop 14/20): text and inputs (16px on phones prevents input zoom).
+- **Label** (500, 13/16; desktop 12/16): field labels, metadata.
+- **Figure XL** (Barlow 600, tabular lining, 56/52; desktop 72/64): the current odometer.
+- **Figure M** (Barlow 600, 28/28; desktop 24/24) and **Figure S** (20/20): readings in lists, tiles, logbook margin. A small Geist unit ("km") follows in Gravel.
+- **Plate** (Barlow 600, +0.08em): 15px, 17px and 22px by chip size.
 
-| Role | Face | Mobile | Desktop | Use |
-|---|---|---|---|---|
-| Display | Geist 700, tracking -0.025em | 34/36 | 44/46 | Vehicle model on its page |
-| Pit Board | Geist 650, tracking -0.02em | 26/30 | 32/36 | The one-sentence verdict |
-| Section | Geist 700, tracking -0.02em | 24/28 | 26/30 | Glovebox, Service, Issues, Odometer: confident, not small caps labels |
-| Title | Geist 600 | 17/22 | 15/20 | Row titles, document names |
-| Body | Geist 400 | 16/24 | 14/20 | Text and inputs (16px on phones prevents input zoom) |
-| Label | Geist 500 | 13/16 | 12/16 | Field labels, metadata (never below 12px) |
-| Figure XL | Barlow Semi Condensed 600, tabular | 56/52 | 72/64 | Current odometer |
-| Figure M | Barlow Semi Condensed 600, tabular | 28/28 | 24/24 | Distances and readings in lists and tiles |
-| Plate | Barlow Semi Condensed 600, +0.08em | 16/16 | 15/15 | Registration number |
+Numbers use Indian digit grouping (en-IN). Dates carry the month as a word.
 
-Tabular lining figures are required so readings align and tick cleanly (verify the font feature at build). Indian digit grouping is used throughout: 1,24,560 km, formatted with the en-IN locale. Dates are written with the month as a word ("23 Oct 2026") so day-month order can never be misread.
+### Named Rules
+**The Sentence Rule.** Section headings are real words at real size. Small uppercase tracked labels are not used as headings.
 
-**The Sentence Rule.** Section headings are real words at real size. Small uppercase tracked labels are not used as headings anywhere.
-
-**The Instrument Rule.** If a number is a reading of the vehicle (distance, odometer), it is set in the figure face. If it is a count or a date inside prose, it is body text.
+**The Instrument Rule.** A number that is a reading of the vehicle is set in the figure face. A count or date inside prose is body text.
 
 ## Layout
 
-Operate mode: a clean aligned grid, consistent spacing, a real type scale. The signature move adds to that cleanliness; it never replaces it.
+Operate mode: a clean aligned grid, consistent spacing, a real type scale.
 
-**Spacing.** 4px base unit. Steps: 2, 4, 8, 12, 16, 24, 32, 48, 72. Phone gutter 16px. Vertical rhythm: more space above a heading than below it (typically 40 above, 12 below).
+**Spacing.** 4px base. Steps 2, 4, 8, 12, 16, 24, 32, 48, 72. Phone gutter 16px (24px on desktop). Blocks are separated by 32px; touch targets are 44px (32px on fine-pointer desktop).
 
-**Surface logic.** The page is the canvas. Content sits directly on it as rows separated by hairlines. Floating containers are reserved for things that are literally raised: sheets, popovers, menus. A vehicle is not a card.
+**Surface logic.** The page is the canvas. Content sits directly on it as rows separated by 1px hairlines, rows at least 56px (44px desktop). Floating containers are reserved for sheets, popovers, menus and the palette. A vehicle is not a card.
 
-**Mobile first (designed first, not collapsed from desktop).**
-- *Garage:* a single column of full-bleed vehicle "bays". Each bay is the photograph edge to edge, then the model name, the plate, the odometer figure and the Pit Board sentence beneath, set on the canvas and separated from the next bay by a hairline. No box, no shadow.
-- *Vehicle context:* a compact sticky header (plate chip plus model; tap it to switch vehicle in a bottom sheet), a **bottom tab bar** with five destinations in the thumb zone: Overview, Glovebox, Service, Issues, Odometer. The full names are used on wider screens; "Service" and "Issues" are the phone labels.
-- *Add:* one context-aware **Add** button docked above the tab bar, bottom-right. On Overview it opens the Quick Log sheet (Odometer reading, Issue, Document, Service record, in that order of speed). On a tab it does that tab's obvious thing.
-- *Sheets over pages:* adding a reading, an issue or a document happens in a bottom sheet with smart defaults (today's date, last reading as a placeholder, last-used vehicle), so common actions are three taps or fewer.
-- *No horizontal scrolling,* ever. Table-like data is rebuilt as stacked rows with a leading figure.
-- *Touch targets* are 44px minimum, spacing between them 8px minimum.
+**Phone (under 1024px, designed first).**
+- *Garage:* a single column of full-bleed 16:10 bays: photograph, then model (24/28), make, the plate chip left and Figure M odometer right, then the Pit Board sentence at 20/26. Hairline between bays. An optional one-line "Needs you" fold sits above the first bay.
+- *Vehicle page:* a 56px sticky compact header (back, plate chip plus model that opens the vehicle switcher), then the identity block and Pit Board, then a sticky segmented strip of five labels (Overview, Glovebox, Service, Issues, Odometer) with a 2px Petrol underline on the current one. The five labels fit at 390px; on narrower phones the strip scrolls with a right-edge fade. It is not a bottom tab bar.
+- *Docked Add:* one 48px Petrol button fixed bottom-right whose label follows the tab: Add (Overview), Upload (Glovebox), Log service (Service), Add issue (Issues), Add reading (Odometer). Actions it covers are hidden on phone (`desktop-only`). Pages reserve 96px of bottom padding.
+- *Sheets over pages:* adding happens in a bottom sheet; from 640px it becomes a centred dialog (520px, 720px for tall ones).
+- No-photo vehicles on phones show a 104px paint band carrying only the model name; the hero carries an underlined "Add a photo" text link.
+- No horizontal scrolling of content.
 
-**Desktop (a first-class product, not stretched mobile).** The same product, expanded by structure rather than size.
-- A **left sidebar** (248px): My Garage, then every vehicle as its plate chip plus model, so vehicle switching is one click or one key. Linear's navigation discipline, our content.
-- A **command palette** on ⌘K / Ctrl+K: go to a vehicle, open a document, add a reading to a named vehicle, jump to a tab. Plus single-key shortcuts for tabs and Add, shown in menus and tooltips.
-- The vehicle page uses a **main column plus a properties rail** (Linear's issue detail structure): the main column (reading width up to 760px) carries the section; the 320px rail carries identity facts, status, and service interval settings, shown at 1280px and above.
-- **Glovebox and Service become master-detail:** the list at left, a live preview or the full record at right, so documents and service entries are read without leaving the list.
-- Tabs sit horizontally under the vehicle header; sheets become popovers or centred dialogs; density tightens (control height 32px, body 14px).
-- The Garage is a grid of bays at stable aspect ratios, three to four across, never oversized cards.
-
-**Breakpoints (directional).** Under 640: phone layout. 640 to 1023: two-column bays, sidebar collapsed to an icon rail. 1024 and up: sidebar plus content. 1280 and up: properties rail visible.
-
-**Information priority on every screen.** (1) What needs attention, in the Pit Board. (2) The most recent facts the owner needs to act (odometer, last service). (3) The records, for lookup. (4) Detail and history, behind a tap.
+**Desktop (1024px and up with a fine pointer).**
+- A 248px sticky **sidebar**: brand, a search field showing the palette shortcut, My Garage, then each vehicle as name plus plate chip with a status dot for soon or overdue.
+- A **command palette** (Ctrl/Cmd+K), 640px wide, ranked search with grouped results. Outside the palette, single keys: g (garage), a (add), 1 to 5 (sections). Hints appear in the palette footer only.
+- Vehicle page max 1320px: a 320px photo beside identity and Pit Board; below, tabs and the main column (Overview capped at 760px) with a 300px **properties rail** at 1280px and above (a collapsed Details block on narrower widths).
+- On sub-tabs the identity collapses to a **one-line strip** (112px photo, 28px model, smaller Pit Board; variant, fuel and actions hidden).
+- **Glovebox** is master-detail (360px list, live document pane, sticky); **Service** splits the logbook and the selected record into two equal columns.
+- The Garage is an auto-fill grid of bays, minimum 300px, 48px by 32px gaps. Density tightens: body 14px, control 32px, buttons 13px.
 
 ## Elevation & Depth
 
-Flat, hairline-driven. Depth is tonal first, a shadow only when something truly floats.
+Flat and hairline-driven; depth is tonal first, with a shadow only where something truly floats. There are no gradients for decoration (the only gradient is the mask that fades the right end of the section strip), no glass and no blur.
 
-- **Level 0, Canvas:** Concrete. All rows, bays and sections.
-- **Level 1, Surface:** Chalk with a 1px Seam border. Inputs, document previews, inline panels.
-- **Level 2, Raised:** popovers and menus: a single ambient shadow (0 8px 24px at 12% Tyre) plus the 1px Seam hairline.
-- **Level 3, Sheet:** bottom sheets and dialogs: a scrim (Tyre at 40%) and a soft upward shadow (0 -8px 32px at 14% Tyre).
-- **Dark theme:** no shadows; steps in lightness plus the 1px line.
+### Shadow Vocabulary
+- **Pop** (`box-shadow: 0 8px 24px rgb(17 22 19 / 0.12)`): popovers, the palette, centred dialogs, toasts, the docked Add button.
+- **Sheet** (`box-shadow: 0 -8px 32px rgb(17 22 19 / 0.14)`): phone bottom sheets, over a scrim of Tyre at 40%.
+- **Dark theme:** both shadows become a 1px line ring; the scrim is 60% black.
+- **Light paint edge:** a no-photo field with light paint gets an inset 1px Seam Strong so it keeps an edge.
+- **Selected swatch:** a 2px canvas gap plus a 2px Petrol ring.
 
+### Named Rules
 **The Hairline Rule.** Structure is made with 1px Seam lines, not boxes. If a section needs a box to be understood, its hierarchy is wrong.
-
-No glassmorphism and no backdrop blur. No gradients; the only translucent layer is the sheet scrim.
 
 ## Shapes
 
 Modest, exact, consistent. Large radii read as consumer-soft; none appear.
 
-- **0px** on full-bleed phone vehicle photographs and document viewers (edge to edge).
-- **2px** document thumbnails, so they read as paper.
-- **4px** the plate chip and desktop vehicle photographs.
-- **6px** buttons, inputs, tags, menu items.
-- **8px** popovers and menus.
-- **14px** top corners of bottom sheets only.
-- **Full round** only for the 8px status mark. There are no pill buttons, no pill filters, no pill-shaped status badges.
+- **0px** full-bleed phone photographs, paint bands, and the phone document viewer screen.
+- **2px** document thumbnails and the document paper, so they read as paper.
+- **4px** plate chip, desktop photographs, count badges, swatches, skeleton bars, checkboxes on issues.
+- **6px** buttons, inputs, choice faces, menu items, toasts.
+- **8px** popovers, the palette, centred dialogs.
+- **14px** top corners of phone bottom sheets only.
+- **Round** only for the 8px status mark and sidebar dot. No pill buttons, filters or badges.
 
-Borders are 1px. Focus is a 2px Petrol ring with 2px offset (Petrol Lit in dark theme), visible on every interactive element, always.
+Borders are 1px (plate 1.5px Tyre). Focus is a 2px Petrol ring, 2px offset (Petrol Lit in dark), on every interactive element; inputs draw it flush.
 
 ## Components
 
-These are directional behaviours for the first build, not a finished library. The library stays small and reusable: nothing here is for one screen only.
+### Buttons
+- **Shape:** 6px radius, 15px type at 600 (13px on desktop), 44px tall on phones, 32px on desktop.
+- **Primary:** Petrol fill, white text, 16px side padding; hover Petrol Deep. One per view. Disabled turns Slab with Gravel text.
+- **Secondary:** Chalk fill, Control Edge border, hover Slab.
+- **Ghost / link:** Petrol text; links are underlined with 1px weight. **Danger:** vermilion text on Chalk with Control Edge border, hover overdue wash.
+- **Docked Add:** the one floating primary: 48px, 16px/650 label with a plus, Pop shadow, scales to 97% when pressed.
 
-- **Vehicle bay.** Photograph (16:10 on phones, full-bleed), model name in Pit Board-weight type beneath it, the plate chip, Figure M odometer, and the Pit Board sentence in one line or two. A small status mark leads the sentence. No box, no shadow, a hairline below. Pressed state: the photograph settles by 1.5% and the row takes a Slab tint. With no photo: a flat paint-colour field with the model name set large, and no silhouette.
-- **Plate chip.** 4px radius, 1.5px Tyre border, white ground, registration set in the Plate style and grouped by its parts ("KA 01 AB 1234"). Single line by default. A two-line variant for two-wheelers and a plate-colour variant by registration category (for example electric vehicles) are open refinements to verify against real plates.
-- **Status indicator.** An 8px round mark plus words, in the status colour, as a line of text, never a pill: "● Insurance expires in 18 days". Colour is never the only signal; the words and the position carry the meaning.
-- **Pit Board.** The verdict sentence at Pit Board scale. Shows the single most urgent item; below it, a quiet "+2 more" opens the full attention list. When all is well it reads "All clear" with the next upcoming item as a secondary line.
-- **Document row (Glovebox).** A 40×52 thumbnail of the first page (2px radius), the document type as the title, the issuer and validity as the secondary line, the status sentence on the right, and a chevron. Sorted by urgency, then by type. Current documents on top, older renewals in a collapsed "History" group. Tapping opens a full-screen viewer with pinch zoom, Share and Download as large targets. Each field carries a small provenance marker ("From the document" or "Entered by you") so extraction can later fill fields without confusing the owner. The Glovebox section opens with the compartment motion.
-- **Timeline entry (Service Records, the logbook).** A left margin carries the odometer reading in Figure M with the date beneath it; a thin vertical rail joins entries; the right column holds workshop, service type, and a collapsed "Work done"; problems found and "Carry to next service" items appear as short lines. No cards. The block above the timeline answers the three questions directly: last service (when, where), next due (at what reading and by what date), and what to take up with the workshop.
-- **Issue row.** A single line of text, "Noticed 3 weeks ago", an optional photo thumbnail, and a quiet "Will come up at next service" marker. Add takes one field. A **Workshop list** view shows only the open issues in large type for use at the service desk.
-- **Odometer row.** Date, reading in Figure M, the change since the previous reading ("+312 km in 9 days") and an optional note or source. No chart in the MVP.
-- **Buttons.** Primary: Petrol fill, white text, 6px radius, 44px tall on phones and 32px on desktop. Secondary: Chalk fill with a Control Edge border. Ghost: text only, Petrol. Destructive: text in vermilion that asks for confirmation. One primary per view. The docked Add button is the one place a primary button floats.
-- **Inputs.** 44px tall on phones (32px desktop), 6px radius, Control Edge border, labels above (never floating), 16px text. Numeric fields use the numeric keypad and show the last value as a placeholder. Dates default to today and open the native picker. Errors name the fix ("Reading is lower than the last one, 45,210 km") in vermilion text beneath the field.
-- **Bottom sheet.** Grabber, 14px top corners, a title, the form, and one primary action at the bottom within thumb reach. Dismiss by swipe, scrim tap or Escape.
-- **Vehicle switcher.** On phones, a sheet listing each vehicle as plate chip plus model plus its Pit Board in one line. On desktop, the sidebar and the command palette.
-- **Command palette (desktop).** A centred 8px-radius panel, a single input, grouped results (Vehicles, Documents, Actions), keyboard-only navigable, with shortcut hints at the right.
-- **Empty states.** Short, specific and a little wry, each with one action: "Empty garage. Wheel something in." with Add a vehicle; Glovebox: "Nothing in the Glovebox yet." with Upload a document; Issues: "Nothing nagging you." with Add an issue. No illustrations.
-- **Toasts.** One line at the bottom, above the tab bar, 3 seconds, with Undo where reversible: "Logged. 45,210 km." "Filed in the Glovebox." "Noted. It'll be on the list for your next service."
-- **Sync state (conditional on the offline decision).** If offline use is confirmed: a quiet "Saved on this phone, will sync" mark on queued items and a thin offline indicator in the header. The language stays plain.
-- **Icons.** One family at 20px with a 1.5px stroke and square-ish joins to match the plate and the grid (a library such as Phosphor Regular is the working assumption) [to be resolved during implementation]. Document types use typographic monograms (RC, INS, PUC) set in the plate style rather than icons.
+### Plate chip
+White ground, 1.5px Tyre border, 4px radius, Barlow 600 with +0.08em tracking, one line. Heights 26 / 32 / 40px (sm, md, lg) with 15 / 17 / 22px lettering; the dense sidebar uses 22px (collapsing to 18px beneath a vehicle name). It stays white-and-black in dark theme, like a real plate. No two-line two-wheeler plate and no plate-colour variants were built.
+
+### Status line
+An 8px round mark plus words, as a line of text, never a pill. Only soon and overdue colour the sentence; dates after it stay Gravel. A "+N more" or, on the vehicle page, "and N more things" trailer sits in Gravel at a smaller size.
+
+### Pit Board
+The verdict sentence at Pit Board scale, with one action button beneath it (for example "Upload the new PUC"). Other obligations are counted only in "and N more things"; long sentences step down to the smaller size. A sentence links to the tab it concerns.
+
+### Vehicle bay and imagery
+Photograph at 16:10, model, make, plate and odometer, Pit Board line. Pressed, the photograph settles to 98.5% scale. No box, no shadow. With no photo: a field of the owner's paint with saturation capped at 30%, make (80% opacity) and model set large at the bottom-left in black or white by lightness; on phones a 104px band with the model only.
+
+### Rows, logbook and documents
+Rows are hairline-separated with a Slab hover and a Petrol Wash active state. A document row is a 40x52 thumbnail (2px, monogram fallback), type as title, validity as secondary, status on the right. The logbook puts the odometer reading and date in a right-aligned margin, a 1px rail with a hollow 9px node, then workshop text with carry-forward lines; no cards. Opening a document on phones slides a full screen in from the right; on desktop it fills the sticky pane.
+
+### Inputs and choices
+44px (32px desktop), 6px radius, Control Edge border, labels above, 16px text on phones. Focus draws a 2px Petrol outline. Errors are vermilion text beneath the field plus a vermilion border. Figure and plate inputs use Barlow at 36px / 24px. Choices are radios drawn as chips, rows or a two-column grid; checked uses Petrol Wash with a Petrol inset ring.
+
+### Bottom sheet and toast
+Sheet: grabber, title, scrolling body, a footer with the primary action over a hairline; Escape, scrim or drag dismiss. A toast is a Tyre bar (inverted in dark) above the docked button, with an underlined Undo.
+
+### Command palette and sidebar
+The palette is a centred 8px-radius panel with a 52px input, grouped results (selected row in Petrol Wash), and a footer of shortcut hints in small keycaps. The sidebar items are 32px with a Petrol Wash current state.
+
+### Motion
+Fast and exact, ease-out (cubic-bezier 0.22, 1, 0.36, 1), no bounce. Implemented: bottom-sheet rise (260ms) and dialog entry, toast arrival (240ms), the phone document screen sliding in (220ms), the bay press-settle (150ms), disclosure caret rotation (150ms), image fade-in (250ms), 120ms colour transitions on controls. Under reduced motion, movement is dropped and a 120ms fade remains; the spinner breathes in opacity instead of rotating.
+
+### Icons
+Phosphor Regular, one family. Document types use typographic monograms in plate-style lettering.
 
 ## Do's and Don'ts
 
-**Do**
-- **Do** make the vehicles the largest, first, most visual objects on the Garage.
-- **Do** write status as a sentence in the owner's units, and show a date or reading beside a relative phrase on detail screens.
+### Do:
+- **Do** make the vehicle the largest, first, most visual object on the Garage.
+- **Do** write status as a sentence, colouring the words only for soon (amber) and overdue (vermilion).
 - **Do** give every colour exactly one job.
-- **Do** let structure come from type scale, spacing and hairlines.
-- **Do** keep common actions to three taps or fewer and reachable by the thumb.
-- **Do** keep the F1 reference to naming, microcopy and motion, at most one wink per screen.
-- **Do** design the phone layout first, then re-compose, not enlarge, for desktop.
+- **Do** build structure from type scale, spacing and 1px hairlines.
+- **Do** keep the Pit Board to one sentence with at most one action button.
+- **Do** set readings in Barlow with tabular lining figures.
+- **Do** design the phone first, then re-compose, not enlarge, for desktop.
+- **Do** keep Gravel (#5e665f) as the lowest-contrast text, and 13px (12px on desktop) as the smallest.
 
-**Don't**
-- **Don't** look like Linear, a fleet-management product, a finance or analytics dashboard, an F1 website, a racing game or a telemetry screen.
-- **Don't** put elements in floating, rounded cards; do not stack big KPI tiles; do not add charts for their own sake.
-- **Don't** use purple or blue AI gradients, glassmorphism, fake 3D vehicle art, carbon-fibre texture or checkered flags.
-- **Don't** use red for being automotive or urgent-looking. Red means expired or overdue, and only that.
-- **Don't** use abbreviations or percentages where a sentence will do ("18D", "92%").
-- **Don't** put a table that scrolls sideways on a phone.
+### Don't:
+- **Don't** put vehicles in floating, rounded cards or stack KPI tiles.
+- **Don't** use a bottom tab bar for sections; the strip under the header does that job.
+- **Don't** use red for anything but expired, overdue or an input error.
+- **Don't** use gradients, glass, blur, fake 3D, carbon texture or checkered flags as decoration.
+- **Don't** let a paint field exceed 30% saturation.
+- **Don't** use pill shapes, or a radius above 14px.
 - **Don't** rely on colour alone for any status.
-- **Don't** show a lie: a stale distance without its freshness, or sample data that is not labelled as sample.
+- **Don't** use abbreviations or percentages where a sentence will do.
+- **Don't** claim motion the build lacks (odometer ticking, Glovebox drop-in, Pit Board cross-fade).

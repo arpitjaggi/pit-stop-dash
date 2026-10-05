@@ -1,0 +1,155 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-05T00:00:00Z",
+  "title": "Design System: Pit Stop Dash",
+  "extensions": {
+    "colorMeta": {
+      "petrol": { "role": "primary", "displayName": "Petrol", "canonical": "#0f4a47", "tonalRamp": ["#06201e", "#0a3836", "#0f4a47", "#2a6a66", "#58c2b8", "#7ad3ca", "#b8e3df", "#dcebe8"] },
+      "concrete": { "role": "neutral", "displayName": "Concrete", "canonical": "#f4f5f2", "tonalRamp": ["#111613", "#454d47", "#5e665f", "#7f877f", "#c3c8bf", "#dfe2dc", "#e9ece6", "#f4f5f2"] },
+      "tyre": { "role": "neutral", "displayName": "Tyre", "canonical": "#111613", "tonalRamp": ["#111613", "#2a312c", "#454d47", "#5e665f", "#7f877f", "#a5aea7", "#c3c8bf", "#dfe2dc"] },
+      "gravel": { "role": "neutral", "displayName": "Gravel", "canonical": "#5e665f", "tonalRamp": ["#111613", "#454d47", "#5e665f", "#7f877f", "#8a948d", "#a5aea7", "#c3c8bf", "#dfe2dc"] },
+      "clear": { "role": "status", "displayName": "Clear Moss", "canonical": "#2a7048", "tonalRamp": ["#14301f", "#1d5035", "#2a7048", "#5cc48a", "#8fd6ad", "#b9e5cc", "#e1f0e6", "#f0f8f3"] },
+      "soon": { "role": "status", "displayName": "Due-Soon Amber", "canonical": "#8a4f00", "tonalRamp": ["#33270f", "#5e3600", "#8a4f00", "#d98a00", "#f0b050", "#f6cd8a", "#fbe7bf", "#fdf4e0"] },
+      "overdue": { "role": "status", "displayName": "Overdue Vermilion", "canonical": "#b83220", "tonalRamp": ["#3a1a15", "#7a2316", "#b83220", "#d9553f", "#ff7a63", "#ffb0a2", "#fbe3de", "#fdf1ee"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Vehicle model on its page (44/46 on desktop)." },
+      "pit-board": { "displayName": "Pit Board", "purpose": "The one-sentence verdict; long sentences step down to 20/28." },
+      "section": { "displayName": "Section", "purpose": "Real-word section headings." },
+      "title": { "displayName": "Title", "purpose": "Row titles and document names." },
+      "body": { "displayName": "Body", "purpose": "Prose and inputs; 16px on phones, 14px on desktop." },
+      "label": { "displayName": "Label", "purpose": "Field labels and metadata; never below 12px." },
+      "figure-xl": { "displayName": "Figure XL", "purpose": "Current odometer (72/64 on desktop)." },
+      "figure-m": { "displayName": "Figure M", "purpose": "Readings in bays, lists and the logbook margin." },
+      "plate": { "displayName": "Plate", "purpose": "Registration lettering in the plate chip: 15, 17 or 22px." }
+    },
+    "shadows": [
+      { "name": "pop", "value": "0 8px 24px rgb(17 22 19 / 0.12)", "purpose": "Popovers, palette, centred dialogs, toasts, docked Add. Dark theme: 0 0 0 1px line." },
+      { "name": "sheet", "value": "0 -8px 32px rgb(17 22 19 / 0.14)", "purpose": "Phone bottom sheets. Dark theme: 0 0 0 1px line." },
+      { "name": "paint-edge", "value": "inset 0 0 0 1px #c3c8bf", "purpose": "Keeps a light no-photo paint field visible against the canvas." }
+    ],
+    "motion": [
+      { "name": "ease", "value": "cubic-bezier(0.22, 1, 0.36, 1)", "purpose": "Single easing for every transition; ease-out, no bounce." },
+      { "name": "control-state", "value": "120ms", "purpose": "Colour and border transitions on buttons and choices; also the reduced-motion fade." },
+      { "name": "sheet-rise", "value": "260ms transform, 200ms opacity", "purpose": "Bottom sheet entry (40px rise on phone, 8px on 640px and up)." },
+      { "name": "toast-in", "value": "240ms", "purpose": "Toast arrival, 12px rise." },
+      { "name": "screen-slide", "value": "220ms", "purpose": "Phone document viewer slides in 24px from the right." },
+      { "name": "press-settle", "value": "150ms scale(0.985)", "purpose": "Bay photograph on press." },
+      { "name": "caret", "value": "150ms rotate(180deg)", "purpose": "Disclosure carets." },
+      { "name": "reduced-motion", "value": "movement dropped, 120ms fade kept; spinner breathes (opacity 1.6s)", "purpose": "prefers-reduced-motion behaviour." }
+    ],
+    "breakpoints": [
+      { "name": "sheet-dialog", "value": "640px", "purpose": "Bottom sheets become centred dialogs." },
+      { "name": "desktop", "value": "1024px + fine pointer", "purpose": "Sidebar, palette, 32px controls, 14px body, master-detail panes." },
+      { "name": "rail", "value": "1280px", "purpose": "Properties rail on the Overview." },
+      { "name": "narrow-phone", "value": "379px", "purpose": "Section strip tightens and scrolls with a right-edge fade." }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Petrol fill; one per view.",
+      "html": "<button class=\"ds-btn-primary\">Upload the new PUC</button>",
+      "css": ".ds-btn-primary{min-height:44px;padding:0 16px;border:1px solid transparent;border-radius:6px;background:var(--accent,#0f4a47);color:var(--on-accent,#fff);font:600 15px/1.2 'Geist Variable',system-ui,sans-serif;transition:background-color .12s cubic-bezier(.22,1,.36,1);} .ds-btn-primary:hover{background:var(--accent-press,#0a3836);} .ds-btn-primary:focus-visible{outline:2px solid var(--accent,#0f4a47);outline-offset:2px;}"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Chalk fill with a Control Edge border.",
+      "html": "<button class=\"ds-btn-secondary\">Log service</button>",
+      "css": ".ds-btn-secondary{min-height:44px;padding:0 16px;border:1px solid var(--edge,#7f877f);border-radius:6px;background:var(--surface,#fff);color:var(--ink,#111613);font:600 15px/1.2 'Geist Variable',system-ui,sans-serif;} .ds-btn-secondary:hover{background:var(--sunk,#e9ece6);} .ds-btn-secondary:focus-visible{outline:2px solid var(--accent,#0f4a47);outline-offset:2px;}"
+    },
+    {
+      "name": "Docked Add",
+      "kind": "button",
+      "refersTo": "button-docked-add",
+      "description": "The single floating primary on phones; label follows the tab.",
+      "html": "<button class=\"ds-docked\">+ Add reading</button>",
+      "css": ".ds-docked{height:48px;padding:0 18px 0 14px;border-radius:6px;background:var(--accent,#0f4a47);color:var(--on-accent,#fff);font:650 16px 'Geist Variable',system-ui,sans-serif;box-shadow:0 8px 24px rgb(17 22 19/.12);border:0;} .ds-docked:hover{background:var(--accent-press,#0a3836);} .ds-docked:active{transform:scale(.97);} .ds-docked:focus-visible{outline:2px solid var(--accent,#0f4a47);outline-offset:2px;}"
+    },
+    {
+      "name": "Text Input",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "44px field, Control Edge border, label above.",
+      "html": "<label class=\"ds-field\"><span>Odometer reading</span><input class=\"ds-input\" value=\"45,210\"></label>",
+      "css": ".ds-field{display:grid;gap:6px;font:500 13px/1 'Geist Variable',system-ui,sans-serif;color:var(--ink-2,#454d47);} .ds-input{min-height:44px;padding:0 12px;border:1px solid var(--edge,#7f877f);border-radius:6px;background:var(--surface,#fff);color:var(--ink,#111613);font:400 16px 'Geist Variable',system-ui,sans-serif;} .ds-input:hover{border-color:var(--ink-3,#5e665f);} .ds-input:focus{outline:2px solid var(--accent,#0f4a47);border-color:var(--accent,#0f4a47);}"
+    },
+    {
+      "name": "Plate Chip",
+      "kind": "chip",
+      "refersTo": "plate-chip",
+      "description": "Registration number as a plate; 26/32/40px heights.",
+      "html": "<span class=\"ds-plate\">KA 01 AB 1234</span>",
+      "css": ".ds-plate{display:inline-flex;align-items:center;height:32px;padding:0 7px;border:1.5px solid #111613;border-radius:4px;background:#fff;color:#111613;font:600 17px/1 'Barlow Semi Condensed',sans-serif;letter-spacing:.08em;font-variant-numeric:lining-nums;white-space:nowrap;}"
+    },
+    {
+      "name": "Status Line",
+      "kind": "custom",
+      "refersTo": "status",
+      "description": "8px mark plus a sentence; only soon and overdue colour the words.",
+      "html": "<p class=\"ds-status\"><span class=\"ds-mark\"></span><span>Insurance expires in 18 days</span></p>",
+      "css": ".ds-status{display:inline-flex;align-items:baseline;gap:.5em;margin:0;color:var(--soon,#8a4f00);font:650 20px/26px 'Geist Variable',system-ui,sans-serif;letter-spacing:-.015em;} .ds-mark{width:8px;height:8px;border-radius:50%;background:var(--soon-mark,#d98a00);}"
+    },
+    {
+      "name": "Section Strip",
+      "kind": "nav",
+      "refersTo": "none",
+      "description": "Phone section navigation: five labels, Petrol underline on the current one.",
+      "html": "<nav class=\"ds-strip\"><a aria-current=\"page\">Overview</a><a>Glovebox</a><a>Service</a><a>Issues</a><a>Odometer</a></nav>",
+      "css": ".ds-strip{display:flex;justify-content:space-between;padding:0 4px;border-bottom:1px solid var(--line,#dfe2dc);background:var(--bg,#f4f5f2);} .ds-strip a{position:relative;display:inline-flex;align-items:center;height:48px;padding:0 8px;color:var(--ink-2,#454d47);font:600 14px 'Geist Variable',system-ui,sans-serif;} .ds-strip a:hover{color:var(--ink,#111613);} .ds-strip a[aria-current]{color:var(--ink,#111613);} .ds-strip a[aria-current]::after{content:'';position:absolute;left:6px;right:6px;bottom:-1px;height:2px;background:var(--accent,#0f4a47);}"
+    },
+    {
+      "name": "Document Row",
+      "kind": "card",
+      "refersTo": "selected-row",
+      "description": "Hairline row: 40x52 paper thumbnail, title, validity, status.",
+      "html": "<div class=\"ds-doc\"><span class=\"ds-thumb\">INS</span><span><b>Insurance</b><br><small>Valid to 23 Oct 2026</small></span></div>",
+      "css": ".ds-doc{display:grid;grid-template-columns:40px 1fr;gap:12px;align-items:center;min-height:76px;padding:12px 4px;border-bottom:1px solid var(--line,#dfe2dc);font:400 15px 'Geist Variable',system-ui,sans-serif;} .ds-doc:hover{background:var(--sunk,#e9ece6);} .ds-thumb{display:grid;place-items:center;width:40px;height:52px;border:1px solid var(--line-strong,#c3c8bf);border-radius:2px;background:var(--surface,#fff);font:600 13px 'Barlow Semi Condensed',sans-serif;letter-spacing:.04em;} small{color:var(--ink-3,#5e665f);font-size:13px;}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Well-Kept Garage",
+    "overview": "The product feels like the garage of someone who loves their cars and keeps a good logbook: orderly, a little proud, nothing in the wrong place, and every drawer opens at once. It is a working tool first, so the world lends type, palette, density and one signature move, never the layout, navigation model or controls. \"Bold Linear\" takes Linear's discipline (strict hierarchy, hairlines, flat quiet surfaces, tight spacing, exact interactions) and turns up type scale, contrast, vehicle imagery and personality. Light is the default theme for sun; a tuned dark theme follows the system. The Pit Board sentence is the signature move and the plate chip the supporting identity primitive.",
+    "keyCharacteristics": [
+      "Flat, hairline-driven, content directly on the canvas; no cards.",
+      "One brand colour (Petrol), three status colours, a green-grey tinted neutral ground.",
+      "Geist for voice, Barlow Semi Condensed only for readings and plates.",
+      "Photographs edge to edge on phones; an owner-chosen, calmed paint field when there is no photo.",
+      "Phone designed first; desktop re-composes with a sidebar, palette, properties rail and master-detail panes."
+    ],
+    "rules": [
+      { "name": "The One Job Rule", "body": "Petrol marks what you can act on. Status colours mark state. Paint colour lives in vehicle imagery. Plate colours live in the plate chip. A colour doing a second job is wrong.", "section": "colors" },
+      { "name": "The Quiet Red Rule", "body": "Red appears only when something is expired or overdue (or an input error). Nothing is red for being automotive or urgent-looking.", "section": "colors" },
+      { "name": "The Sentence-Only Rule", "body": "Colour reaches the words of a status sentence only for soon and overdue. Clear, info and neutral sentences stay ink (or Asphalt) and carry their state in the 8px mark.", "section": "colors" },
+      { "name": "The Calmed Paint Rule", "body": "A paint field never outshouts a status colour: its saturation is capped at 30% in code, hue and lightness kept.", "section": "colors" },
+      { "name": "The Sentence Rule", "body": "Section headings are real words at real size. Small uppercase tracked labels are not used as headings.", "section": "typography" },
+      { "name": "The Instrument Rule", "body": "A number that is a reading of the vehicle is set in the figure face. A count or date inside prose is body text.", "section": "typography" },
+      { "name": "The Hairline Rule", "body": "Structure is made with 1px Seam lines, not boxes. If a section needs a box to be understood, its hierarchy is wrong.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do make the vehicle the largest, first, most visual object on the Garage.",
+      "Do write status as a sentence, colouring the words only for soon (amber) and overdue (vermilion).",
+      "Do give every colour exactly one job.",
+      "Do build structure from type scale, spacing and 1px hairlines.",
+      "Do keep the Pit Board to one sentence with at most one action button.",
+      "Do set readings in Barlow with tabular lining figures.",
+      "Do design the phone first, then re-compose, not enlarge, for desktop.",
+      "Do keep Gravel (#5e665f) as the lowest-contrast text, and 13px (12px on desktop) as the smallest."
+    ],
+    "donts": [
+      "Don't put vehicles in floating, rounded cards or stack KPI tiles.",
+      "Don't use a bottom tab bar for sections; the strip under the header does that job.",
+      "Don't use red for anything but expired, overdue or an input error.",
+      "Don't use gradients, glass, blur, fake 3D, carbon texture or checkered flags as decoration.",
+      "Don't let a paint field exceed 30% saturation.",
+      "Don't use pill shapes, or a radius above 14px.",
+      "Don't rely on colour alone for any status.",
+      "Don't use abbreviations or percentages where a sentence will do.",
+      "Don't claim motion the build lacks (odometer ticking, Glovebox drop-in, Pit Board cross-fade)."
+    ]
+  }
+}
