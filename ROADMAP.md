@@ -166,8 +166,7 @@ variant and sometimes the engine. The bundled make list stays as a typing aid on
 - Warnings are yellow with different icons; red is for errors only.
 
 ## Housekeeping that sits alongside
-- Sign-up showed "Failed to fetch" on your machine. Still open. Check `VITE_SUPABASE_URL`,
-  and blockers in the browser.
+- The sign-up "Failed to fetch" report is closed (owner, 6 Oct 2026).
 - Do not run `supabase db push`. Your migrations were applied outside the CLI history.
 - Every new table or column ships as a numbered migration, idempotent, with tests in
   `supabase/tests`.
