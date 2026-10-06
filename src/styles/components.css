@@ -29,8 +29,8 @@
 .btn--dark { background: var(--ink); color: var(--surface); }
 .btn--ghost { color: var(--ink); padding: 0 var(--sp-3); text-decoration: underline; text-decoration-color: var(--brand); text-decoration-thickness: 2px; text-underline-offset: 0.25em; }
 .btn--ghost:hover:not(:disabled) { background: var(--brand-wash); }
-.btn--danger { color: var(--overdue); border-color: var(--line-strong); background: var(--surface); }
-.btn--danger:hover:not(:disabled) { background: var(--overdue-wash); border-color: var(--overdue); }
+.btn--danger { color: var(--danger); border-color: var(--line-strong); background: var(--surface); }
+.btn--danger:hover:not(:disabled) { background: var(--danger-wash); border-color: var(--danger); }
 .btn--inline { justify-content: flex-start; min-height: var(--tap); padding-left: 0; }
 .btn--inline-block { justify-self: start; }
 .btn:disabled { cursor: not-allowed; }
@@ -64,7 +64,7 @@
 .field { display: grid; gap: 6px; min-width: 0; }
 .field__label { font-size: 0.8125rem; line-height: 1rem; font-weight: 600; color: var(--ink-2); padding: 0; }
 .field__msg { font-size: 0.8125rem; line-height: 1.125rem; color: var(--ink-3); }
-.field__msg--error { color: var(--overdue); font-weight: 500; }
+.field__msg--error { color: var(--danger); font-weight: 500; }
 .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-3); }
 
 .input {
@@ -81,7 +81,7 @@
 @media (min-width: 1024px) and (pointer: fine) { .input { font-size: 0.875rem; } }
 .input:hover { border-color: var(--edge); }
 .input:focus { outline: 3px solid var(--focus); outline-offset: 0; border-color: var(--ink); }
-.input[aria-invalid='true'], .field:has(.field__msg--error) .input { border-color: var(--overdue); }
+.input[aria-invalid='true'], .field:has(.field__msg--error) .input { border-color: var(--danger); }
 .input--area { padding: var(--sp-3) var(--sp-4); resize: vertical; min-height: 5.5rem; line-height: 1.4; }
 .input--select {
   appearance: none;
@@ -129,43 +129,68 @@
 /* ------------------------------------------------------------ identity and status */
 
 .plate {
+  --plate-bg: #ffffff;
+  --plate-ink: #17140f;
+  --plate-edge: #17140f;
   display: inline-flex;
-  align-items: center;
-  padding: 0 8px;
-  border: 1.5px solid #17140f;
+  align-items: stretch;
+  overflow: hidden;
+  border: 1.5px solid var(--plate-edge);
   border-radius: var(--r-plate);
-  background: #ffffff;
-  color: #17140f;
+  background: var(--plate-bg);
+  color: var(--plate-ink);
   font-family: var(--font-fig);
   font-weight: 600;
   font-variant-numeric: lining-nums;
   letter-spacing: 0.08em;
   white-space: nowrap;
   line-height: 1;
+  vertical-align: middle;
 }
-.plate > span { padding-top: 1px; }
-.plate--sm { height: 26px; font-size: 0.9375rem; padding: 0 7px; }
+:root[data-theme='dark'] .plate { box-shadow: 0 0 0 1px var(--line-strong); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme='light']) .plate { box-shadow: 0 0 0 1px var(--line-strong); } }
+.plate--commercial { --plate-bg: #f7c600; }
+.plate--ev { --plate-bg: #0f8a47; --plate-ink: #ffffff; --plate-edge: #0a5c2f; }
+.plate--ev-commercial { --plate-bg: #0f8a47; --plate-ink: #ffd21f; --plate-edge: #0a5c2f; }
+.plate--rental { --plate-bg: #17140f; --plate-ink: #ffd21f; --plate-edge: #17140f; }
+/* The hologram strip: a blue band with the chakra, and IND beneath it where there is room. */
+.plate__ind { display: grid; align-content: center; justify-items: center; gap: 1px; padding: 0 3px; background: #1b3a8a; color: #ffffff; }
+.plate__chakra { width: 1em; height: 1em; font-size: 0.6em; }
+.plate__ind-text { display: none; font-family: var(--font-ui); font-size: 0.34em; font-weight: 700; letter-spacing: 0.06em; }
+.plate__num { display: inline-flex; align-items: center; padding: 1px 8px 0; }
+.plate--sm { height: 26px; font-size: 0.9375rem; }
+.plate--sm .plate__num { padding: 1px 7px 0; }
 .plate--md { height: 34px; font-size: 1.125rem; }
-.plate--lg { height: 42px; font-size: 1.5rem; padding: 0 11px; }
+.plate--lg { height: 42px; font-size: 1.5rem; }
+.plate--md .plate__ind, .plate--lg .plate__ind { padding: 0 4px; }
+.plate--md .plate__ind-text, .plate--lg .plate__ind-text { display: block; }
+.plate--md .plate__chakra, .plate--lg .plate__chakra { font-size: 0.55em; }
+.plate--lg .plate__num { padding: 1px 11px 0; }
+.plate--stacked.plate--md { height: 52px; font-size: 1.0625rem; }
+.plate--stacked.plate--lg { height: 64px; font-size: 1.375rem; }
+.plate--stacked .plate__num { display: grid; align-content: center; justify-items: center; gap: 2px; padding: 2px 9px 0; line-height: 0.95; letter-spacing: 0.1em; }
 
 .status { display: inline-flex; align-items: baseline; gap: 0.5em; color: var(--ink); }
 .status__mark { flex: none; width: 9px; height: 9px; border-radius: 50%; background: var(--ink-3); transform: translateY(-0.08em); }
 .status__text { min-width: 0; overflow-wrap: anywhere; }
 .status__more { color: var(--ink-3); font-weight: 500; white-space: nowrap; }
 .status__date { color: var(--ink-3); font-weight: 400; }
-.status--overdue { color: var(--overdue); }
-.status--overdue .status__mark { background: var(--overdue-mark); }
+
+/* Yellow means "look at this". Overdue is a solid yellow tile holding a warning octagon; soon is a plain amber clock. */
+.status__mark--overdue, .status__mark--soon, .status__mark--clear { display: inline-grid; place-items: center; background: none; border-radius: 0; transform: translateY(0.24em); }
+.status__mark--overdue { width: 1.5em; height: 1.5em; padding: 0.2em; border-radius: 0.4em; background: var(--overdue-wash); color: #17140f; transform: translateY(0.3em); }
+.status__mark--soon { width: 1.25em; height: 1.25em; color: var(--soon-mark); }
+.status__mark--clear { width: 1.2em; height: 1.2em; color: var(--clear-mark); }
+.status--overdue { color: var(--overdue); font-weight: 700; }
 .status--soon { color: var(--soon); }
-.status--soon .status__mark { background: var(--soon-mark); }
-.status--clear .status__mark { background: var(--clear-mark); }
-.status--info .status__mark { background: var(--ink); }
 .status--neutral { color: var(--ink-2); }
 .status--neutral .status__mark { background: transparent; box-shadow: inset 0 0 0 2px var(--ink-3); }
 
 /* A status as a coloured strip: the colour is the headline, the words are the detail. */
 .status--strip { display: flex; align-items: flex-start; padding: 12px 16px; border-radius: var(--r-inner); background: var(--well); color: var(--ink); font-weight: 600; }
 .status--strip .status__mark { margin-top: 0.45em; transform: none; }
-.status--strip.status--overdue { background: var(--overdue-wash); }
+.status--strip .status__mark--overdue, .status--strip .status__mark--soon, .status--strip .status__mark--clear { margin-top: 0.1em; }
+.status--strip.status--overdue { background: var(--overdue-wash); color: #17140f; }
 .status--strip.status--soon { background: var(--soon-wash); }
 .status--strip.status--clear { background: var(--clear-wash); }
 .status--strip.status--info { background: var(--brand-wash); }
@@ -182,7 +207,7 @@
 .vimg__img.is-loaded { opacity: 1; }
 
 /* The paint stage: a pale tint of the vehicle's paint, and a large flat disc of the paint itself. */
-.vimg--stage { --vc: var(--brand); background: color-mix(in oklch, var(--vc) var(--stage-mix, 34%), var(--surface)); }
+.vimg--stage { --vc: var(--edge); background: color-mix(in oklch, var(--vc) var(--stage-mix, 34%), var(--surface)); }
 .stage__disc { position: absolute; z-index: -1; width: 54%; aspect-ratio: 1; right: -12%; top: -44%; border-radius: 50%; background: var(--vc); }
 .vimg--hero .stage__disc { width: 62%; right: -14%; top: -30%; }
 .vimg--thumb.vimg--stage { display: grid; place-items: center; border-radius: 50%; background: var(--vc); }
@@ -256,12 +281,12 @@ body:has(dialog[open]) { overflow: hidden; }
 
 .toasts { position: fixed; z-index: 60; left: var(--gutter); right: var(--gutter); bottom: calc(env(safe-area-inset-bottom) + 88px); display: grid; gap: var(--sp-2); justify-items: center; pointer-events: none; }
 .toast { pointer-events: auto; display: flex; align-items: center; gap: var(--sp-4); max-width: 480px; padding: var(--sp-3) var(--sp-5); border-radius: var(--r-inner); background: var(--panel); color: var(--on-panel); box-shadow: var(--shadow-pop); font-weight: 600; animation: toast-in 0.26s var(--ease); }
-.toast__undo { color: var(--brand); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; min-height: var(--tap); padding: 0 var(--sp-1); }
+.toast__undo { color: var(--accent); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; min-height: var(--tap); padding: 0 var(--sp-1); }
 @keyframes toast-in { from { transform: translateY(12px); opacity: 0; } }
 @media (min-width: 1024px) { .toasts { bottom: var(--sp-5); } }
 
 .notice { padding: var(--sp-3) var(--sp-4); border-radius: var(--r-inner); background: var(--well); color: var(--ink); }
-.notice--error { background: var(--overdue-wash); }
+.notice--error { background: var(--danger-wash); }
 
 .empty { display: grid; gap: var(--sp-3); justify-items: start; padding: var(--sp-6) 0; max-width: 32rem; }
 .empty__action { margin-top: var(--sp-2); }
@@ -301,8 +326,9 @@ body:has(dialog[open]) { overflow: hidden; }
 /* ------------------------------------------------------------ gate (sign in / demo) */
 
 .gate { min-height: 100dvh; display: grid; align-content: center; gap: var(--sp-7); padding: var(--sp-6) var(--gutter); max-width: 1040px; margin: 0 auto; }
-.gate__word { display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-display); font-weight: 700; letter-spacing: -0.02em; font-size: 1.125rem; margin-bottom: var(--sp-5); }
-.gate__word::before { content: 'P'; display: grid; place-items: center; width: 32px; height: 32px; border-radius: 10px; background: var(--brand); color: var(--on-brand); font-family: var(--font-fig); font-weight: 700; font-size: 1.125rem; }
+.gate__word { display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-display); font-weight: 700; letter-spacing: -0.02em; font-size: 1.25rem; margin-bottom: var(--sp-5); }
+.gate__name { display: grid; line-height: 1.1; }
+.gate__sub { font-family: var(--font-ui); font-weight: 500; letter-spacing: 0; font-size: 0.75rem; color: var(--ink-3); margin-top: 2px; }
 .gate__promise { max-width: 13ch; font-size: clamp(2.5rem, 10vw, 4.25rem); line-height: 0.98; letter-spacing: -0.045em; }
 .gate__form { display: grid; gap: var(--sp-4); align-content: start; max-width: 440px; width: 100%; padding: var(--sp-6) var(--sp-5); background: var(--surface); border-radius: var(--r-card); box-shadow: var(--shadow-card); }
 .gate__alt { display: flex; flex-wrap: wrap; gap: var(--sp-1) var(--sp-3); }
@@ -329,3 +355,15 @@ body:has(dialog[open]) { overflow: hidden; }
 .fold[open] > summary { margin-bottom: var(--sp-3); }
 
 @media (max-width: 1023px) { .desktop-only { display: none !important; } }
+
+/* ------------------------------------------------------------ switch */
+
+.toggle { position: relative; display: inline-block; flex: none; width: 52px; height: 32px; cursor: pointer; }
+.toggle input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
+.toggle__track { position: absolute; inset: 0; border-radius: var(--r-full); background: var(--sunk); border: 1.5px solid var(--edge); transition: background-color 0.16s var(--ease), border-color 0.16s var(--ease); }
+.toggle__track::after { content: ''; position: absolute; top: 3px; left: 3px; width: 22px; height: 22px; border-radius: 50%; background: var(--ink); transition: transform 0.18s var(--ease), background-color 0.16s var(--ease); }
+.toggle input:checked + .toggle__track { background: var(--brand); border-color: var(--brand); }
+.toggle input:checked + .toggle__track::after { transform: translateX(20px); background: #ffffff; }
+.toggle input:focus-visible + .toggle__track { outline: 3px solid var(--focus); outline-offset: 3px; }
+.toggle input:disabled { cursor: progress; }
+.toggle input:disabled + .toggle__track { opacity: 0.6; }

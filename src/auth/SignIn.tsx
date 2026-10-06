@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import type { SupabaseClient } from '@supabase/supabase-js';
+import { FlagMark } from '@/ui/FlagMark';
 import { Button, Field, Input, Notice } from '@/ui/atoms';
 
 type Mode = 'in' | 'up';
@@ -39,7 +40,13 @@ export function SignIn({ client }: { client: SupabaseClient }) {
   return (
     <main className="gate" id="main">
       <div className="gate__brand">
-        <p className="gate__word">Pit Stop Dash</p>
+        <p className="gate__word">
+          <FlagMark size={36} />
+          <span className="gate__name">
+            Pit Stop
+            <span className="gate__sub">Vehicle Management Portal</span>
+          </span>
+        </p>
         <h1 className="t-display gate__promise">Everything you need to know about your vehicles, in one place.</h1>
       </div>
       <form className="gate__form" onSubmit={submit}>

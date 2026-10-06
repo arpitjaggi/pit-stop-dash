@@ -101,6 +101,7 @@ export async function createDemoApi(): Promise<Api> {
 
   return {
     mode: 'demo',
+    remindersAvailable: false,
 
     async listVehicles() {
       return structuredClone(t.vehicles);
@@ -109,7 +110,7 @@ export async function createDemoApi(): Promise<Api> {
       const id = newId();
       const files = photo ? await putPhoto(id, photo) : { photo_path: null, photo_thumb_path: null };
       const v: Vehicle = {
-        id, user_id: DEMO_USER, variant: null, registration_number: null, registration_date: null, purchase_date: null,
+        id, user_id: DEMO_USER, plate_use: 'private', variant: null, registration_number: null, registration_date: null, purchase_date: null,
         colour_name: null, colour_hex: null, notes: null, engine_cc: null, transmission: null, battery_kwh: null,
         cng_kit_info: null, wheels: null, service_interval_km: null, service_interval_months: null,
         current_odometer_km: null, odometer_read_on: null, created_at: now(), updated_at: now(),
@@ -260,6 +261,22 @@ export async function createDemoApi(): Promise<Api> {
       t.documents = t.documents.filter((x) => x.id !== id);
       await persist();
       if (d) await dropBlobs([d.file_path, d.thumb_path]);
+    },
+
+    async getReminderSettings() {
+      return null;
+    },
+    async saveReminderSettings() {
+      throw new Error('Reminders need a signed-in account.');
+    },
+    async startTelegramLink() {
+      throw new Error('Reminders need a signed-in account.');
+    },
+    async disconnectTelegram() {
+      throw new Error('Reminders need a signed-in account.');
+    },
+    async sendTestReminder() {
+      throw new Error('Reminders need a signed-in account.');
     },
 
     async signedUrl(_bucket, path) {

@@ -2,6 +2,7 @@
 // Dates are ISO calendar dates ("2026-09-14"); timestamps are ISO strings.
 
 export type VehicleType = 'car' | 'suv' | 'motorcycle' | 'scooter' | 'other_two_wheeler' | 'other';
+export type PlateUse = 'private' | 'commercial' | 'rental';
 export type FuelType = 'petrol' | 'diesel' | 'cng' | 'petrol_cng' | 'electric' | 'hybrid' | 'other';
 export type DocType =
   | 'rc'
@@ -26,6 +27,7 @@ export interface Vehicle {
   registration_date: string | null;
   purchase_date: string | null;
   fuel_type: FuelType;
+  plate_use: PlateUse;
   colour_name: string | null;
   colour_hex: string | null;
   notes: string | null;
@@ -49,6 +51,7 @@ export type NewVehicle = Pick<Vehicle, 'vehicle_type' | 'make' | 'model' | 'fuel
     Pick<
       Vehicle,
       | 'variant'
+      | 'plate_use'
       | 'registration_number'
       | 'registration_date'
       | 'purchase_date'

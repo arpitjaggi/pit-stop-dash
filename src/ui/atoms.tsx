@@ -1,7 +1,9 @@
 import { forwardRef, useId, type ButtonHTMLAttributes, type InputHTMLAttributes, type ReactNode, type SelectHTMLAttributes, type TextareaHTMLAttributes } from 'react';
 import { Link, type LinkProps } from 'react-router-dom';
-import { formatRegistration } from '@/lib/plate';
+import { isTwoWheeler, type Vehicle } from '@/data/types';
+import { formatRegistration, plateTone, splitRegistration, type PlateTone } from '@/lib/plate';
 import type { Severity } from '@/lib/status';
+import { CheckCircle, Clock, WarningOctagon } from '@/ui/icons';
 
 /** Turns database errors into something a person can act on. */
 export function friendlyError(e: unknown): string {
@@ -120,23 +122,61 @@ export function Choice<T extends string>({
 
 // ---------------------------------------------------------------- identity and status
 
-/** The registration number as a plate: the vehicle's everyday identity in India. */
-export function Plate({ value, size = 'md' }: { value: string; size?: 'sm' | 'md' | 'lg' }) {
+/** The registration number as an HSRP plate: blue IND strip, colours by use, two lines on a two-wheeler. */
+export function Plate({ value, size = 'md', tone = 'private', stacked = false }: { value: string; size?: 'sm' | 'md' | 'lg'; tone?: PlateTone; stacked?: boolean }) {
   const text = formatRegistration(value);
+  const two = stacked && size !== 'sm';
+  const [top, bottom] = splitRegistration(value);
   return (
-    <span className={cx('plate', `plate--${size}`)} role="img" aria-label={`Registration number ${text}`}>
-      <span aria-hidden="true">{text}</span>
+    <span className={cx('plate', `plate--${size}`, `plate--${tone}`, two && 'plate--stacked')} role="img" aria-label={`Registration number ${text}`}>
+      <span className="plate__ind" aria-hidden="true">
+        <svg viewBox="0 0 16 16" className="plate__chakra" fill="none" stroke="currentColor" strokeWidth="1.1">
+          <circle cx="8" cy="8" r="5.6" />
+          <path d="M8 2.4v11.2M2.4 8h11.2M4 4l8 8M12 4l-8 8" strokeWidth="0.8" />
+        </svg>
+        <span className="plate__ind-text">IND</span>
+      </span>
+      <span className="plate__num" aria-hidden="true">
+        {two && bottom ? (
+          <>
+            <span>{top}</span>
+            <span>{bottom}</span>
+          </>
+        ) : (
+          text
+        )}
+      </span>
     </span>
   );
 }
 
+/** A vehicle's plate in its true colours. */
+export function VehiclePlate({ vehicle, size = 'md' }: { vehicle: Pick<Vehicle, 'registration_number' | 'plate_use' | 'fuel_type' | 'vehicle_type'>; size?: 'sm' | 'md' | 'lg' }) {
+  if (!vehicle.registration_number) return null;
+  return <Plate value={vehicle.registration_number} size={size} tone={plateTone(vehicle.plate_use, vehicle.fuel_type)} stacked={isTwoWheeler(vehicle.vehicle_type)} />;
+}
+
 const SR: Record<Severity, string> = { overdue: 'Needs attention: ', soon: 'Coming up: ', info: 'To do: ', clear: '', neutral: '' };
+
+/** The mark for a status. Overdue and soon are both yellow, so they differ by shape: a warning octagon on a yellow tile, or a plain clock. */
+export function StatusMark({ severity, className }: { severity: Severity; className?: string }) {
+  if (severity === 'overdue') {
+    return <span className={cx('status__mark', 'status__mark--overdue', className)} aria-hidden="true"><WarningOctagon size="100%" weight="bold" /></span>;
+  }
+  if (severity === 'soon') {
+    return <span className={cx('status__mark', 'status__mark--soon', className)} aria-hidden="true"><Clock size="100%" weight="bold" /></span>;
+  }
+  if (severity === 'clear') {
+    return <span className={cx('status__mark', 'status__mark--clear', className)} aria-hidden="true"><CheckCircle size="100%" weight="fill" /></span>;
+  }
+  return <span className={cx('status__mark', className)} aria-hidden="true" />;
+}
 
 /** A status as a plain sentence led by a small mark. Never colour alone: the words carry it. */
 export function StatusLine({ severity, children, className, as: Tag = 'span' }: { severity: Severity; children: ReactNode; className?: string; as?: 'span' | 'p' | 'div' }) {
   return (
     <Tag className={cx('status', `status--${severity}`, className)}>
-      <span className="status__mark" aria-hidden="true" />
+      <StatusMark severity={severity} />
       <span className="status__text">
         {SR[severity] && <span className="sr-only">{SR[severity]}</span>}
         {children}

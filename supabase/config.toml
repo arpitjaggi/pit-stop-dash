@@ -13,3 +13,11 @@ enable_confirmations = false
 
 [storage]
 file_size_limit = "15MiB"
+
+# The reminder functions check their own secrets (a cron header, a Telegram secret token, or the
+# signed-in user's token), so the platform's JWT check is switched off for them.
+[functions.send-reminders]
+verify_jwt = false
+
+[functions.telegram-webhook]
+verify_jwt = false

@@ -273,3 +273,48 @@ export function useDeleteDocument() {
     onSettled: () => qc.invalidateQueries({ queryKey: qk.documents }),
   });
 }
+
+// ---------------------------------------------------------------- reminders
+
+import type { ReminderSettingsPatch } from './api';
+
+const reminderKey = ['reminder-settings'] as const;
+
+export function useReminderSettings(poll = false) {
+  const api = useApi();
+  return useQuery({
+    queryKey: reminderKey,
+    queryFn: () => api.getReminderSettings(),
+    enabled: api.remindersAvailable,
+    staleTime: STALE,
+    refetchInterval: poll ? 3000 : false,
+  });
+}
+
+export function useSaveReminderSettings() {
+  const api = useApi();
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (patch: ReminderSettingsPatch) => api.saveReminderSettings(patch),
+    onSuccess: (data) => qc.setQueryData(reminderKey, data),
+  });
+}
+
+export function useTelegramLink() {
+  const api = useApi();
+  return useMutation({ mutationFn: () => api.startTelegramLink() });
+}
+
+export function useDisconnectTelegram() {
+  const api = useApi();
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: () => api.disconnectTelegram(),
+    onSuccess: () => qc.invalidateQueries({ queryKey: reminderKey }),
+  });
+}
+
+export function useTestReminder() {
+  const api = useApi();
+  return useMutation({ mutationFn: () => api.sendTestReminder() });
+}

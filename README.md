@@ -1,4 +1,4 @@
-# Pit Stop Dash
+# Pit Stop: Vehicle Management Portal
 
 A personal digital garage. Everything you need to know about your vehicles, in one place: documents in a Glovebox, a service logbook, known issues to tell the workshop, odometer readings, and one plain sentence per vehicle (the Pit Board) saying what needs you right now.
 
@@ -17,7 +17,7 @@ Product truth lives in [`PRODUCT.md`](PRODUCT.md), the visual system in [`DESIGN
 | Styling | Plain CSS with design tokens | No runtime, no framework to maintain. Fonts (Geist, Barlow Semi Condensed) are self-hosted. |
 | PDFs | pdf.js, loaded only when a PDF is opened | Good phone viewing without weighing down first load. |
 
-Future OCR, notifications and SMS fit onto the same platform (Supabase Edge Functions and scheduled jobs). Nothing for them is built, but documents already carry an `extracted_fields` list so extracted values can be marked "From the document" versus "Entered by you".
+Reminders run on the same platform (Edge Functions and a scheduled job); see below. Document reading is next on the [roadmap](ROADMAP.md), and documents already carry an `extracted_fields` list so extracted values can be marked "From the document" versus "Entered by you".
 
 ## Run it locally
 
@@ -35,6 +35,34 @@ With no Supabase variables set, the app shows a "No backend connected" screen wi
 3. **Authentication → Providers → Email** is on by default. For a personal app you may turn off "Confirm email" so password sign-up works instantly; otherwise the app asks you to confirm by email. Add your site URL (and `http://localhost:5173`) under **Authentication → URL Configuration**.
 4. Copy `.env.example` to `.env.local` and fill in `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` (Project Settings → API). The anon key is safe in the browser: row-level security does the protecting.
 5. `npm run dev`, create an account, add your first vehicle.
+
+### Reminders (optional, free)
+
+The app can message you before insurance, PUC or a CNG hydro-test runs out, by email and Telegram. It needs the third and fourth migrations applied, two Edge Functions, a few secrets and a daily schedule. Everything below is free at personal scale.
+
+1. **Migrations.** Apply `20261006000001_plate_use.sql` and `20261006000002_reminders.sql` the same way as the first two.
+2. **Telegram bot.** In Telegram, message [@BotFather](https://t.me/BotFather), send `/newbot`, and keep the token and the bot's username. Put the username (without the @) in `.env.local` as `VITE_TELEGRAM_BOT_USERNAME`.
+3. **Email.** Make a free [Resend](https://resend.com) account and an API key. Without a verified domain, Resend only delivers to your own sign-up address, from `onboarding@resend.dev`, which is enough for a personal app.
+4. **Secrets.** Choose two long random strings (for `CRON_SECRET` and `TELEGRAM_WEBHOOK_SECRET`), then:
+
+   ```bash
+   supabase secrets set CRON_SECRET=... TELEGRAM_WEBHOOK_SECRET=... TELEGRAM_BOT_TOKEN=... \
+     RESEND_API_KEY=... REMINDER_FROM_EMAIL="Pit Stop <onboarding@resend.dev>" APP_URL=https://your-site
+   ```
+
+5. **Deploy the functions.** `supabase functions deploy send-reminders telegram-webhook` (or paste each `index.ts` and `_shared/messages.ts` into the dashboard's Edge Functions editor).
+6. **Point Telegram at the bot function** (once):
+
+   ```bash
+   curl "https://api.telegram.org/bot<TOKEN>/setWebhook" \
+     -d url=https://<project-ref>.supabase.co/functions/v1/telegram-webhook \
+     -d secret_token=<TELEGRAM_WEBHOOK_SECRET>
+   ```
+
+7. **Schedule it.** Edit and run `supabase/cron/reminders.sql` in the SQL editor. It calls the function every day at 9:00 India time.
+8. In the app: **Account → Reminders**, connect Telegram, and press **Send a test message**.
+
+What is sent: for the latest insurance, PUC and CNG certificate of each vehicle, one message at each chosen lead time (30, 14, 7 or 1 day before, or on the day). If a day is missed the reminder is caught up, and nothing is sent twice. SMS and WhatsApp are not built: SMS in India needs sender registration with no free route, and WhatsApp business messages are paid.
 
 ### Deploy
 
@@ -57,7 +85,7 @@ node scripts/e2e.mjs     # browser end-to-end flows in demo mode (dev server run
 
 ## Data model
 
-`vehicles` (common fields as columns, type-specific ones optional: engine cc, battery kWh, CNG kit, wheels; per-vehicle service interval in km and months; a trigger-maintained current odometer), `odometer_readings`, `service_records`, `issues`, `documents`. Every child row references its vehicle through a composite key `(vehicle_id, user_id)`, so a row can never point at someone else's vehicle. Users are Supabase's `auth.users`.
+`vehicles` (common fields as columns, `plate_use` for the HSRP plate colour, type-specific ones optional: engine cc, battery kWh, CNG kit, wheels; per-vehicle service interval in km and months; a trigger-maintained current odometer), `odometer_readings`, `service_records`, `issues`, `documents`, plus `reminder_settings` and `reminder_log` for reminders. Every child row references its vehicle through a composite key `(vehicle_id, user_id)`, so a row can never point at someone else's vehicle. Users are Supabase's `auth.users`.
 
 ## Decisions made without asking
 

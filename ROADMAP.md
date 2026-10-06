@@ -4,27 +4,25 @@ Written 6 Oct 2026, after the Paint Shop redesign and the step-by-step Add vehic
 This covers the seven changes requested after the redesign. Each is checked against the
 product rules in `PRODUCT.md`, then sequenced.
 
-## Verdicts at a glance
+## Status
 
-| # | Request | Verdict | Size | Cost to run | Phase |
-|---|---|---|---|---|---|
-| 1 | Rename to "Pit Stop: Vehicle Management Portal"; chequered flag as the icon everywhere | Straightforward. Reverses an earlier "no chequered flags" rule, as you asked | S | Free | 1 |
-| 2 | HSRP-style number plates, with colours (green for EV) | Straightforward. Needs one new field: how the vehicle is used | S–M | Free | 1 |
-| 4 | Spacing problem in the Glovebox header | Bug. **Fixed in this change** | XS | Free | Done |
-| 7 | Theme in Ferrari scarlet | Doable. One real design risk: red is also our "overdue" colour (see below) | M | Free | 1 |
-| 6 | Alerts for PUC, insurance, CNG hydro-test | Doable and free via Telegram plus email. SMS is the wrong tool in India (see below) | M–L | Free at personal scale | 2 |
-| 5 | Read documents and fill the fields | Doable in tiers: free and private first, AI only with consent | L | Free for digital PDFs; per-use cost for AI | 3 |
-| 3 | Fetch make and model details from the web | The riskiest. No free official Indian source exists. Recommended as a bundled list first, then AI lookup with sources | M–L | Bundled list free; AI lookup per-use | 4 |
+| # | Request | State |
+|---|---|---|
+| 1 | Rename to "Pit Stop: Vehicle Management Portal"; chequered flag as the icon | **Built** (Phase 1) |
+| 2 | HSRP-style number plates, with colours (green for EV) | **Built** (Phase 1). Needs migration `20261006000001_plate_use.sql` |
+| 4 | Spacing problem in the Glovebox header | **Built** |
+| 7 | Theme in Ferrari scarlet | **Built** (Phase 1). Warnings are yellow, told apart by icon |
+| 6 | Alerts for PUC, insurance, CNG hydro-test | **Built** (Phase 2): Telegram and email. Needs migration `20261006000002_reminders.sql`, two functions, secrets and a schedule (see README) |
+| 5 | Read documents and fill the fields | **Next** (Phase 3) |
+| 3 | Fetch make and model details from the web | **Scrapped.** Phase 3 covers it: reading an RC fills make, model, fuel, engine and registration date from the document itself |
 
-Order is by value over effort. Reminders (6) pay off most, because the dates are already in
-the Glovebox. Document reading (5) removes the most typing. Web lookup (3) saves the least
-and is the shakiest on data quality, so it goes last.
+Decisions taken on 6 Oct 2026: yellow is the colour for overdue and soon, with a warning octagon for overdue and a clock for soon; the rest of the work runs on free resources.
 
 ---
 
-## Phase 1. Identity and look (items 1, 2, 4, 7)
+## Phase 1. Identity and look (items 1, 2, 4, 7). Built
 
-One working session. No new services.
+No new services.
 
 ### 1. Name and chequered flag
 - Full name **Pit Stop: Vehicle Management Portal** on the sign-in screen, browser tab title,
@@ -68,15 +66,14 @@ space below it. Fixed in `pages.css`.
   it keeps the app from turning into a red wall. A Modena-style yellow stays as a small second
   accent for count chips and the dark-mode focus ring.
 - Light and dark both get new tokens. The Pit Board panel stays ink.
-- **The risk:** "overdue" is also red. With a scarlet brand, red stops meaning "act now" on its
-  own. Plan: overdue keeps its words (our rule is that words carry meaning), gains a warning
-  icon, and moves to a deeper crimson that does not match the brand button. I will check the
-  Garage and Pit Board screens side by side before locking it.
+- **Decision:** warnings are yellow, not red, so the scarlet brand never competes with them. Overdue is
+  a solid yellow tile holding a warning octagon; soon is a plain amber clock; clear is a green tick.
+  Shape and words tell them apart, not hue. Red remains only for errors and delete buttons.
 - Each vehicle's own paint disc is untouched, so a red car still shows red.
 
 ---
 
-## Phase 2. Reminders (item 6)
+## Phase 2. Reminders (item 6). Built
 
 **Short answer: Telegram bot plus email, with an in-app "due soon" list. Not SMS.**
 
@@ -144,39 +141,23 @@ review screen, not guessed.
 
 ---
 
-## Phase 4. Fetch make and model details (item 3)
+## Phase 4. Fetch make and model details (item 3). Scrapped
 
-There is no free official API for Indian make and model specifications. Registration-number
-lookups depend on paid third-party services of uncertain legality, and scraping car portals
-breaks their terms. So the plan is two layers:
-
-1. **Bundled list.** A curated JSON of makes, models, variants, engine, fuel options and
-   transmission for the vehicles Indians actually own, starting with about 30 makes. Free,
-   offline, instant. It replaces the current make suggestions and fills fields on selection.
-   Grows through releases. Wikipedia and Wikidata can seed it, with attribution.
-2. **AI lookup with sources.** If the model is not in the list, the user taps "Look this up".
-   An Edge Function asks a model with web search for specifications and returns suggestions,
-   each with the source link. The user confirms each field, and anything unsourced is dropped.
-   Costs per lookup, so it needs an API key and a per-user daily limit.
-
-Not recommended: VAHAN or registration-number lookups through paid resellers, and scraping.
+Dropped on 6 Oct 2026. There is no free official source for Indian make and model specifications,
+and the document reader in Phase 3 gets the same facts from the owner's own papers. An RC gives the
+make, model, fuel, engine capacity, colour and registration date; an insurance policy gives the
+variant and sometimes the engine. The bundled make list stays as a typing aid only.
 
 ---
 
-## Decisions I have made, and what I need from you
+## Decisions taken
 
-**Defaults I will use unless you say otherwise**
 - Telegram plus email for reminders. WhatsApp and SMS are not built.
-- Photo OCR is Tesseract. AI vision is off until you opt in.
+- Photo OCR is Tesseract in the browser. An AI vision reader is optional, off by default, and only
+  ever used with the owner's opt-in, because it sends the file to a third party.
 - "Pit Stop" for short labels, the full name in titles and sign-in.
 - The chequered flag is a logomark only.
-
-**Two things only you can decide**
-1. **Budget for the AI-based pieces (Phases 3 and 4).** They need an Anthropic API key held in
-   Supabase secrets and cost a small amount per use. Are you happy to supply one, with a
-   monthly cap? If not, the free tiers (bundled list, digital PDFs, Tesseract) still ship.
-2. **How red should "overdue" be.** Once the brand is scarlet, I plan an icon and a deeper
-   crimson for overdue. If you would rather overdue shifted to a different colour entirely, say so before Phase 1.
+- Warnings are yellow with different icons; red is for errors only.
 
 ## Housekeeping that sits alongside
 - Sign-up showed "Failed to fetch" on your machine. Still open. Check `VITE_SUPABASE_URL`,

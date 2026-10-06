@@ -56,8 +56,24 @@ export type DocumentPatch = Partial<
   Pick<VDocument, 'doc_type' | 'title' | 'issuer' | 'reference_number' | 'issued_on' | 'expires_on' | 'notes' | 'extracted_fields'>
 >;
 
+export interface ReminderSettings {
+  email_enabled: boolean;
+  telegram_enabled: boolean;
+  /** Days before the expiry date to remind on; 0 is the day itself. */
+  lead_days: number[];
+  telegram_connected: boolean;
+}
+export type ReminderSettingsPatch = Partial<Pick<ReminderSettings, 'email_enabled' | 'telegram_enabled' | 'lead_days'>>;
+/** What happened to each channel when a test message was sent: "sent", "off", "not connected" or a reason. */
+export interface ReminderTestResult {
+  email: string;
+  telegram: string;
+}
+
 export interface Api {
   mode: 'supabase' | 'demo';
+  /** Reminders need a real account: the demo has nowhere to send them from. */
+  remindersAvailable: boolean;
 
   listVehicles(): Promise<Vehicle[]>;
   createVehicle(input: Omit<NewVehicle, 'odometer_km'>, photo?: PreparedImage | null): Promise<Vehicle>;
@@ -82,6 +98,13 @@ export interface Api {
   addDocument(input: NewDocument): Promise<VDocument>;
   updateDocument(id: string, patch: DocumentPatch): Promise<VDocument>;
   deleteDocument(id: string): Promise<void>;
+
+  getReminderSettings(): Promise<ReminderSettings | null>;
+  saveReminderSettings(patch: ReminderSettingsPatch): Promise<ReminderSettings>;
+  /** A one-time code for the bot's start link. */
+  startTelegramLink(): Promise<string>;
+  disconnectTelegram(): Promise<void>;
+  sendTestReminder(): Promise<ReminderTestResult>;
 
   /** A short-lived URL for a stored file. */
   signedUrl(bucket: Bucket, path: string): Promise<string>;

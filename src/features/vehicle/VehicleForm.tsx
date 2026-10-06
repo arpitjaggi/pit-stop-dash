@@ -2,12 +2,12 @@ import { useEffect, useRef, useState } from 'react';
 import type { PreparedImage } from '@/data/api';
 import {
   FUEL_TYPES, VEHICLE_TYPES, defaultIntervals, isTwoWheeler,
-  type FuelType, type NewVehicle, type Vehicle, type VehicleType,
+  type FuelType, type NewVehicle, type PlateUse, type Vehicle, type VehicleType,
 } from '@/data/types';
 import { todayISO } from '@/lib/dates';
 import { formatNumber, parseNumber } from '@/lib/format';
 import { PHOTO_SPEC, prepareImage } from '@/lib/image';
-import { looksLikeRegistration, normaliseRegistration, validRegistrationShape } from '@/lib/plate';
+import { looksLikeRegistration, normaliseRegistration, plateTone, validRegistrationShape } from '@/lib/plate';
 import { Button, Choice, Field, Input, Notice, Plate, TextArea, cx } from '@/ui/atoms';
 import { ArrowLeft, Camera, X } from '@/ui/icons';
 import { useSignedUrl } from '@/data/hooks';
@@ -31,6 +31,7 @@ interface Values {
   variant: string;
   registration: string;
   fuel: FuelType;
+  use: PlateUse;
   odometer: string;
   colour: { name: string; hex: string } | null;
   purchase: string;
@@ -55,6 +56,7 @@ function initial(v?: Vehicle): Values {
     variant: v?.variant ?? '',
     registration: v?.registration_number ?? '',
     fuel: v?.fuel_type ?? 'petrol',
+    use: v?.plate_use ?? 'private',
     odometer: v?.current_odometer_km != null ? String(v.current_odometer_km) : '',
     colour: v?.colour_hex ? { name: v.colour_name ?? '', hex: v.colour_hex } : null,
     purchase: v?.purchase_date ?? '',
@@ -193,6 +195,7 @@ export function VehicleForm({ existing, submitLabel, formId, busy, onSubmit, ser
       registration_date: v.registered || null,
       purchase_date: v.purchase || null,
       fuel_type: v.fuel,
+      plate_use: v.use,
       colour_name: v.colour?.name ?? null,
       colour_hex: v.colour?.hex ?? null,
       notes: v.notes.trim() || null,
@@ -270,11 +273,24 @@ export function VehicleForm({ existing, submitLabel, formId, busy, onSubmit, ser
           />
         )}
       </Field>
-      {norm && validRegistrationShape(norm) && <Plate value={norm} size="md" />}
+      {norm && validRegistrationShape(norm) && <Plate value={norm} size="md" tone={plateTone(v.use, v.fuel)} stacked={isTwoWheeler(v.type)} />}
     </>
   );
 
   const fuelBlock = <Choice legend="Fuel" value={v.fuel} onChange={(f) => set('fuel', f)} options={FUEL_TYPES.map((f) => ({ value: f.value, label: f.label }))} />;
+
+  const useBlock = (
+    <Choice
+      legend="How is it used?"
+      value={v.use}
+      onChange={(u) => set('use', u)}
+      options={[
+        { value: 'private' as PlateUse, label: 'Private' },
+        { value: 'commercial' as PlateUse, label: 'Commercial' },
+        { value: 'rental' as PlateUse, label: 'Self-drive rental' },
+      ]}
+    />
+  );
 
   const odometerBlock = (
     <Field label="Odometer now (km)" error={errors.odometer} hint="This becomes your first reading.">
@@ -380,6 +396,7 @@ export function VehicleForm({ existing, submitLabel, formId, busy, onSubmit, ser
       <>
         <section className="vform__section">{registrationBlock}</section>
         <section className="vform__section">{fuelBlock}</section>
+        <section className="vform__section">{useBlock}</section>
       </>,
       <>
         <section className="vform__section">{odometerBlock}</section>
@@ -431,6 +448,7 @@ export function VehicleForm({ existing, submitLabel, formId, busy, onSubmit, ser
       </section>
       <section className="vform__section">{registrationBlock}</section>
       <section className="vform__section">{fuelBlock}</section>
+      <section className="vform__section">{useBlock}</section>
       {!editing && <section className="vform__section">{odometerBlock}</section>}
 
       <details className="vform__more" open={editing}>

@@ -20,7 +20,7 @@ The owner uses the product mainly when physically around their vehicles: at a pe
 
 ## Product Purpose
 
-Pit Stop Dash is a personal digital garage: everything the owner needs to know about their vehicles, in one place. It keeps the important information of vehicle ownership together (identity, documents, service history, known issues, odometer history, and upcoming or expired obligations) and surfaces what needs attention.
+Pit Stop: Vehicle Management Portal ("Pit Stop" for short) is a personal digital garage: everything the owner needs to know about their vehicles, in one place. It keeps the important information of vehicle ownership together (identity, documents, service history, known issues, odometer history, and upcoming or expired obligations) and surfaces what needs attention.
 
 Success: the owner never misses an insurance or PUC expiry or a service due date, never forgets a problem noticed weeks earlier when the vehicle reaches the workshop, can pull up any document in seconds on a phone, and can log an odometer reading or an issue in a few taps.
 
@@ -127,11 +127,11 @@ Still open:
 2. **Sharing.** Single owner for now; the data model is ready for more users but there is no invitation or shared-garage flow.
 3. **Insurance terms.** Policy type and term are not modelled beyond the dates, issuer and policy number.
 4. **Warranty by distance.** Warranties expire by date only.
-5. **Reminders.** Out of scope for the MVP (V2 alerts).
+5. **Reminders.** Built after the MVP: Telegram and email alerts for insurance, PUC and CNG hydro-test dates (see ROADMAP.md). SMS and WhatsApp are not built.
 
 ## Brand Commitments
 
-- Name: "Pit Stop Dash". The quirk comes from the owner being an F1 fan.
+- Name: "Pit Stop: Vehicle Management Portal", "Pit Stop" where space is tight. The quirk comes from the owner being an F1 fan. Renamed from "Pit Stop Dash" on 6 Oct 2026.
 - The F1 influence lives in subtle details, naming, composition, and micro-interactions. It must not look like an F1 website, racing game, or motorsport dashboard.
 - Intended personality: premium, personal, practical, automotive, slightly quirky, calm, well organised, fast, information-rich without being overwhelming. It should feel like someone who loves cars cared about it, not like an AI generated a dashboard.
 
@@ -140,8 +140,10 @@ Visual direction, revised by the owner on 6 Oct 2026 after seeing the first buil
 - **Vibrant, warm and confident, in light and dark modes.** The Linear-style restraint is retired. The references the owner supplied (a car-rental tablet UI with a warm ground, saffron-yellow action colour and a dark detail panel; a row of cards where each car owns a large disc of its own paint colour; a car-health phone app) set the mood: colour with a job, soft rounded cards, big friendly type, dark panels for the key action.
 - **Each vehicle owns its colour.** The vehicle's paint colour is its identity across its screens.
 - **No gradients, no glow.** Flat colour only. Explicitly rejected: lavender/blue AI gradients, glassmorphism, soft glows (the health-app reference's gradients were the thing to avoid).
-- Still binding from earlier: not an F1 website, racing game or telemetry screen; no carbon fibre or checkered flags; no stock or fake vehicle imagery (photos are the owner's own); the F1 influence stays in naming, microcopy and motion, at most one wink per screen and never inside a warning.
-- Name and personality are unchanged: "Pit Stop Dash"; personal, practical, calm, well organised, a little quirky.
+- **Scarlet is the brand colour (revised 6 Oct 2026).** A Ferrari-style scarlet for actions, selection and the logo, on the warm paper ground, with a small yellow accent for counts and the dark-mode focus ring. **Yellow is the colour of everything that needs a look.** Overdue and soon are both yellow and are told apart by shape: overdue is a warning octagon on a solid yellow tile, soon is a plain clock. Red is kept for errors and destructive actions only, never for a due date.
+- **The chequered flag is the logo.** It is the one mark used for the favicon, home-screen icons, sidebar and sign-in. It is a logomark only: no flag patterns, stripes or backgrounds, and never inside a warning.
+- Still binding from earlier: not an F1 website, racing game or telemetry screen; no carbon fibre; no stock or fake vehicle imagery (photos are the owner's own); the F1 influence stays in naming, microcopy and motion, at most one wink per screen and never inside a warning.
+- Personality is unchanged: personal, practical, calm, well organised, a little quirky.
 - Light and dark are both first-class; the owner can choose Light, Dark or follow the system.
 - The homepage feels like "My Garage", not a fleet dashboard.
 

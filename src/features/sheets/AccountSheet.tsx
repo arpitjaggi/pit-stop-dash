@@ -1,7 +1,7 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { useSession } from '@/auth/session';
 import { Button, Notice } from '@/ui/atoms';
-import { SignOut, ArrowCounterClockwise } from '@/ui/icons';
+import { SignOut, ArrowCounterClockwise, Bell } from '@/ui/icons';
 import { useSheet } from '@/ui/hooks';
 import { Sheet } from '@/ui/Sheet';
 import { ThemeToggle } from '@/ui/theme';
@@ -24,6 +24,9 @@ export function AccountSheet() {
             Signed in as <strong>{session.email}</strong>
           </p>
         )}
+        <Button variant="secondary" onClick={() => sheet.open('reminders', { replace: true })}>
+          <Bell size={18} aria-hidden /> Reminders
+        </Button>
         {session.resetDemo && (
           <Button
             variant="secondary"

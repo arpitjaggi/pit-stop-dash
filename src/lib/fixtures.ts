@@ -6,7 +6,7 @@ export const TODAY = '2026-10-05';
 export function vehicle(p: Partial<Vehicle> = {}): Vehicle {
   return {
     id: 'v1', user_id: 'u1', vehicle_type: 'car', make: 'Maruti Suzuki', model: 'Swift', variant: 'VXi',
-    registration_number: 'KA01AB1234', registration_date: null, purchase_date: null, fuel_type: 'petrol',
+    registration_number: 'KA01AB1234', registration_date: null, purchase_date: null, fuel_type: 'petrol', plate_use: 'private',
     colour_name: null, colour_hex: null, notes: null, engine_cc: null, transmission: null, battery_kwh: null,
     cng_kit_info: null, wheels: null, photo_path: null, photo_thumb_path: null,
     service_interval_km: 10000, service_interval_months: 12,

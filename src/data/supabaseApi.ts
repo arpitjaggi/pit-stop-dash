@@ -12,6 +12,9 @@ import {
   type NewReading,
   type NewServiceRecord,
   type PreparedImage,
+  type ReminderSettings,
+  type ReminderSettingsPatch,
+  type ReminderTestResult,
   type ServicePatch,
   newId,
 } from './api';
@@ -24,6 +27,7 @@ function unwrap<T>(r: Result<T>): T {
   return r.data as T;
 }
 
+const REMINDER_COLS = 'email_enabled, telegram_enabled, lead_days, telegram_connected';
 const mime = (ext: string) => (ext === 'webp' ? 'image/webp' : 'image/jpeg');
 const safeName = (n: string) => n.replace(/[^\w.\-]+/g, '_').slice(-80) || 'file';
 
@@ -56,6 +60,7 @@ export function createSupabaseApi(sb: SupabaseClient): Api {
 
   return {
     mode: 'supabase',
+    remindersAvailable: true,
 
     // -------------------------------------------------------------- vehicles
     async listVehicles() {
@@ -169,6 +174,29 @@ export function createSupabaseApi(sb: SupabaseClient): Api {
       const d = unwrap(await sb.from('documents').select('file_path, thumb_path').eq('id', id).single()) as Pick<VDocument, 'file_path' | 'thumb_path'>;
       unwrap(await sb.from('documents').delete().eq('id', id));
       await remove('documents', [d.file_path, d.thumb_path]);
+    },
+
+    async getReminderSettings() {
+      return unwrap(await sb.from('reminder_settings').select(REMINDER_COLS).maybeSingle()) as ReminderSettings | null;
+    },
+    async saveReminderSettings(patch: ReminderSettingsPatch) {
+      // Insert the first time and update after: the browser may only write the three preference columns.
+      const existing = unwrap(await sb.from('reminder_settings').select('user_id').maybeSingle()) as { user_id: string } | null;
+      if (existing) {
+        return unwrap(await sb.from('reminder_settings').update(patch).eq('user_id', existing.user_id).select(REMINDER_COLS).single()) as ReminderSettings;
+      }
+      return unwrap(await sb.from('reminder_settings').insert(patch).select(REMINDER_COLS).single()) as ReminderSettings;
+    },
+    async startTelegramLink() {
+      return unwrap(await sb.rpc('start_telegram_link')) as string;
+    },
+    async disconnectTelegram() {
+      unwrap(await sb.rpc('disconnect_telegram'));
+    },
+    async sendTestReminder() {
+      const { data, error } = await sb.functions.invoke('send-reminders', { body: { test: true } });
+      if (error) throw new Error('The reminder service did not answer. Check that the send-reminders function is deployed.');
+      return data as ReminderTestResult;
     },
 
     async signedUrl(bucket, path) {

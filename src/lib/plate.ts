@@ -16,6 +16,22 @@ export function formatRegistration(normalised: string): string {
   return normalised;
 }
 
+export type PlateTone = 'private' | 'commercial' | 'ev' | 'ev-commercial' | 'rental';
+
+/** The plate colour: white, yellow or black by use; green for electric (yellow letters when it earns money). */
+export function plateTone(use: 'private' | 'commercial' | 'rental', fuel: string): PlateTone {
+  if (fuel === 'electric') return use === 'private' ? 'ev' : 'ev-commercial';
+  return use;
+}
+
+/** The two lines of a two-wheeler's rear plate: state and district, then series and number. */
+export function splitRegistration(normalised: string): [string, string] {
+  const text = formatRegistration(normalised);
+  const parts = text.split(' ');
+  if (parts.length < 3) return [text, ''];
+  return [parts.slice(0, 2).join(' '), parts.slice(2).join(' ')];
+}
+
 /** Soft check: unusual formats are allowed (old, temporary, military), just not silently. */
 export function looksLikeRegistration(normalised: string): boolean {
   return STANDARD.test(normalised) || BHARAT.test(normalised);

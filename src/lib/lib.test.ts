@@ -55,3 +55,33 @@ describe('registration numbers', () => {
   });
 });
 
+
+import { doc, vehicle } from './fixtures';
+import { upcomingReminders } from './reminders';
+
+describe('reminder preview', () => {
+  const today = '2026-10-06';
+  const bundle = (docs: Parameters<typeof doc>[0][]) => ({
+    vehicle: vehicle({ id: 'v1', model: 'Swift' }),
+    documents: docs.map((d) => doc({ vehicle_id: 'v1', ...d })),
+    issues: [], services: [],
+  });
+
+  it('names the next date a reminder goes out, for the latest document of each kind', () => {
+    const out = upcomingReminders([bundle([
+      { id: 'old', doc_type: 'insurance', expires_on: '2026-10-20' },
+      { id: 'new', doc_type: 'insurance', expires_on: '2027-10-19' },
+      { id: 'puc', doc_type: 'puc', expires_on: '2026-10-13' },
+    ])], [30, 7, 1, 0], today);
+    expect(out.map((o) => [o.key, o.remindOn])).toEqual([['puc', '2026-10-06'], ['new', '2027-09-19']]);
+  });
+
+  it('skips expired documents, other types and documents with no date', () => {
+    const out = upcomingReminders([bundle([
+      { id: 'a', doc_type: 'insurance', expires_on: '2026-10-01' },
+      { id: 'b', doc_type: 'rc', expires_on: '2027-01-01' },
+      { id: 'c', doc_type: 'puc', expires_on: null },
+    ])], [30, 7, 1, 0], today);
+    expect(out).toEqual([]);
+  });
+});

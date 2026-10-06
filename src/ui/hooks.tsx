@@ -25,7 +25,7 @@ export const useWide = () => useMedia('(min-width: 1280px)');
 
 export type SheetName =
   | 'log' | 'reading' | 'issue' | 'document' | 'document-edit' | 'service' | 'service-edit' | 'record' | 'switch'
-  | 'interval' | 'edit-vehicle' | 'workshop' | 'account' | 'delete-vehicle' | 'details';
+  | 'interval' | 'edit-vehicle' | 'workshop' | 'account' | 'delete-vehicle' | 'details' | 'reminders';
 
 export function useSheet() {
   const [params] = useSearchParams();

@@ -2,7 +2,8 @@ import { NavLink } from 'react-router-dom';
 import { useGarage } from '@/data/hooks';
 import { todayISO } from '@/lib/dates';
 import { pitBoard } from '@/lib/status';
-import { Plate } from '@/ui/atoms';
+import { VehiclePlate, StatusMark } from '@/ui/atoms';
+import { FlagMark } from '@/ui/FlagMark';
 import { Command, MagnifyingGlass, Plus, User } from '@/ui/icons';
 import { useSheet } from '@/ui/hooks';
 import { ThemeToggle } from '@/ui/theme';
@@ -17,8 +18,11 @@ export function Sidebar({ onSearch }: { onSearch: () => void }) {
   return (
     <nav className="sidebar" aria-label="Garage">
       <div className="sidebar__brand">
-        <span className="sidebar__mark" aria-hidden="true">P</span>
-        <span className="sidebar__word">Pit Stop Dash</span>
+        <FlagMark size={34} />
+        <span className="sidebar__word">
+          Pit Stop
+          <span className="sidebar__sub">Vehicle Management Portal</span>
+        </span>
       </div>
 
       <button type="button" className="sidebar__search" onClick={onSearch}>
@@ -44,9 +48,11 @@ export function Sidebar({ onSearch }: { onSearch: () => void }) {
                   {v.model}
                 </span>
                 {board && (board.severity === 'overdue' || board.severity === 'soon') && (
-                  <span className={`sidebar__dot sidebar__dot--${board.severity}`} role="img" aria-label={board.severity === 'overdue' ? 'Needs attention' : 'Something coming up'} />
+                  <span className="sidebar__flag" role="img" aria-label={board.severity === 'overdue' ? 'Needs attention' : 'Something coming up'}>
+                    <StatusMark severity={board.severity} />
+                  </span>
                 )}
-                <span className="sidebar__plate">{v.registration_number ? <Plate value={v.registration_number} size="sm" /> : <span className="t-label t-ink-3">Unregistered</span>}</span>
+                <span className="sidebar__plate">{v.registration_number ? <VehiclePlate vehicle={v} size="sm" /> : <span className="t-label t-ink-3">Unregistered</span>}</span>
               </NavLink>
             </li>
           );

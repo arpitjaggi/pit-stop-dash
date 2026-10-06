@@ -77,7 +77,7 @@ export async function buildSeed() {
   const readings: Reading[] = [];
 
   const base = {
-    user_id: USER, variant: null, registration_date: null, purchase_date: null, notes: null, engine_cc: null, transmission: null,
+    user_id: USER, plate_use: 'private' as const, variant: null, registration_date: null, purchase_date: null, notes: null, engine_cc: null, transmission: null,
     battery_kwh: null, cng_kit_info: null, wheels: null, photo_path: null, photo_thumb_path: null, created_at: iso(d(-300)), updated_at: iso(d(-3)),
   };
 

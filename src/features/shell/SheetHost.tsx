@@ -11,6 +11,7 @@ import { DocumentSheet } from '../sheets/DocumentSheet';
 import { ServiceSheet } from '../sheets/ServiceSheet';
 import { RecordSheet } from '../sheets/RecordSheet';
 import { IntervalSheet } from '../sheets/IntervalSheet';
+import { ReminderSheet } from '../sheets/ReminderSheet';
 
 /** Renders whichever sheet the URL asks for. Unmounted means closed. */
 export function SheetHost() {
@@ -44,6 +45,8 @@ export function SheetHost() {
       return <RecordSheet />;
     case 'interval':
       return <IntervalSheet />;
+    case 'reminders':
+      return <ReminderSheet />;
     default:
       return null;
   }

@@ -147,5 +147,80 @@ reset role;
 select pg_temp.assert((select public from storage.buckets where id = 'documents') = false, 'documents bucket is private');
 select pg_temp.assert((select public from storage.buckets where id = 'photos') = false, 'photos bucket is private');
 
+
+-- ---- reminders
+set role authenticated;
+select set_config('request.jwt.claim.sub', '00000000-0000-0000-0000-00000000000a', false);
+insert into public.vehicles (vehicle_type, make, model, registration_number, fuel_type, plate_use)
+values ('car', 'Maruti Suzuki', 'Swift', 'KA01MN4821', 'petrol_cng', 'commercial') returning id \gset r_car_
+select pg_temp.assert((select plate_use from public.vehicles where id = :'r_car_id') = 'commercial', 'plate_use is stored');
+insert into public.documents (vehicle_id, doc_type, file_path, file_name, mime_type, size_bytes, expires_on) values
+  (:'r_car_id', 'insurance', 'a/ins.pdf', 'ins.pdf', 'application/pdf', 1, '2026-10-13'),
+  (:'r_car_id', 'puc', 'a/puc.pdf', 'puc.pdf', 'application/pdf', 1, '2026-11-20'),
+  (:'r_car_id', 'cng_certificate', 'a/cng.pdf', 'cng.pdf', 'application/pdf', 1, '2026-10-06'),
+  (:'r_car_id', 'rc', 'a/rc.pdf', 'rc.pdf', 'application/pdf', 1, '2026-10-06');
+-- The owner can set preferences, but not the chat id or the link token.
+insert into public.reminder_settings (email_enabled, telegram_enabled, lead_days) values (true, true, '{30,7,1,0}');
+select pg_temp.assert((select count(*) from public.reminder_settings) = 1, 'A sees own settings');
+select pg_temp.assert((select telegram_connected from public.reminder_settings) = false, 'telegram starts disconnected');
+do $$ begin
+  begin
+    perform telegram_chat_id from public.reminder_settings;
+    raise exception 'FAILED: chat id was readable';
+  exception when insufficient_privilege then null; end;
+end $$;
+do $$ begin
+  begin
+    update public.reminder_settings set telegram_chat_id = 42;
+    raise exception 'FAILED: chat id was writable';
+  exception when insufficient_privilege then null; end;
+end $$;
+do $$ begin
+  begin
+    update public.reminder_settings set lead_days = '{5}';
+    raise exception 'FAILED: odd lead time accepted';
+  exception when check_violation then null; end;
+end $$;
+select length(public.start_telegram_link()) as tok_len \gset
+select pg_temp.assert(:tok_len = 32, 'a link code is issued');
+do $$ begin
+  begin
+    perform * from public.due_reminders('2026-10-06');
+    raise exception 'FAILED: a user ran the reminder job query';
+  exception when insufficient_privilege then null; end;
+end $$;
+-- B cannot see A's settings.
+select set_config('request.jwt.claim.sub', '00000000-0000-0000-0000-00000000000b', false);
+select pg_temp.assert((select count(*) from public.reminder_settings) = 0, 'B sees no settings of A');
+reset role;
+
+-- The bot connects the chat; the daily job then finds what is due.
+update public.reminder_settings set telegram_chat_id = 4242, telegram_link_token = null;
+set role service_role;
+select pg_temp.assert((select count(*) from public.due_reminders('2026-10-06') where doc_type = 'insurance' and lead_days = 7 and days_left = 7) = 2, 'insurance 7 days out: email and telegram');
+select pg_temp.assert((select count(*) from public.due_reminders('2026-10-06') where doc_type = 'cng_certificate' and lead_days = 0) = 2, 'CNG certificate due today');
+select pg_temp.assert((select count(*) from public.due_reminders('2026-10-06') where doc_type = 'puc') = 0, 'PUC 45 days out is not yet due');
+select pg_temp.assert((select count(*) from public.due_reminders('2026-10-06') where doc_type = 'rc') = 0, 'RC is never reminded');
+select pg_temp.assert((select vehicle_name from public.due_reminders('2026-10-06') limit 1) = 'Maruti Suzuki Swift', 'vehicle name is returned');
+-- Once logged, the same reminder is not repeated, even on a later day within the same bracket.
+insert into public.reminder_log (user_id, document_id, expires_on, lead_days, channel)
+select user_id, id, expires_on, 7, 'email' from public.documents where doc_type = 'insurance';
+select pg_temp.assert((select count(*) from public.due_reminders('2026-10-09') where doc_type = 'insurance') = 1, 'logged email is not repeated, telegram still due');
+select pg_temp.assert((select channel from public.due_reminders('2026-10-09') where doc_type = 'insurance') = 'telegram', 'only telegram remains');
+-- A day missed still gets its reminder: 3 days out falls in the 7-day bracket until the 1-day one.
+select pg_temp.assert((select count(*) from public.due_reminders('2026-10-10') where doc_type = 'insurance') = 1, 'bracket carries over until the next lead time');
+select pg_temp.assert((select count(*) from public.due_reminders('2026-10-12') where doc_type = 'insurance' and lead_days = 1) = 2, 'one day out moves to the 1-day reminder on both channels');
+-- Expired documents are not reminded.
+select pg_temp.assert((select count(*) from public.due_reminders('2026-10-14') where doc_type = 'insurance') = 0, 'expired documents are left to the app');
+reset role;
+-- A renewed policy replaces the old one.
+insert into public.documents (user_id, vehicle_id, doc_type, file_path, file_name, mime_type, size_bytes, expires_on)
+select user_id, vehicle_id, 'insurance', 'a/ins2.pdf', 'ins2.pdf', 'application/pdf', 1, '2027-10-12' from public.documents where doc_type = 'insurance' limit 1;
+set role service_role;
+select pg_temp.assert((select count(*) from public.due_reminders('2026-10-06') where doc_type = 'insurance') = 0, 'a renewed policy silences the old one');
+reset role;
+delete from public.vehicles where id = :'r_car_id';
+select pg_temp.assert((select count(*) from public.reminder_log) = 0, 'log cascades with the document');
+
 \o
 \echo 'ALL SCHEMA, TRIGGER AND RLS CHECKS PASSED'

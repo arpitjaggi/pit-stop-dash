@@ -4,7 +4,7 @@ import type { VehicleBundle } from '@/data/types';
 import { todayISO } from '@/lib/dates';
 import { formatNumber } from '@/lib/format';
 import { attentionItems, pitBoard } from '@/lib/status';
-import { Button, EmptyState, LinkButton, Plate, Notice } from '@/ui/atoms';
+import { Button, EmptyState, LinkButton, VehiclePlate, Notice, StatusMark } from '@/ui/atoms';
 import { CaretDown, Plus, User } from '@/ui/icons';
 import { useDesktop, useSheet } from '@/ui/hooks';
 import { VehicleImage } from '../shared/VehicleImage';
@@ -86,8 +86,9 @@ export function GaragePage() {
               <summary>
                 <span className="needs__count fig fig-s">{attention.length}</span>
                 <span className={`needs__lead needs__sentence--${attention[0].i.severity}`}>
+                  <StatusMark severity={attention[0].i.severity} />
                   <span className="sr-only">{attention.length === 1 ? 'Thing needs you. ' : 'Things need you. '}</span>
-                  {attention[0].v.model}: {attention[0].i.sentence}
+                  <span className="needs__lead-text">{attention[0].v.model}: {attention[0].i.sentence}</span>
                 </span>
                 <CaretDown size={16} aria-hidden className="needs__caret" />
               </summary>
@@ -96,7 +97,7 @@ export function GaragePage() {
                   <li key={`${v.id}-${i.id}`}>
                     <Link to={`/vehicles/${v.id}${i.docId ? `/glovebox/${i.docId}` : i.tab === 'overview' ? '' : `/${i.tab}`}`} className="needs__row">
                       <span className={`needs__sentence needs__sentence--${i.severity}`}>
-                        {v.model}: {i.sentence}
+                        <StatusMark severity={i.severity} /> {v.model}: {i.sentence}
                       </span>
                     </Link>
                   </li>
@@ -133,7 +134,7 @@ function Bay({ bundle, today, eager }: { bundle: VehicleBundle; today: string; e
         <h2 className={v.photo_path ? 'bay__model' : 'bay__model sr-only'}>{v.model}</h2>
         {(v.photo_path || v.variant) && <p className="bay__make">{(v.photo_path ? [v.make, v.variant] : [v.variant]).filter(Boolean).join(' · ')}</p>}
         <div className="bay__id">
-          {v.registration_number ? <Plate value={v.registration_number} size="sm" /> : <span className="t-label t-ink-3">Not registered yet</span>}
+          {v.registration_number ? <VehiclePlate vehicle={v} size="sm" /> : <span className="t-label t-ink-3">Not registered yet</span>}
           <span className="bay__odo">
             {v.current_odometer_km != null ? (
               <>

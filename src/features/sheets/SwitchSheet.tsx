@@ -2,7 +2,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useGarage } from '@/data/hooks';
 import { todayISO } from '@/lib/dates';
 import { pitBoard } from '@/lib/status';
-import { Plate } from '@/ui/atoms';
+import { VehiclePlate } from '@/ui/atoms';
 import { Plus } from '@/ui/icons';
 import { rememberVehicle, useSheet } from '@/ui/hooks';
 import { Sheet } from '@/ui/Sheet';
@@ -40,7 +40,7 @@ export function SwitchSheet() {
                 <span className="switch-row__text">
                   <span className="t-title">{v.model}</span>
                   <span className="switch-row__meta">
-                    {v.registration_number ? <Plate value={v.registration_number} size="sm" /> : <span className="t-label t-ink-3">Not registered yet</span>}
+                    {v.registration_number ? <VehiclePlate vehicle={v} size="sm" /> : <span className="t-label t-ink-3">Not registered yet</span>}
                   </span>
                   {b && <PitBoardLine board={pitBoard(b, today)} className="switch-row__board" />}
                 </span>

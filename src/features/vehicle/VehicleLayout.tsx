@@ -5,7 +5,7 @@ import { fuelLabel } from '@/data/types';
 import { todayISO } from '@/lib/dates';
 import { formatNumber } from '@/lib/format';
 import { openIssues, pitBoard, type PitAction } from '@/lib/status';
-import { Button, EmptyState, LinkButton, Notice, Plate, cx } from '@/ui/atoms';
+import { Button, EmptyState, LinkButton, Notice, VehiclePlate, cx } from '@/ui/atoms';
 import { ArrowLeft, Camera, CaretDown, PencilSimple } from '@/ui/icons';
 import { rememberVehicle, useDesktop, useSheet, useWide, type SheetName } from '@/ui/hooks';
 import { DockedAdd } from '../shell/DockedAdd';
@@ -122,7 +122,7 @@ export function VehicleLayout() {
           </button>
           <button type="button" className="vbar__who" onClick={() => sheet.open('switch', { v: v.id })} aria-label={`${v.model}. Switch vehicle`}>
             <span className="vbar__model">{v.model}</span>
-            {v.registration_number && (scrolled || compact) && <Plate value={v.registration_number} size="sm" />}
+            {v.registration_number && (scrolled || compact) && <VehiclePlate vehicle={v} size="sm" />}
             <CaretDown size={14} aria-hidden />
           </button>
           <button type="button" className="icon-btn" aria-label="Edit vehicle" onClick={() => sheet.open('edit-vehicle', { v: v.id })}>
@@ -149,7 +149,7 @@ export function VehicleLayout() {
                   <h1 className="t-display vhead__model">{v.model}</h1>
                   <p className="vhead__variant t-ink-2">{[v.make, v.variant].filter(Boolean).join(' · ')}</p>
                   <div className="vhead__facts">
-                    {v.registration_number ? <Plate value={v.registration_number} size="md" /> : <span className="t-label t-ink-3">Not registered yet</span>}
+                    {v.registration_number ? <VehiclePlate vehicle={v} size="md" /> : <span className="t-label t-ink-3">Not registered yet</span>}
                     <span className="vhead__fuel t-ink-2">{fuelLabel(v.fuel_type)}</span>
                     <span className="vhead__odo">
                       {v.current_odometer_km != null ? (
