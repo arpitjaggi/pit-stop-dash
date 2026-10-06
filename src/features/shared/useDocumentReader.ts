@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { readDocument } from '@/lib/docread/read';
 
 export type ReaderState =
@@ -12,12 +12,18 @@ export type ReaderState =
 export function useDocumentReader() {
   const [state, setState] = useState<ReaderState>({ phase: 'idle' });
   const run = useRef(0);
+  const abort = useRef<AbortController | null>(null);
+
+  useEffect(() => () => abort.current?.abort(), []);
 
   const read = useCallback(async (file: File, password?: string) => {
+    abort.current?.abort();
+    abort.current = new AbortController();
     const id = ++run.current;
     setState({ phase: 'reading', fraction: 0, stage: 'Opening the file' });
     const result = await readDocument(file, {
       password,
+      signal: abort.current.signal,
       onProgress: (fraction, stage) => id === run.current && setState({ phase: 'reading', fraction, stage }),
     });
     if (id !== run.current) return;
@@ -28,6 +34,7 @@ export function useDocumentReader() {
 
   const reset = useCallback(() => {
     run.current++;
+    abort.current?.abort();
     setState({ phase: 'idle' });
   }, []);
 

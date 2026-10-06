@@ -106,6 +106,8 @@ async function ocr(canvases: HTMLCanvasElement[], opts: ReadOptions): Promise<st
       else if (/loading|initializ/.test(m.status)) opts.onProgress?.(0, 'Getting the reader ready');
     },
   });
+  // Closing the sheet (or picking another file) stops the engine at once instead of letting it finish unseen.
+  opts.signal?.addEventListener('abort', () => void worker.terminate());
   try {
     const parts: string[] = [];
     for (const c of canvases) {

@@ -14,7 +14,7 @@ export function ReaderPanel({ state, onPassword }: { state: ReaderState; onPassw
           <span className="reader__stage">{state.stage}</span>
           <span className="t-ink-3 reader__note">Read on this device. The file is not sent anywhere to be read.</span>
           <span className="reader__track" aria-hidden="true">
-            <span className="reader__fill" style={{ width: `${Math.max(4, Math.round(state.fraction * 100))}%` }} />
+            <span className="reader__fill" style={{ '--p': Math.max(0.04, state.fraction) } as React.CSSProperties} />
           </span>
         </div>
       </div>

@@ -436,7 +436,7 @@ details > summary::-webkit-details-marker { display: none; }
 .reader__stage { font-weight: 650; }
 .reader__note { font-size: 0.8125rem; line-height: 1.125rem; }
 .reader__track { display: block; height: 6px; margin-top: 6px; border-radius: var(--r-full); background: var(--sunk); overflow: hidden; }
-.reader__fill { display: block; height: 100%; border-radius: var(--r-full); background: var(--brand); transition: width 0.3s var(--ease); }
+.reader__fill { display: block; width: 100%; height: 100%; border-radius: var(--r-full); background: var(--brand); transform: scaleX(var(--p, 0.04)); transform-origin: left center; transition: transform 0.3s var(--ease); }
 
 .findings { display: grid; gap: var(--sp-3); margin: 0; padding: var(--sp-4); border: 0; background: var(--well); border-radius: var(--r-inner); }
 .findings__list { display: grid; gap: var(--sp-1); margin: 0; padding: 0; list-style: none; }
