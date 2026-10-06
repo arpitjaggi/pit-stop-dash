@@ -135,3 +135,5 @@ $$;
 
 revoke execute on function public.due_reminders(date) from public, anon, authenticated;
 grant execute on function public.due_reminders(date) to service_role;
+
+notify pgrst, 'reload schema';

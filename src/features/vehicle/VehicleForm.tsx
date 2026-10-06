@@ -9,7 +9,9 @@ import { formatNumber, parseNumber } from '@/lib/format';
 import { PHOTO_SPEC, prepareImage } from '@/lib/image';
 import { looksLikeRegistration, normaliseRegistration, plateTone, validRegistrationShape } from '@/lib/plate';
 import { Button, Choice, Field, Input, Notice, Plate, TextArea, cx } from '@/ui/atoms';
-import { ArrowLeft, Camera, X } from '@/ui/icons';
+import { ArrowLeft, Camera, Crop as CropIcon, Plus, X } from '@/ui/icons';
+import { CropDialog } from '../shared/CropDialog';
+import { normaliseHex } from '@/lib/hex';
 import { useSignedUrl } from '@/data/hooks';
 
 /** Popular Indian makes, as suggestions only. There is deliberately no vehicle database. */
@@ -113,6 +115,10 @@ export function VehicleForm({ existing, submitLabel, formId, busy, onSubmit, ser
   const [preview, setPreview] = useState<string | null>(null);
   const [photoError, setPhotoError] = useState<string | null>(null);
   const [photoBusy, setPhotoBusy] = useState(false);
+  // A picked picture waits in the cropper; the last one picked is kept so it can be framed again.
+  const [cropSource, setCropSource] = useState<File | null>(null);
+  const [sourceFile, setSourceFile] = useState<File | null>(null);
+  const [hexText, setHexText] = useState(() => (existing?.colour_hex && !SWATCHES.some((s) => s.hex === existing.colour_hex) ? existing.colour_hex : ''));
   const fileRef = useRef<HTMLInputElement>(null);
   const existingUrl = useSignedUrl('photos', existing?.photo_path);
   const today = todayISO();
@@ -123,8 +129,15 @@ export function VehicleForm({ existing, submitLabel, formId, busy, onSubmit, ser
   const norm = normaliseRegistration(v.registration);
   const shown = photo === 'remove' ? null : preview ?? (photo ? null : existingUrl ?? null);
 
-  async function pick(file: File | undefined) {
+  function pick(file: File | undefined) {
     if (!file) return;
+    setPhotoError(null);
+    setCropSource(file);
+  }
+
+  async function cropped(file: File) {
+    setSourceFile(cropSource);
+    setCropSource(null);
     setPhotoBusy(true);
     setPhotoError(null);
     try {
@@ -136,6 +149,13 @@ export function VehicleForm({ existing, submitLabel, formId, busy, onSubmit, ser
     } finally {
       setPhotoBusy(false);
     }
+  }
+
+  function typeHex(text: string) {
+    setHexText(text);
+    const hex = normaliseHex(text);
+    if (hex) set('colour', { name: `Custom ${hex}`, hex });
+    else if (!text.trim() && v.colour && !SWATCHES.some((s) => s.hex === v.colour?.hex)) set('colour', null);
   }
 
   function validate(): Partial<Record<ErrorKey, string>> {
@@ -330,8 +350,13 @@ export function VehicleForm({ existing, submitLabel, formId, busy, onSubmit, ser
           <Button variant="secondary" busy={photoBusy} onClick={() => fileRef.current?.click()}>
             <Camera size={18} aria-hidden /> {shown ? 'Change photo' : 'Add a photo'}
           </Button>
+          {sourceFile && photo && photo !== 'remove' && (
+            <Button variant="ghost" className="btn--inline" onClick={() => setCropSource(sourceFile)}>
+              <CropIcon size={16} aria-hidden /> Adjust crop
+            </Button>
+          )}
           {shown && (
-            <Button variant="ghost" className="btn--inline" onClick={() => { setPhoto('remove'); setPreview(null); }}>
+            <Button variant="ghost" className="btn--inline" onClick={() => { setPhoto('remove'); setPreview(null); setSourceFile(null); }}>
               <X size={16} aria-hidden /> Remove photo
             </Button>
           )}
@@ -342,18 +367,29 @@ export function VehicleForm({ existing, submitLabel, formId, busy, onSubmit, ser
     </>
   );
 
+  const customHex = v.colour && !SWATCHES.some((s) => s.hex === v.colour?.hex) ? v.colour.hex : null;
+  const hexInvalid = hexText.trim() !== '' && !normaliseHex(hexText);
   const colourBlock = (
     <fieldset className="choice">
       <legend className="field__label">Colour</legend>
       <div className="swatches">
         {SWATCHES.map((s) => (
           <label key={s.hex} className="swatch" title={s.name}>
-            <input type="radio" name="colour" checked={v.colour?.hex === s.hex} onChange={() => set('colour', s)} />
+            <input type="radio" name="colour" checked={v.colour?.hex === s.hex} onChange={() => { set('colour', s); setHexText(''); }} />
             <span className="swatch__chip" style={{ background: s.hex }} />
             <span className="sr-only">{s.name}</span>
           </label>
         ))}
+        <label className={cx('swatch', 'swatch--custom', customHex && 'is-set')} title="Pick any colour">
+          <input type="color" value={customHex ?? '#808080'} onChange={(e) => typeHex(e.target.value)} aria-label="Pick a custom colour" />
+          <span className="swatch__chip" style={customHex ? { background: customHex } : undefined}>{!customHex && <Plus size={18} aria-hidden />}</span>
+        </label>
       </div>
+      <Field label="Or type a hex code" error={hexInvalid ? 'Use a colour like #E5383B or E5383B.' : undefined}>
+        {(p) => (
+          <Input {...p} className="input--hex" autoComplete="off" autoCapitalize="characters" spellCheck={false} placeholder="#E5383B" maxLength={7} value={hexText} aria-invalid={hexInvalid || undefined} onChange={(e) => typeHex(e.target.value)} />
+        )}
+      </Field>
       {v.colour && <p className="field__msg">{v.colour.name}. Used when there is no photo.</p>}
     </fieldset>
   );
@@ -380,6 +416,8 @@ export function VehicleForm({ existing, submitLabel, formId, busy, onSubmit, ser
   );
 
   const notesBlock = <Field label="Notes">{(p) => <TextArea {...p} rows={2} value={v.notes} onChange={(e) => set('notes', e.target.value)} />}</Field>;
+
+  const cropDialog = cropSource ? <CropDialog key={cropSource.name + cropSource.size} file={cropSource} onCancel={() => setCropSource(null)} onDone={cropped} /> : null;
 
   const status = (
     <>
@@ -435,6 +473,7 @@ export function VehicleForm({ existing, submitLabel, formId, busy, onSubmit, ser
             {step === last ? submitLabel : 'Continue'}
           </Button>
         </div>
+        {cropDialog}
       </form>
     );
   }
@@ -464,6 +503,7 @@ export function VehicleForm({ existing, submitLabel, formId, busy, onSubmit, ser
       </details>
 
       {status}
+      {cropDialog}
       <button type="submit" hidden>{submitLabel}</button>
     </form>
   );

@@ -16,3 +16,6 @@ alter table public.vehicles
 -- Column-level grants are additive, so these add to the lists set in the first migration.
 grant insert (plate_use) on public.vehicles to authenticated;
 grant update (plate_use) on public.vehicles to authenticated;
+
+-- Ask the API to pick up the new column straight away (it usually does within seconds).
+notify pgrst, 'reload schema';

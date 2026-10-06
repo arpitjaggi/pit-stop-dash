@@ -9,6 +9,7 @@ import { CheckCircle, Clock, WarningOctagon } from '@/ui/icons';
 export function friendlyError(e: unknown): string {
   const m = e instanceof Error ? e.message : String(e);
   if (/vehicles_user_registration_key|already in your garage/i.test(m)) return 'A vehicle with this registration number is already in your garage.';
+  if (/schema cache|could not find the .* column/i.test(m)) return 'The database is missing the latest update. Apply the newest files in supabase/migrations (see the README), then try again.';
   if (/Failed to fetch|NetworkError|network/i.test(m)) return 'We could not reach the server. Check your connection and try again.';
   return m;
 }

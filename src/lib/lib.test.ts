@@ -85,3 +85,45 @@ describe('reminder preview', () => {
     expect(out).toEqual([]);
   });
 });
+
+import { cropRect, fullWindow } from './crop';
+import { normaliseHex } from './hex';
+
+describe('photo crop', () => {
+  it('fits a 16:9 window inside any picture', () => {
+    expect(fullWindow(4000, 3000)).toEqual({ w: 4000, h: 2250 });
+    const wide = fullWindow(6000, 2000);
+    expect(wide.w).toBeCloseTo((2000 * 16) / 9);
+    expect(wide.h).toBe(2000);
+    const tall = fullWindow(1000, 3000);
+    expect(tall.w).toBe(1000);
+    expect(tall.h).toBeCloseTo((1000 * 9) / 16);
+  });
+  it('keeps the window inside the picture however far it is pushed', () => {
+    const r = cropRect(4000, 3000, 2, -500, 99999);
+    expect(r.x).toBe(0);
+    expect(r.y + r.h).toBeCloseTo(3000);
+    expect(r.w / r.h).toBeCloseTo(16 / 9);
+  });
+  it('zooming in shrinks the window and never past the limits', () => {
+    const a = cropRect(4000, 3000, 1, 2000, 1500);
+    const b = cropRect(4000, 3000, 2, 2000, 1500);
+    expect(b.w).toBeCloseTo(a.w / 2);
+    expect(cropRect(4000, 3000, 99, 2000, 1500).w).toBeCloseTo(a.w / 4);
+    expect(cropRect(4000, 3000, 0.2, 2000, 1500).w).toBeCloseTo(a.w);
+  });
+});
+
+describe('hex colours', () => {
+  it('accepts the usual ways of typing one', () => {
+    expect(normaliseHex('#e5383b')).toBe('#E5383B');
+    expect(normaliseHex(' E5383B ')).toBe('#E5383B');
+    expect(normaliseHex('f80')).toBe('#FF8800');
+  });
+  it('rejects anything else', () => {
+    expect(normaliseHex('')).toBeNull();
+    expect(normaliseHex('#12345')).toBeNull();
+    expect(normaliseHex('red')).toBeNull();
+    expect(normaliseHex('#GG0000')).toBeNull();
+  });
+});

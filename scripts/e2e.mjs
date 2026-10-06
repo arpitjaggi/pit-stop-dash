@@ -116,7 +116,8 @@ await run('mobile', { width: 390, height: 844 }, true, async (page) => {
   await page.getByRole('button', { name: 'Add', exact: true }).click();
   await page.getByRole('button', { name: /Another vehicle/ }).click();
   await page.waitForURL(/vehicles\/new/);
-  ok(await page.getByText('Step 1 of 5').isVisible(), 'adding a vehicle starts as a step form');
+  await page.getByText('Step 1 of 5').waitFor({ timeout: 5000 });
+  ok(true, 'adding a vehicle starts as a step form');
   await page.getByRole('radio', { name: /Motorcycle/ }).check({ force: true });
   await page.getByRole('button', { name: 'Continue' }).click();
   await page.getByRole('button', { name: 'Continue' }).click();
@@ -134,6 +135,26 @@ await run('mobile', { width: 390, height: 844 }, true, async (page) => {
   await page.locator('.formbar').getByRole('button', { name: 'Back' }).click();
   ok(await page.getByLabel('Odometer now (km)').inputValue() === '8,200', 'going back keeps what was entered');
   await page.getByRole('button', { name: 'Continue' }).click();
+  // a custom colour by hex code
+  await page.getByLabel('Or type a hex code').fill('12ab9c');
+  ok(await page.getByText('Custom #12AB9C').isVisible(), 'a hex code sets a custom colour');
+  await page.getByLabel('Or type a hex code').fill('nope');
+  ok(await page.getByText(/Use a colour like/).isVisible(), 'a bad hex code says what is expected');
+  // a photo is cropped before it is kept
+  const png = await page.evaluate(() => {
+    const c = document.createElement('canvas');
+    c.width = 1200; c.height = 900;
+    const g = c.getContext('2d');
+    g.fillStyle = '#3b82f6'; g.fillRect(0, 0, 1200, 900);
+    g.fillStyle = '#ffffff'; g.fillRect(500, 300, 200, 200);
+    return c.toDataURL('image/png').split(',')[1];
+  });
+  await page.locator('input[type=file]').setInputFiles({ name: 'car.png', mimeType: 'image/png', buffer: Buffer.from(png, 'base64') });
+  await page.getByRole('heading', { name: 'Crop the photo' }).waitFor({ timeout: 5000 });
+  await page.getByRole('slider', { name: 'Zoom' }).fill('2');
+  await page.getByRole('button', { name: 'Use this crop' }).click();
+  await page.getByAltText('Vehicle photo preview').waitFor({ timeout: 5000 });
+  ok(await page.getByRole('button', { name: 'Adjust crop' }).isVisible(), 'the cropped photo is previewed and can be adjusted');
   await page.getByRole('button', { name: 'Add to garage' }).click();
   await page.waitForURL(/vehicles\/(?!new)/);
   await page.locator('.vhead__board').getByText('Nothing tracked yet.').waitFor({ timeout: 5000 });
