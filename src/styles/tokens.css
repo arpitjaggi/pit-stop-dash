@@ -102,8 +102,9 @@
     --ink-3: #a0988a;
     --brand-wash: #3a2f10;
     --focus: #ffc53d;
-    --panel: #2a2620;
-    --panel-line: #433d34;
+    --panel: #0a0908;
+    --panel-line: #4a4439;
+    --stage-mix: 44%;
     --clear: #6edba0;
     --clear-mark: #6edba0;
     --clear-wash: #123626;
@@ -133,8 +134,9 @@
   --ink-3: #a0988a;
   --brand-wash: #3a2f10;
   --focus: #ffc53d;
-  --panel: #2a2620;
-  --panel-line: #433d34;
+  --panel: #0a0908;
+  --panel-line: #4a4439;
+  --stage-mix: 44%;
   --clear: #6edba0;
   --clear-mark: #6edba0;
   --clear-wash: #123626;

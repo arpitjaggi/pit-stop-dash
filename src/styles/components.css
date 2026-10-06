@@ -175,14 +175,15 @@
 
 .vimg { position: relative; overflow: hidden; background: var(--sunk); width: 100%; isolation: isolate; }
 .vimg--bay { aspect-ratio: 16 / 9; }
-.vimg--hero { aspect-ratio: 16 / 9; }
+.vimg--hero { aspect-ratio: 2 / 1; }
+@media (min-width: 1024px) { .vimg--hero { aspect-ratio: 16 / 9; } }
 .vimg--thumb { width: 56px; height: 56px; border-radius: var(--r-inner); flex: none; }
 .vimg__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.25s var(--ease); }
 .vimg__img.is-loaded { opacity: 1; }
 
 /* The paint stage: a pale tint of the vehicle's paint, and a large flat disc of the paint itself. */
-.vimg--stage { --vc: var(--brand); background: color-mix(in srgb, var(--vc) 30%, var(--surface)); }
-.stage__disc { position: absolute; z-index: -1; width: 54%; aspect-ratio: 1; right: -12%; top: -44%; border-radius: 50%; background: var(--vc); box-shadow: inset 0 0 0 1px rgb(23 20 15 / 0.12); }
+.vimg--stage { --vc: var(--brand); background: color-mix(in oklch, var(--vc) var(--stage-mix, 34%), var(--surface)); }
+.stage__disc { position: absolute; z-index: -1; width: 54%; aspect-ratio: 1; right: -12%; top: -44%; border-radius: 50%; background: var(--vc); }
 .vimg--hero .stage__disc { width: 62%; right: -14%; top: -30%; }
 .vimg--thumb.vimg--stage { display: grid; place-items: center; border-radius: 50%; background: var(--vc); }
 .stage__name { position: absolute; left: 0; right: 0; bottom: 0; display: grid; padding: var(--sp-4) var(--sp-4) 14px; color: var(--ink); }

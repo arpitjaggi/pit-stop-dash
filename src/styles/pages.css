@@ -142,7 +142,9 @@ details > summary::-webkit-details-marker { display: none; }
 .vtabs { position: sticky; top: var(--bar-h); z-index: 14; background: var(--bg); padding: var(--sp-3) 0 var(--sp-2); }
 .vtabs ul { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; padding: 0 var(--gutter); scroll-snap-type: x proximity; scroll-padding-inline: var(--gutter); }
 .vtabs ul::-webkit-scrollbar { display: none; }
-.vtabs.fade-end ul { -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent); }
+.vtabs.fade-end ul, .vtabs.fade-start ul { --fl: #000; --fr: #000; -webkit-mask-image: linear-gradient(to right, var(--fl) 0, #000 28px, #000 calc(100% - 28px), var(--fr) 100%); mask-image: linear-gradient(to right, var(--fl) 0, #000 28px, #000 calc(100% - 28px), var(--fr) 100%); }
+.vtabs.fade-start ul { --fl: transparent; }
+.vtabs.fade-end ul { --fr: transparent; }
 .vtabs__link { display: inline-flex; align-items: center; gap: 6px; height: 42px; padding: 0 14px; border-radius: var(--r-full); color: var(--ink-2); font-size: 0.875rem; font-weight: 650; white-space: nowrap; scroll-snap-align: start; transition: background-color 0.14s var(--ease), color 0.14s var(--ease); }
 .vtabs__link:hover { background: var(--sunk); color: var(--ink); }
 .vtabs__link[aria-current='page'] { background: var(--ink); color: var(--surface); }
@@ -308,9 +310,9 @@ details > summary::-webkit-details-marker { display: none; }
   .vhead { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: var(--sp-5); padding: 0; align-items: stretch; }
   .vhead__id { padding: var(--sp-5) var(--sp-6) var(--sp-6); }
   .vhead__variant { font-size: 0.9375rem; }
-  .vhead__facts { margin-top: var(--sp-5); gap: var(--sp-4); }
+  .vhead__facts { margin-top: var(--sp-5); gap: var(--sp-3) var(--sp-4); flex-wrap: nowrap; }
   .vhead__odo { margin-left: auto; }
-  .vhead__board { padding: var(--sp-6); align-content: space-between; gap: var(--sp-5); }
+  .vhead__board { padding: var(--sp-6); align-content: end; gap: var(--sp-5); }
   .pitpanel .status__mark { width: 12px; height: 12px; }
   .vhead__board .t-board { font-size: 2.5rem; line-height: 1.08; }
   .vtabs { top: 0; padding: var(--sp-5) 0 var(--sp-3); }

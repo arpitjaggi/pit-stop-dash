@@ -45,6 +45,7 @@ export function VehicleLayout() {
   const sentinel = useRef<HTMLDivElement>(null);
   const tabsRef = useRef<HTMLElement>(null);
   const [fadeEnd, setFadeEnd] = useState(false);
+  const [fadeStart, setFadeStart] = useState(false);
 
   useEffect(() => {
     if (vehicleId) rememberVehicle(vehicleId);
@@ -63,7 +64,11 @@ export function VehicleLayout() {
   useEffect(() => {
     const ul = tabsRef.current?.querySelector('ul');
     if (!ul) return;
-    const check = () => setFadeEnd(ul.scrollWidth > ul.clientWidth + 2 && ul.scrollLeft + ul.clientWidth < ul.scrollWidth - 2);
+    const check = () => {
+      const overflow = ul.scrollWidth > ul.clientWidth + 2;
+      setFadeEnd(overflow && ul.scrollLeft + ul.clientWidth < ul.scrollWidth - 2);
+      setFadeStart(overflow && ul.scrollLeft > 2);
+    };
     check();
     ul.addEventListener('scroll', check, { passive: true });
     window.addEventListener('resize', check);
@@ -77,6 +82,7 @@ export function VehicleLayout() {
     if (!ul || !current) return;
     const left = current.offsetLeft - (ul.clientWidth - current.offsetWidth) / 2;
     ul.scrollTo({ left: Math.max(0, left), behavior: 'instant' });
+    ul.dispatchEvent(new Event('scroll'));
   }, [pathname, bundle?.vehicle.id]);
 
   if (loading) return <div className="page vpage"><div className="vhead__loading skeleton" aria-busy="true" /></div>;
@@ -143,7 +149,7 @@ export function VehicleLayout() {
                   <h1 className="t-display vhead__model">{v.model}</h1>
                   <p className="vhead__variant t-ink-2">{[v.make, v.variant].filter(Boolean).join(' · ')}</p>
                   <div className="vhead__facts">
-                    {v.registration_number ? <Plate value={v.registration_number} size={desktop && !strip ? 'lg' : 'md'} /> : <span className="t-label t-ink-3">Not registered yet</span>}
+                    {v.registration_number ? <Plate value={v.registration_number} size="md" /> : <span className="t-label t-ink-3">Not registered yet</span>}
                     <span className="vhead__fuel t-ink-2">{fuelLabel(v.fuel_type)}</span>
                     <span className="vhead__odo">
                       {v.current_odometer_km != null ? (
@@ -180,7 +186,7 @@ export function VehicleLayout() {
             </header>
           )}
 
-          <nav ref={tabsRef} className={cx('vtabs', fadeEnd && 'fade-end')} aria-label="Sections">
+          <nav ref={tabsRef} className={cx('vtabs', fadeEnd && 'fade-end', fadeStart && 'fade-start')} aria-label="Sections">
             <ul>
               {TABS.map((t) => (
                 <li key={t.label}>
