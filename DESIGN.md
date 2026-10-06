@@ -244,6 +244,45 @@ components:
     textColor: "{colors.accent}"
     rounded: "{rounded.plate}"
     height: "34px"
+  input-hex:
+    backgroundColor: "{colors.card}"
+    textColor: "{colors.ink}"
+    typography: "{typography.plate}"
+    rounded: "{rounded.control}"
+    height: "48px"
+    width: "200px"
+  swatch-custom:
+    backgroundColor: "{colors.card}"
+    textColor: "{colors.ink-2}"
+    rounded: "{rounded.full}"
+    size: "44px"
+  crop-dialog:
+    backgroundColor: "{colors.card}"
+    textColor: "{colors.ink}"
+    rounded: "{rounded.sheet}"
+    width: "560px"
+  crop-frame:
+    backgroundColor: "{colors.sunk}"
+    rounded: "{rounded.inner}"
+  reader-panel:
+    backgroundColor: "{colors.well}"
+    textColor: "{colors.ink}"
+    rounded: "{rounded.inner}"
+    padding: "16px"
+  reader-fill:
+    backgroundColor: "{colors.brand}"
+    rounded: "{rounded.full}"
+    height: "6px"
+  findings-list:
+    backgroundColor: "{colors.well}"
+    textColor: "{colors.ink}"
+    rounded: "{rounded.inner}"
+    padding: "16px"
+  rc-start:
+    backgroundColor: "{colors.card}"
+    textColor: "{colors.ink}"
+    rounded: "{rounded.card}"
+    padding: "24px"
   switch-on:
     backgroundColor: "{colors.brand}"
     rounded: "{rounded.full}"
@@ -275,13 +314,14 @@ The system is phone-first and warm, confident rather than clinical. Desktop re-c
 - Each vehicle's own paint: flat disc over a pale oklch tint, or the owner's photo.
 - HSRP registration plates in true colours by use, with a blue IND strip, stacked on two lines for two-wheelers.
 - Pill section tabs with an ink active pill, a five-step Add vehicle wizard, a pill switch, and a Reminders sheet.
+- Photo and document tools stay in the same vocabulary: a 28px cropper dialog with a thirds grid, a well-coloured reader panel whose scarlet progress bar scales with a transform, and a well-coloured findings list of opt-in checkboxes.
 
 ## Colors
 
 A warm paper-and-ink palette with a scarlet voice, a yellow attention colour, a green clear state and each vehicle's own paint as a guest. Light values are the base keys; dark counterparts are the `-dark` keys and mirror the same roles.
 
 ### Primary
-- **Scarlet** (#dc0000, dark #e5231c; pressed #b80000, dark #c91a14; wash #ffe4e0, dark #3f1512): fills primary buttons, the docked Add button, selected choice chips, the switch when on, the current wizard segment, the selected command-palette row, text selection, action-row icon discs and the underline under text links and ghost buttons. Text on it is always white (5.5:1). It is also the logomark's tile. It never marks a due date or a warning.
+- **Scarlet** (#dc0000, dark #e5231c; pressed #b80000, dark #c91a14; wash #ffe4e0, dark #3f1512): fills primary buttons, the docked Add button, selected choice chips, the switch when on, the current wizard segment, the document reader's progress fill, the accent of the cropper's zoom slider and the findings checkboxes, the selected command-palette row, text selection, action-row icon discs and the underline under text links and ghost buttons. Text on it is always white (5.5:1). It is also the logomark's tile. It never marks a due date or a warning.
 
 ### Secondary
 - **Modena Yellow** (#ffd21f; ink text on it 13:1): tab count badges, numbered workshop markers, the toast Undo link, the pit panel link underline, the overdue status tile in the dark theme, and the focus ring in dark. Identical in both themes.
@@ -336,7 +376,8 @@ Sizes are phone values; desktop (min 1024px, fine pointer) steps body down and d
 - **Body** (400, 1rem/1.5rem; desktop 0.875rem/1.25rem): prose and inputs (16px on phones so iOS does not zoom).
 - **Label** (500, 0.8125rem/1rem; desktop 0.75rem): field labels and metadata. Sentence case.
 - **Figures** (Barlow 600, tabular lining numerals): XL 3.75rem (desktop 4.75rem) for the odometer, M 1.75rem, S 1.25rem; units in Geist 0.8125rem Ink 3.
-- **Plate** (Barlow 600, 0.08em tracking): 0.9375 / 1.125 / 1.5rem on 26 / 34 / 42px plates.
+- **Plate** (Barlow 600, 0.08em tracking): 0.9375 / 1.125 / 1.5rem on 26 / 34 / 42px plates. The hex colour field reuses Barlow, uppercase, 0.08em.
+- Reader stage lines are Geist weight 650; reader notes and findings notes are 0.8125rem Ink 3; findings labels are 0.8125rem weight 650 Ink 3.
 
 ### Named Rules
 **The Instrument Rule.** A reading of the vehicle (odometer, plate, kilometre figure) is set in Barlow with tabular lining figures. A count or date inside prose is body text.
@@ -347,7 +388,7 @@ Sizes are phone values; desktop (min 1024px, fine pointer) steps body down and d
 
 Phone is a single column with a 16px gutter (24px on desktop). Spacing is a 4px base: 2, 4, 8, 12, 16, 24, 32, 48, 72. Controls are 48px tall on touch and 36px on desktop with a fine pointer; the minimum tap target is 44px (36px on desktop).
 
-Garage: a stack of vehicle cards on phones, an auto-fill grid with 320px minimum columns on desktop (max width 1320px). Vehicle page: a sticky 56px bar, a stage card with the ink Pit Board directly below, a sticky pill tab strip, then white section cards. At 1024px a 264px sidebar appears, the stage and Pit Board sit side by side (1.1fr / 1fr), and a 320px sticky properties rail joins the Overview. Past the Overview the header collapses to one strip. Documents and Service become master-detail panes. Sheets (including Reminders) are bottom sheets on phones and centred dialogs from 640px (520px wide, 720px tall variant). The Add vehicle wizard is a full-height column on phones with a sticky action bar, and a 720px centred column on desktop.
+Garage: a stack of vehicle cards on phones, an auto-fill grid with 320px minimum columns on desktop (max width 1320px). Vehicle page: a sticky 56px bar, a stage card with the ink Pit Board directly below, a sticky pill tab strip, then white section cards. At 1024px a 264px sidebar appears, the stage and Pit Board sit side by side (1.1fr / 1fr), and a 320px sticky properties rail joins the Overview. Past the Overview the header collapses to one strip. Documents and Service become master-detail panes. The photo cropper is a centred dialog at every width (560px, capped at 94vw and 94dvh). Sheets (including Reminders) are bottom sheets on phones and centred dialogs from 640px (520px wide, 720px tall variant). The Add vehicle wizard is a full-height column on phones with a sticky action bar, and a 720px centred column on desktop. Its first step stacks the "Have the RC? Start from it." block above the vehicle-type choices with 32px between them.
 
 Cards stack with 16px between them and are never nested inside other cards.
 
@@ -359,6 +400,7 @@ Depth is tonal first, shadow second. Light cards lift with a soft two-layer shad
 - **Card** (`0 1px 2px rgb(23 20 15 / 0.05), 0 10px 28px rgb(23 20 15 / 0.07)`; dark `0 0 0 1px line`): every white card.
 - **Pop** (`0 12px 36px rgb(23 20 15 / 0.18)`; dark `0 0 0 1px line-strong, 0 16px 40px rgb(0 0 0 / 0.5)`): command palette, desktop dialogs, toasts, docked Add.
 - **Sheet** (`0 -12px 40px rgb(23 20 15 / 0.2)`; dark `0 0 0 1px line-strong`): phone bottom sheets.
+- The cropper dialog takes Pop and the scrim as its backdrop.
 - Scrim is `rgb(23 20 15 / 0.45)` (dark `rgb(0 0 0 / 0.62)`).
 
 ### Named Rules
@@ -368,7 +410,7 @@ Depth is tonal first, shadow second. Light cards lift with a soft two-layer shad
 
 ## Shapes
 
-Soft and rounded, in a clear ladder: 24px cards and desktop dialogs, 28px sheet top corners, 18px popovers and the docked Add, 16px inner wells, rows, status strips and thumbnails, 14px controls (buttons, inputs, sidebar items), 6px plates and document thumbnails, and full pills for tabs, chips, the segmented control, the switch, wizard segments and icon buttons. Vehicle thumbnails without a photo are circles. Check boxes are 9px-radius squares. The logomark is a 16/64 rounded tile. The paint disc is a true circle partly clipped by the stage edge (54% wide, offset right and above; 62% on the hero). Borders are 1.5px on controls, 1px for dividers. Focus is a 3px ring with 2px offset on every interactive element.
+Soft and rounded, in a clear ladder: 24px cards and desktop dialogs, 28px sheet top corners, 18px popovers and the docked Add, 16px inner wells, rows, status strips and thumbnails, 14px controls (buttons, inputs, sidebar items), 6px plates and document thumbnails, and full pills for tabs, chips, the segmented control, the switch, wizard segments and icon buttons. Vehicle thumbnails without a photo are circles. Check boxes are 9px-radius squares; the findings list is the exception and uses native 22px boxes in a scarlet accent. The cropper dialog is 28px on all four corners over a 16px-radius frame; the custom colour swatch is a 44px circle like the preset swatches, with a dashed Control Edge outline until a colour is set, then solid. The reader progress track is a 6px pill. The logomark is a 16/64 rounded tile. The paint disc is a true circle partly clipped by the stage edge (54% wide, offset right and above; 62% on the hero). Borders are 1.5px on controls, 1px for dividers. Focus is a 3px ring with 2px offset on every interactive element.
 
 ## Components
 
@@ -413,6 +455,21 @@ A 52 by 32px pill: sunk track with a Control Edge border and an ink thumb; check
 ### Add Vehicle Wizard
 Five steps. A progress bar of five 6px pill segments (done ink, current scarlet, upcoming sunk), a "Step n of 5" count in Ink 3, a display-font step title, a panel that slides in 18px from the direction of travel, and a sticky bottom action bar with a flexing scarlet Next. Reduced motion swaps the slide for a 120ms fade. The registration step previews the live plate.
 
+### Photo Cropper
+A centred dialog (28px radius, Pop shadow, scrim behind, 24px padding, 16px between parts) with a section heading, one plain sentence of instruction, a 16:9 frame in sunk (16px radius) holding a canvas the owner drags, a thirds grid of 1px lines in translucent white that inverts against the photo, a Zoom label over a full-width slider with scarlet accent, and actions right-aligned: a secondary Cancel and a scarlet primary that flexes up to 240px. The frame shows the 16:9 ratio the garage uses for photos.
+
+### Custom Colour
+Beside the preset paint swatches (44px circles, 1px strong seam border, selected shows a 3px card gap then a 2px ink ring, focus is a 3px ring at 3px offset) sits a custom swatch: a dashed Control Edge circle with a plus, which fills with the chosen colour and turns solid once set. Under it, a labelled "Or type a hex code" field in the Barlow plate style (uppercase, 0.08em, 200px maximum width) with the usual error treatment.
+
+### Document Reader
+A well-coloured panel (16px radius, 16px padding): a spinner beside a weight-650 stage line, a small Ink 3 note, and a 6px pill track in sunk whose scarlet fill is full width and scaled from the left by a transform (scaleX from a progress value, minimum 0.04, 300ms on the one ease). The locked-PDF variant is one column: a field, its hint and a secondary Unlock button. Failures use a plain notice. Animate the bar with the transform only, never its width.
+
+### Findings List
+"Update the vehicle from this RC": a well-coloured group (16px radius, 16px padding) of rows, each a 22px scarlet-accent checkbox, a small Ink 3 label above the proposed change, and an optional Ink 3 note for low-confidence values. Rows are at least the tap height (44px, 36px desktop). Each row is opt-in per its default; nothing is applied until saved.
+
+### RC Start Block
+At the top of the Add vehicle wizard, a white card (24px radius, Card shadow, 24px padding, 12px gaps) with a title, one sentence of explanation, a secondary button with an upload icon, then the reader panel and a notice stretched to the full width. It is the one card in the wizard; the choice blocks below it are open on the page, not cards.
+
 ### Reminders Sheet
 A standard sheet of 16px-radius well rows (64px minimum): icon, title and subtitle, and a switch at the end, followed by a short list of upcoming dates in Geist with figures in Barlow.
 
@@ -435,6 +492,7 @@ Light, Dark and System. Choosing Light or Dark sets `data-theme` on the root; Sy
 - **Do** design light and dark together; verify every new surface in both themes.
 - **Do** keep cards at 24px, controls at 14px, tabs and chips as pills.
 - **Do** use the owner's own photographs for imagery.
+- **Do** animate progress with a transform (scaleX from the left) on the one ease, and keep reading and cropping tools in well, sunk and scarlet.
 - **Do** allow the F1 influence only in naming, microcopy and motion, at most one wink per screen.
 
 ### Don't:
