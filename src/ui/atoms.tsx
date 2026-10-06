@@ -90,8 +90,10 @@ export function Choice<T extends string>({
   onChange,
   options,
   layout = 'chips',
+  hideLegend,
 }: {
   legend: string;
+  hideLegend?: boolean;
   value: T;
   onChange: (v: T) => void;
   options: { value: T; label: string; hint?: string }[];
@@ -100,7 +102,7 @@ export function Choice<T extends string>({
   const name = useId();
   return (
     <fieldset className={cx('choice', `choice--${layout}`)}>
-      <legend className="field__label">{legend}</legend>
+      <legend className={cx('field__label', hideLegend && 'sr-only')}>{legend}</legend>
       <div className="choice__set">
         {options.map((o) => (
           <label key={o.value} className="choice__opt">

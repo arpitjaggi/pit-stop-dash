@@ -1,16 +1,15 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAddVehicle } from '@/data/hooks';
-import { Button, friendlyError } from '@/ui/atoms';
+import { friendlyError } from '@/ui/atoms';
 import { ArrowLeft } from '@/ui/icons';
-import { rememberVehicle, useDesktop, useToast } from '@/ui/hooks';
+import { rememberVehicle, useToast } from '@/ui/hooks';
 import { VehicleForm, type VehicleSubmit } from '../vehicle/VehicleForm';
 
 export function AddVehiclePage() {
   const navigate = useNavigate();
   const add = useAddVehicle();
   const toast = useToast();
-  const desktop = useDesktop();
   const [error, setError] = useState<string | null>(null);
 
   async function onSubmit({ vehicle, photo }: VehicleSubmit) {
@@ -33,13 +32,7 @@ export function AddVehiclePage() {
         </button>
         <h1 className="t-section">Add a vehicle</h1>
       </header>
-      <p className="formintro t-ink-2">Only the basics are needed. Documents, photos and the rest can wait.</p>
-      <VehicleForm formId="add-vehicle" submitLabel="Add to garage" busy={add.isPending} onSubmit={onSubmit} serverError={error} />
-      <div className="formbar">
-        <Button variant="primary" type="submit" form="add-vehicle" block={!desktop} busy={add.isPending}>
-          Add to garage
-        </Button>
-      </div>
+      <VehicleForm wizard formId="add-vehicle" submitLabel="Add to garage" busy={add.isPending} onSubmit={onSubmit} serverError={error} />
     </div>
   );
 }
