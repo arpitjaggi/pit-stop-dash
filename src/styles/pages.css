@@ -14,6 +14,7 @@
 .block > h2, .block > .t-section { margin-bottom: var(--sp-3); }
 .block__lede { margin-bottom: var(--sp-3); }
 .sectionhead { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-3); }
+.glovebox__list > .sectionhead { margin-bottom: var(--sp-4); }
 
 .linkbtn { color: var(--ink); font-weight: 650; min-height: var(--tap); padding: 0; text-align: left; font-size: 0.9375rem; text-decoration-skip-ink: none; text-decoration: underline; text-decoration-color: var(--brand); text-decoration-thickness: 3px; text-underline-offset: 4px; }
 .linkbtn:hover { background: var(--brand-wash); }
