@@ -1,346 +1,373 @@
 ---
 name: Pit Stop Dash
-description: A beautifully designed digital garage for Indian vehicle owners. Linear's discipline, a confident automotive voice, and a quiet F1 wink.
+description: A personal digital garage in a paint shop's colours, where every vehicle wears its own paint and one ink panel says what to do.
 colors:
-  concrete: "#f4f5f2"
-  chalk: "#ffffff"
-  slab: "#e9ece6"
-  seam: "#dfe2dc"
-  seam-strong: "#c3c8bf"
-  control-edge: "#7f877f"
-  tyre: "#111613"
-  asphalt: "#454d47"
-  gravel: "#5e665f"
-  petrol: "#0f4a47"
-  petrol-deep: "#0a3836"
-  petrol-wash: "#dcebe8"
-  clear: "#2a7048"
-  clear-wash: "#e1f0e6"
-  soon: "#8a4f00"
-  soon-mark: "#d98a00"
-  soon-wash: "#fbe7bf"
-  overdue: "#b83220"
-  overdue-wash: "#fbe3de"
-  garage-night: "#0d1110"
-  night-surface: "#141a18"
-  night-raised: "#1c2421"
-  night-seam: "#26302c"
-  night-ink: "#ecefea"
-  petrol-lit: "#58c2b8"
+  brand: "#ffc53d"
+  brand-press: "#f2b21f"
+  brand-wash: "#fff1cc"
+  brand-wash-dark: "#3a2f10"
+  on-brand: "#17140f"
+  paper: "#f2eee6"
+  paper-dark: "#12100d"
+  card: "#ffffff"
+  card-dark: "#1d1a16"
+  well: "#f8f5ef"
+  well-dark: "#26221d"
+  sunk: "#ece7dc"
+  sunk-dark: "#171512"
+  line: "#e4ded2"
+  line-dark: "#2e2a24"
+  line-strong: "#d3cbbb"
+  line-strong-dark: "#433d34"
+  edge: "#8a8272"
+  edge-dark: "#7d7567"
+  ink: "#17140f"
+  ink-dark: "#f6f1e8"
+  ink-2: "#4b463d"
+  ink-2-dark: "#c4bcad"
+  ink-3: "#665f52"
+  ink-3-dark: "#a0988a"
+  focus: "#17140f"
+  focus-dark: "#ffc53d"
+  panel: "#1b1814"
+  panel-dark: "#0a0908"
+  on-panel: "#ffffff"
+  on-panel-2: "#cfc7b8"
+  panel-line: "#3a352d"
+  panel-line-dark: "#4a4439"
+  panel-clear: "#7ee2a8"
+  panel-soon: "#ffd166"
+  panel-overdue: "#ff9a8c"
+  clear: "#067647"
+  clear-dark: "#6edba0"
+  clear-mark: "#12b76a"
+  clear-wash: "#d9f5e4"
+  clear-wash-dark: "#123626"
+  soon: "#8a4b05"
+  soon-dark: "#ffc764"
+  soon-mark: "#f79009"
+  soon-wash: "#ffeab8"
+  soon-wash-dark: "#3a2b0a"
+  overdue: "#b42318"
+  overdue-dark: "#ff9a8c"
+  overdue-mark: "#d92d20"
+  overdue-wash: "#ffe1dd"
+  overdue-wash-dark: "#3f1814"
 typography:
   display:
-    fontFamily: "Geist Variable, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "2.125rem"
+    fontFamily: "Bricolage Grotesque Variable, Geist Variable, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "2.5rem"
     fontWeight: 700
-    lineHeight: "2.25rem"
-    letterSpacing: "-0.025em"
+    lineHeight: "2.5rem"
+    letterSpacing: "-0.035em"
   pit-board:
-    fontFamily: "Geist Variable, ui-sans-serif, system-ui, sans-serif"
+    fontFamily: "Bricolage Grotesque Variable, Geist Variable, ui-sans-serif, system-ui, sans-serif"
     fontSize: "1.625rem"
-    fontWeight: 650
+    fontWeight: 600
     lineHeight: "2rem"
-    letterSpacing: "-0.02em"
+    letterSpacing: "-0.025em"
   section:
-    fontFamily: "Geist Variable, ui-sans-serif, system-ui, sans-serif"
+    fontFamily: "Bricolage Grotesque Variable, Geist Variable, ui-sans-serif, system-ui, sans-serif"
     fontSize: "1.5rem"
     fontWeight: 700
     lineHeight: "1.75rem"
-    letterSpacing: "-0.02em"
+    letterSpacing: "-0.03em"
+  make:
+    fontFamily: "Bricolage Grotesque Variable, Geist Variable, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "1rem"
+    fontWeight: 300
+    lineHeight: "1.25rem"
+    letterSpacing: "-0.01em"
+  model:
+    fontFamily: "Bricolage Grotesque Variable, Geist Variable, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "clamp(2rem, 9.5vw, 2.5rem)"
+    fontWeight: 700
+    lineHeight: 1
+    letterSpacing: "-0.04em"
   title:
-    fontFamily: "Geist Variable, ui-sans-serif, system-ui, sans-serif"
+    fontFamily: "Geist Variable, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif"
     fontSize: "1.0625rem"
     fontWeight: 600
     lineHeight: "1.375rem"
     letterSpacing: "-0.005em"
   body:
-    fontFamily: "Geist Variable, ui-sans-serif, system-ui, sans-serif"
+    fontFamily: "Geist Variable, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif"
     fontSize: "1rem"
     fontWeight: 400
     lineHeight: "1.5rem"
   label:
-    fontFamily: "Geist Variable, ui-sans-serif, system-ui, sans-serif"
+    fontFamily: "Geist Variable, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif"
     fontSize: "0.8125rem"
     fontWeight: 500
     lineHeight: "1rem"
   figure-xl:
-    fontFamily: "Barlow Semi Condensed, Barlow Fallback, sans-serif"
-    fontSize: "3.5rem"
+    fontFamily: "Barlow Semi Condensed, Barlow Fallback, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "3.75rem"
     fontWeight: 600
-    lineHeight: "3.25rem"
+    lineHeight: "3.5rem"
+    letterSpacing: "0"
     fontFeature: "'tnum' 1, 'lnum' 1"
   figure-m:
-    fontFamily: "Barlow Semi Condensed, Barlow Fallback, sans-serif"
+    fontFamily: "Barlow Semi Condensed, Barlow Fallback, ui-sans-serif, system-ui, sans-serif"
     fontSize: "1.75rem"
     fontWeight: 600
     lineHeight: "1.75rem"
+    letterSpacing: "0"
     fontFeature: "'tnum' 1, 'lnum' 1"
   plate:
-    fontFamily: "Barlow Semi Condensed, Barlow Fallback, sans-serif"
-    fontSize: "1.0625rem"
+    fontFamily: "Barlow Semi Condensed, Barlow Fallback, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "1.125rem"
     fontWeight: 600
     lineHeight: 1
     letterSpacing: "0.08em"
 rounded:
-  doc: "2px"
-  plate: "4px"
-  control: "6px"
-  popover: "8px"
-  sheet: "14px"
+  doc: "6px"
+  plate: "6px"
+  control: "14px"
+  inner: "16px"
+  popover: "18px"
+  card: "24px"
+  sheet: "28px"
+  full: "999px"
 spacing:
-  "0": "2px"
-  "1": "4px"
-  "2": "8px"
-  "3": "12px"
-  "4": "16px"
-  "5": "24px"
-  "6": "32px"
-  "7": "48px"
-  "8": "72px"
+  xs: "4px"
+  sm: "8px"
+  md: "16px"
+  lg: "24px"
+  xl: "32px"
+  xxl: "48px"
+  huge: "72px"
+  gutter: "16px"
 components:
   button-primary:
-    backgroundColor: "{colors.petrol}"
-    textColor: "{colors.chalk}"
+    backgroundColor: "{colors.brand}"
+    textColor: "{colors.on-brand}"
     rounded: "{rounded.control}"
-    padding: "0 16px"
-    height: "44px"
-  button-primary-hover:
-    backgroundColor: "{colors.petrol-deep}"
-  button-secondary:
-    backgroundColor: "{colors.chalk}"
-    textColor: "{colors.tyre}"
-    rounded: "{rounded.control}"
-    padding: "0 16px"
-    height: "44px"
-  button-ghost:
-    textColor: "{colors.petrol}"
-    rounded: "{rounded.control}"
-    padding: "0 8px"
-  button-danger:
-    backgroundColor: "{colors.chalk}"
-    textColor: "{colors.overdue}"
-    rounded: "{rounded.control}"
-  button-docked-add:
-    backgroundColor: "{colors.petrol}"
-    textColor: "{colors.chalk}"
-    rounded: "{rounded.control}"
-    padding: "0 18px 0 14px"
+    padding: "0 24px"
     height: "48px"
-  input:
-    backgroundColor: "{colors.chalk}"
-    textColor: "{colors.tyre}"
+  button-primary-hover:
+    backgroundColor: "{colors.brand-press}"
+  button-secondary:
+    backgroundColor: "{colors.card}"
+    textColor: "{colors.ink}"
     rounded: "{rounded.control}"
-    padding: "0 12px"
-    height: "44px"
+    padding: "0 24px"
+    height: "48px"
+  button-dark:
+    backgroundColor: "{colors.ink}"
+    textColor: "{colors.card}"
+    rounded: "{rounded.control}"
+    padding: "0 24px"
+    height: "48px"
+  button-docked-add:
+    backgroundColor: "{colors.brand}"
+    textColor: "{colors.on-brand}"
+    rounded: "18px"
+    padding: "0 22px 0 18px"
+    height: "54px"
+  input:
+    backgroundColor: "{colors.card}"
+    textColor: "{colors.ink}"
+    rounded: "{rounded.control}"
+    padding: "0 16px"
+    height: "48px"
+  card:
+    backgroundColor: "{colors.card}"
+    textColor: "{colors.ink}"
+    rounded: "{rounded.card}"
+    padding: "24px"
+  pit-panel:
+    backgroundColor: "{colors.panel}"
+    textColor: "{colors.on-panel}"
+    rounded: "{rounded.card}"
+    padding: "24px"
+  tab-pill:
+    textColor: "{colors.ink-2}"
+    rounded: "{rounded.full}"
+    padding: "0 14px"
+    height: "42px"
+  tab-pill-active:
+    backgroundColor: "{colors.ink}"
+    textColor: "{colors.card}"
+  status-strip:
+    backgroundColor: "{colors.well}"
+    textColor: "{colors.ink}"
+    rounded: "{rounded.inner}"
+    padding: "12px 16px"
   plate-chip:
-    backgroundColor: "{colors.chalk}"
-    textColor: "{colors.tyre}"
-    typography: "{typography.plate}"
+    backgroundColor: "#ffffff"
+    textColor: "#17140f"
     rounded: "{rounded.plate}"
-    height: "32px"
-  sheet:
-    backgroundColor: "{colors.chalk}"
-    textColor: "{colors.tyre}"
-    rounded: "{rounded.sheet}"
-  selected-row:
-    backgroundColor: "{colors.petrol-wash}"
-    textColor: "{colors.tyre}"
+    padding: "0 8px"
+    height: "34px"
 ---
 
 # Design System: Pit Stop Dash
 
-Every value below was read from the shipped stylesheets and components (`src/styles/*.css`, `src/features/*`, `src/ui/*`, `src/lib/colour.ts`). Where the build moved a seed value, the build is recorded here.
-
 ## Overview
 
-**Creative North Star: The Well-Kept Garage.** The product feels like the garage of someone who loves their cars and keeps a good logbook: orderly, a little proud, nothing in the wrong place, and every drawer opens at once. It is a working tool first (Operate mode), so the world lends four things only: type, palette, density and one signature move. It never supplies the layout, navigation model or controls, which stay as standard and legible as the best tools in the category.
+**Creative North Star: "The Paint Shop"**
 
-**"Bold Linear", defined.** Linear's discipline (strict hierarchy, hairline borders, flat quiet surfaces, tight spacing, fast and exact interactions) with four things turned up: type scale (louder headings, instrument-sized numerals), contrast (true ink on a tinted ground), vehicle imagery (the vehicle is the hero, full-bleed on phones), and personality (microcopy, never ornament). Boldness comes from typography, spacing, scale, contrast and composition, not decoration.
+A personal garage that feels like a paint shop's colour wall: warm paper underfoot, white rounded cards, ink for everything that must be read, and each vehicle wearing its own paint as a large flat disc over a pale tint of the same colour. Colour has one job each. Saffron acts and selects, the ink panel instructs, vivid washes with words report status, and a vehicle's paint identifies it. The owner recognises their cars by colour before reading a word, then reads one plain sentence per vehicle.
 
-**Light by default, dark by system.** The owner is on a phone in direct sun, so light is the default theme. A tuned dark theme follows the system setting; it is a re-lit palette, not an inversion. Both ship.
+The system is phone-first and warm, confident rather than clinical. Desktop re-composes the same surfaces (sidebar, side-by-side stage and ink panel, properties rail, master-detail panes) instead of enlarging them. Light, Dark and System are all first-class; the dark theme is warm charcoal with lifted cards and the same saffron.
 
-**Signature move: the Pit Board.** Each vehicle carries one sentence of verdict at display scale, leading each bay and each vehicle page. It is the one thing to know this lap, made typographic. The press-settle on a bay photograph is its physical companion.
-
-**Supporting primitive: the Plate.** The registration number is set as a plate chip in plate lettering. It names a vehicle in the sidebar, switcher, palette, toasts and document headers. No other element imitates a physical object.
+It is flat colour throughout. No gradient, no glow, no glass. The only gradient in the build is a functional scroll-fade mask on the vehicle tab strip.
 
 **Key Characteristics:**
-- Flat, hairline-driven, content directly on the canvas; no cards.
-- One brand colour (Petrol), three status colours, a green-grey tinted neutral ground.
-- Geist for voice, Barlow Semi Condensed only for readings and plates.
-- Photographs edge to edge on phones; an owner-chosen, calmed paint field when there is no photo.
-- Phone designed first; desktop re-composes with a sidebar, palette, properties rail and master-detail panes.
+- Warm paper ground, white cards at 24px radius, ink text, soft low shadows in light and hairline rings in dark.
+- One brand colour (saffron #ffc53d) for actions and selection; ink text on it.
+- One ink "pit panel" per vehicle holding the Pit Board sentence and its single action.
+- Status is a vivid wash plus words and a mark; colour never carries it alone.
+- Each vehicle's own paint: flat disc over a pale oklch tint, with no photo; the owner's photo when there is one.
+- Bricolage Grotesque for display (make light, model bold), Geist for body, Barlow Semi Condensed for figures and plates.
+- Pill-shaped section tabs; the active pill is ink.
 
 ## Colors
 
-A restrained shell with committed jobs: one brand colour, a cool concrete neutral set, three status colours. Paint colour appears only inside vehicle imagery.
+A warm, paper-and-ink palette with one saffron voice, three status hues, and the vehicle's own colour as a guest. Values below are light; dark counterparts are in the frontmatter (`-dark` keys) and mirror the same roles.
 
 ### Primary
-- **Petrol** (#0f4a47): the one brand colour. Primary buttons, links, selection, the focus ring, the active-tab underline, the docked Add button. **Petrol Deep** (#0a3836) is the pressed and hover state; **Petrol Wash** (#dcebe8) is the selected-row, active-pane and current-sidebar tint.
+- **Saffron** (#ffc53d, pressed #f2b21f, wash #fff1cc / dark wash #3a2f10): fills primary buttons, the docked Add button, selected choice chips, count badges, the selected command-palette row, the numbered workshop markers and the brand mark. Text on it is always ink (#17140f, 11.6:1). Identical in dark. Also the underline under text links and ghost buttons, and the focus ring in dark (#ffc53d).
 
 ### Neutral
-- **Concrete** (#f4f5f2): the canvas, cool and green-grey, never cream, never pure white.
-- **Chalk** (#ffffff): raised surfaces only: sheets, popovers, inputs, secondary buttons, document paper.
-- **Slab** (#e9ece6): sunk wells, hover rows, pressed states, loading skeletons.
-- **Seam** (#dfe2dc): hairline dividers. **Seam Strong** (#c3c8bf): outlines on non-interactive objects and document edges.
-- **Control Edge** (#7f877f): the border of inputs, choice faces and secondary buttons.
-- **Tyre** (#111613): primary text, plate lettering and the toast ground.
-- **Asphalt** (#454d47): secondary text.
-- **Gravel** (#5e665f): tertiary text, timestamps, captions, placeholders. Darkened from the seed (#646c66) so it clears 4.5:1 on Petrol Wash and Slab selected states.
+- **Paper** (#f2eee6; dark #12100d): the page ground and sticky bars.
+- **Card White** (#ffffff; dark #1d1a16): cards, sheets, inputs, secondary buttons.
+- **Well** (#f8f5ef; dark #26221d): quiet wells inside a card, action rows, status strips with no state.
+- **Sunk** (#ece7dc; dark #171512): pressed states, hover on tabs, segmented-control track, skeletons, the image background before load.
+- **Seam** (#e4ded2; dark #2e2a24) and **Seam Strong** (#d3cbbb; dark #433d34): row dividers and control borders. **Control Edge** (#8a8272; dark #7d7567) is the 3:1 border for check boxes and control hover.
+- **Ink** (#17140f; dark #f6f1e8), **Ink 2** (#4b463d; dark #c4bcad), **Ink 3** (#665f52; dark #a0988a): primary, secondary and lowest-contrast text. Focus ring is ink in light, saffron in dark.
+
+### Pit Panel
+- **Panel Ink** (#1b1814; dark #0a0908), text white, secondary text #cfc7b8, border #3a352d (dark #4a4439). Panel-safe status text: green #7ee2a8, amber #ffd166, red #ff9a8c, the same in both themes.
 
 ### Status
-Status is always paired with words, never colour alone.
-- **Clear** moss (#2a7048, wash #e1f0e6): a mark only; the sentence stays ink.
-- **Due soon** amber (text #8a4f00, mark #d98a00, wash #fbe7bf): coloured sentence text and mark.
-- **Overdue** vermilion (#b83220, wash #fbe3de): coloured sentence text and mark; also error text and the destructive label.
-- **Info** is an ink mark with an ink sentence. **Neutral** is Asphalt text with a hollow ring mark.
+- **Clear** (text #067647, mark #12b76a, wash #d9f5e4; dark #6edba0 / #6edba0 / #123626).
+- **Soon** (text #8a4b05, mark #f79009, wash #ffeab8; dark #ffc764 / #ffc764 / #3a2b0a).
+- **Overdue** (text #b42318, mark #d92d20, wash #ffe1dd; dark #ff9a8c / #ff9a8c / #3f1814).
 
-### Dark theme (follows system)
-Concrete becomes **Garage Night** (#0d1110); surfaces step lighter, not shadowed: Surface (#141a18), Sunk (#1c2421), Seam (#26302c), Seam Strong (#34403b), Control Edge (#6b756e). Ink (#ecefea), Ink-2 (#a5aea7), Ink-3 (#8a948d). Petrol lifts to **Petrol Lit** (#58c2b8) with pressed #7ad3ca, wash #12302d, and button text #06201e. Status: moss #5cc48a, amber #f0b050, vermilion #ff7a63. No neon, no glow.
+### Vehicle Paint
+- Set per vehicle from its own hex (`--vc`). Card tint is the paint mixed into the card colour in oklch at 34% (44% in dark); the disc is the paint at full strength. Text on a paint disc is ink or white, chosen by luminance.
 
 ### Named Rules
-**The One Job Rule.** Petrol marks what you can act on. Status colours mark state. Paint colour lives in vehicle imagery. Plate colours live in the plate chip. A colour doing a second job is wrong.
+**The One Job Rule.** Saffron acts and selects. Ink panels instruct. Washes and marks report status. Paint identifies a vehicle. A colour doing a second job is wrong.
 
-**The Quiet Red Rule.** Red appears only when something is expired or overdue (or an input error). Nothing is red for being automotive or urgent-looking.
+**The Words Carry It Rule.** Status is always a sentence plus a mark; the wash reinforces. Never colour alone.
 
-**The Sentence-Only Rule.** Colour reaches the words of a status sentence only for soon and overdue. Clear, info and neutral sentences stay ink (or Asphalt) and carry their state in the 8px mark.
-
-**The Calmed Paint Rule.** A paint field never outshouts a status colour: its saturation is capped at 30% in code, hue and lightness kept.
+**The Paint Is Theirs Rule.** A vehicle's colour appears only as its tint and disc (plus the small swatch and thumbnail). It never leaks into buttons, text or status.
 
 ## Typography
 
-**UI Font:** Geist Variable (with ui-sans-serif, system-ui, Segoe UI, Roboto)
-**Figure Font:** Barlow Semi Condensed 500/600/700 (with a size-adjusted Arial Narrow / Roboto Condensed fallback)
+**Display Font:** Bricolage Grotesque Variable (fallback Geist Variable, system sans)
+**Body Font:** Geist Variable (fallback ui-sans-serif, system-ui, Segoe UI, Roboto)
+**Figure/Plate Font:** Barlow Semi Condensed 500/600/700 (fallback Barlow Fallback: Arial Narrow at 88% size-adjust)
 
-**Character:** Geist is the confident workhorse voice, tight-tracked at display sizes. Barlow, drawn from highway signage and number plates, is the instrument: it sets readings and plates and never prose. Latin script only.
+**Character:** Bricolage brings the friendly, slightly quirky shop-sign voice at heading sizes with tight negative tracking; Geist stays neutral for reading; Barlow's condensed tabular figures read like instrument faces and registration plates.
 
 ### Hierarchy
-Phone size first, then the desktop value at 1024px and above with a fine pointer.
-- **Display** (700, 34/36, -0.025em; desktop 44/46): vehicle model on its page.
-- **Pit Board** (650, 26/30, -0.02em; desktop 32/40): the one-sentence verdict. Long sentences step down to 20/28 (desktop 22/30).
-- **Section** (700, 24/28, -0.02em; desktop 26/30): section headings in real words.
-- **Title** (600, 17/22; desktop 15/20): row titles, document names.
-- **Body** (400, 16/24; desktop 14/20): text and inputs (16px on phones prevents input zoom).
-- **Label** (500, 13/16; desktop 12/16): field labels, metadata.
-- **Figure XL** (Barlow 600, tabular lining, 56/52; desktop 72/64): the current odometer.
-- **Figure M** (Barlow 600, 28/28; desktop 24/24) and **Figure S** (20/20): readings in lists, tiles, logbook margin. A small Geist unit ("km") follows in Gravel.
-- **Plate** (Barlow 600, +0.08em): 15px, 17px and 22px by chip size.
-
-Numbers use Indian digit grouping (en-IN). Dates carry the month as a word.
+Sizes are phone values; desktop (min 1024px, fine pointer) steps them down for body and up for display.
+- **Display** (700, 2.5rem, 1; desktop 3.25rem, tracking -0.035em): vehicle model on its page.
+- **Pit Board** (600, 1.625rem/2rem; desktop 1.875rem; long sentences 1.25rem/1.75rem): the one-sentence verdict, on the ink panel.
+- **Section** (700, 1.5rem/1.75rem, -0.03em): real-word section headings.
+- **Stage make / model** (300 at 1rem over 700 at clamp(2rem, 9.5vw, 2.5rem), -0.04em): make light, model bold, on the paint stage and vehicle names.
+- **Title** (600, 1.0625rem/1.375rem; desktop 0.9375rem): row and document titles.
+- **Body** (400, 1rem/1.5rem; desktop 0.875rem/1.25rem): prose and inputs (16px on phones so iOS does not zoom).
+- **Label** (500, 0.8125rem/1rem; desktop 0.75rem): field labels, metadata. Sentence case, never uppercase.
+- **Figures** (Barlow 600, tabular lining numerals): XL 3.75rem (desktop 4.75rem) for the current odometer, M 1.75rem, S 1.25rem; units in Geist 0.8125rem Ink 3.
+- **Plate** (Barlow 600, 0.08em tracking): 0.9375 / 1.125 / 1.5rem in 26 / 34 / 42px chips.
 
 ### Named Rules
-**The Sentence Rule.** Section headings are real words at real size. Small uppercase tracked labels are not used as headings.
+**The Instrument Rule.** A reading of the vehicle (odometer, plate, a kilometre figure) is set in Barlow with tabular lining figures. A count or date inside prose is body text.
 
-**The Instrument Rule.** A number that is a reading of the vehicle is set in the figure face. A count or date inside prose is body text.
+**The Make-Light Rule.** Wherever make and model appear as a pair in display type, the make is weight 300 and the model weight 700.
 
 ## Layout
 
-Operate mode: a clean aligned grid, consistent spacing, a real type scale.
+Phone is a single column with a 16px gutter (24px on desktop). Spacing is a 4px base: 2, 4, 8, 12, 16, 24, 32, 48, 72. Controls are 48px tall on touch and 36px on desktop; the minimum tap target is 44px (36px on desktop).
 
-**Spacing.** 4px base. Steps 2, 4, 8, 12, 16, 24, 32, 48, 72. Phone gutter 16px (24px on desktop). Blocks are separated by 32px; touch targets are 44px (32px on fine-pointer desktop).
+Garage: a stack of vehicle cards on phones, an auto-fill grid with 320px minimum columns on desktop (max width 1320px). Vehicle page: a sticky 56px header, a stage card with the ink panel directly below, a sticky pill tab strip, then white section cards. At 1024px a 264px sidebar appears, the stage and ink panel sit side by side (1.1fr / 1fr), and a 320px sticky properties rail joins the Overview. Past the Overview the header collapses to a single strip. Documents and Service become master-detail panes. Sheets are bottom sheets on phones and centred dialogs from 640px (520px wide, 720px for tall).
 
-**Surface logic.** The page is the canvas. Content sits directly on it as rows separated by 1px hairlines, rows at least 56px (44px desktop). Floating containers are reserved for sheets, popovers, menus and the palette. A vehicle is not a card.
-
-**Phone (under 1024px, designed first).**
-- *Garage:* a single column of full-bleed 16:10 bays: photograph, then model (24/28), make, the plate chip left and Figure M odometer right, then the Pit Board sentence at 20/26. Hairline between bays. An optional one-line "Needs you" fold sits above the first bay.
-- *Vehicle page:* a 56px sticky compact header (back, plate chip plus model that opens the vehicle switcher), then the identity block and Pit Board, then a sticky segmented strip of five labels (Overview, Glovebox, Service, Issues, Odometer) with a 2px Petrol underline on the current one. The five labels fit at 390px; on narrower phones the strip scrolls with a right-edge fade. It is not a bottom tab bar.
-- *Docked Add:* one 48px Petrol button fixed bottom-right whose label follows the tab: Add (Overview), Upload (Glovebox), Log service (Service), Add issue (Issues), Add reading (Odometer). Actions it covers are hidden on phone (`desktop-only`). Pages reserve 96px of bottom padding.
-- *Sheets over pages:* adding happens in a bottom sheet; from 640px it becomes a centred dialog (520px, 720px for tall ones).
-- No-photo vehicles on phones show a 104px paint band carrying only the model name; the hero carries an underlined "Add a photo" text link.
-- No horizontal scrolling of content.
-
-**Desktop (1024px and up with a fine pointer).**
-- A 248px sticky **sidebar**: brand, a search field showing the palette shortcut, My Garage, then each vehicle as name plus plate chip with a status dot for soon or overdue.
-- A **command palette** (Ctrl/Cmd+K), 640px wide, ranked search with grouped results. Outside the palette, single keys: g (garage), a (add), 1 to 5 (sections). Hints appear in the palette footer only.
-- Vehicle page max 1320px: a 320px photo beside identity and Pit Board; below, tabs and the main column (Overview capped at 760px) with a 300px **properties rail** at 1280px and above (a collapsed Details block on narrower widths).
-- On sub-tabs the identity collapses to a **one-line strip** (112px photo, 28px model, smaller Pit Board; variant, fuel and actions hidden).
-- **Glovebox** is master-detail (360px list, live document pane, sticky); **Service** splits the logbook and the selected record into two equal columns.
-- The Garage is an auto-fill grid of bays, minimum 300px, 48px by 32px gaps. Density tightens: body 14px, control 32px, buttons 13px.
+Cards stack with 16px between them and are never nested inside other cards.
 
 ## Elevation & Depth
 
-Flat and hairline-driven; depth is tonal first, with a shadow only where something truly floats. There are no gradients for decoration (the only gradient is the mask that fades the right end of the section strip), no glass and no blur.
+Depth is tonal first, shadow second. Light theme cards lift with a soft two-layer shadow; dark theme drops shadows and uses a 1px hairline ring instead.
 
 ### Shadow Vocabulary
-- **Pop** (`box-shadow: 0 8px 24px rgb(17 22 19 / 0.12)`): popovers, the palette, centred dialogs, toasts, the docked Add button.
-- **Sheet** (`box-shadow: 0 -8px 32px rgb(17 22 19 / 0.14)`): phone bottom sheets, over a scrim of Tyre at 40%.
-- **Dark theme:** both shadows become a 1px line ring; the scrim is 60% black.
-- **Light paint edge:** a no-photo field with light paint gets an inset 1px Seam Strong so it keeps an edge.
-- **Selected swatch:** a 2px canvas gap plus a 2px Petrol ring.
+- **Card** (`0 1px 2px rgb(23 20 15 / 0.05), 0 10px 28px rgb(23 20 15 / 0.07)`; dark `0 0 0 1px line`): every white card.
+- **Pop** (`0 12px 36px rgb(23 20 15 / 0.18)`; dark `0 0 0 1px line-strong, 0 16px 40px rgb(0 0 0 / 0.5)`): command palette, desktop dialogs, toasts, docked Add.
+- **Sheet** (`0 -12px 40px rgb(23 20 15 / 0.2)`; dark `0 0 0 1px line-strong`): phone bottom sheets.
+- Scrim is `rgb(23 20 15 / 0.45)` (dark `rgb(0 0 0 / 0.62)`).
 
 ### Named Rules
-**The Hairline Rule.** Structure is made with 1px Seam lines, not boxes. If a section needs a box to be understood, its hierarchy is wrong.
+**The Flat Colour Rule.** Fills are flat. No gradients, glows, blurs or glass. The single exception is the mask-image fade on the scrolling tab strip, which reveals clipped tabs and paints nothing.
+
+**The Soft Shadow Rule.** Shadows are low, diffuse and ink-tinted. Never hard offset, never coloured.
 
 ## Shapes
 
-Modest, exact, consistent. Large radii read as consumer-soft; none appear.
-
-- **0px** full-bleed phone photographs, paint bands, and the phone document viewer screen.
-- **2px** document thumbnails and the document paper, so they read as paper.
-- **4px** plate chip, desktop photographs, count badges, swatches, skeleton bars, checkboxes on issues.
-- **6px** buttons, inputs, choice faces, menu items, toasts.
-- **8px** popovers, the palette, centred dialogs.
-- **14px** top corners of phone bottom sheets only.
-- **Round** only for the 8px status mark and sidebar dot. No pill buttons, filters or badges.
-
-Borders are 1px (plate 1.5px Tyre). Focus is a 2px Petrol ring, 2px offset (Petrol Lit in dark), on every interactive element; inputs draw it flush.
+Soft and rounded, in a clear ladder: 24px cards and desktop dialogs, 28px sheet top corners, 18px popovers and the docked Add, 16px inner wells/rows/status strips/thumbnails, 14px controls (buttons, inputs, sidebar items), 6px plates and document thumbnails, and full pills for tabs, chips, the segmented control and icon buttons. Vehicle thumbnails without a photo are circles. Check boxes are 9px-radius squares. The paint disc is a true circle, partly clipped by the stage edge (54% wide, offset right and above; 62% on the hero). Borders are 1.5px on controls, 1px for dividers. Focus is a 3px ring with 2px offset on every interactive element.
 
 ## Components
 
 ### Buttons
-- **Shape:** 6px radius, 15px type at 600 (13px on desktop), 44px tall on phones, 32px on desktop.
-- **Primary:** Petrol fill, white text, 16px side padding; hover Petrol Deep. One per view. Disabled turns Slab with Gravel text.
-- **Secondary:** Chalk fill, Control Edge border, hover Slab.
-- **Ghost / link:** Petrol text; links are underlined with 1px weight. **Danger:** vermilion text on Chalk with Control Edge border, hover overdue wash.
-- **Docked Add:** the one floating primary: 48px, 16px/650 label with a plus, Pop shadow, scales to 97% when pressed.
+- **Shape:** 14px radius, 48px tall (36px desktop), 24px side padding (16px desktop), weight 650, 1.5px border.
+- **Primary:** saffron fill, ink text; hover to #f2b21f; press scales to 0.98. Disabled turns sunk with Ink 3 text.
+- **Secondary:** white fill, strong seam border, ink text; hover border goes ink.
+- **Dark:** ink fill, card-coloured text.
+- **Ghost / link:** ink text with a 2 to 3px saffron underline; hover fills with saffron wash.
+- **Danger:** overdue-coloured text on card; hover fills overdue wash.
+- **Docked Add:** the single floating action on phones, 54px, 18px radius, saffron, bottom-right, pop shadow.
 
-### Plate chip
-White ground, 1.5px Tyre border, 4px radius, Barlow 600 with +0.08em tracking, one line. Heights 26 / 32 / 40px (sm, md, lg) with 15 / 17 / 22px lettering; the dense sidebar uses 22px (collapsing to 18px beneath a vehicle name). It stays white-and-black in dark theme, like a real plate. No two-line two-wheeler plate and no plate-colour variants were built.
+### Pit Panel (signature)
+The ink panel (24px radius, 24px padding, 1px panel border) holds the Pit Board sentence in display type with a status mark in the panel-safe status colour, and at most one action. Links in it are white with a saffron underline. One panel per vehicle page; in the collapsed strip it shrinks to 18px radius and a 1rem sentence.
 
-### Status line
-An 8px round mark plus words, as a line of text, never a pill. Only soon and overdue colour the sentence; dates after it stay Gravel. A "+N more" or, on the vehicle page, "and N more things" trailer sits in Gravel at a smaller size.
+### Paint Stage (signature)
+Vehicle imagery is the owner's photo (cover-fit, fades in) or, with none, a paint stage: pale oklch tint, flat disc, make over model in the Make-Light pairing. Thumbnails are a full paint circle with a two-letter model monogram in Barlow. 16:9 on garage cards, 2:1 hero on phones, 16:9 on desktop.
 
-### Pit Board
-The verdict sentence at Pit Board scale, with one action button beneath it (for example "Upload the new PUC"). Other obligations are counted only in "and N more things"; long sentences step down to the smaller size. A sentence links to the tab it concerns.
+### Cards / Containers
+- **Corner Style:** 24px. **Background:** white (dark #1d1a16). **Shadow:** Card. **Padding:** 24px, 16px between stacked cards. Rows inside use 1px seam dividers, minimum 56px tall (48px desktop).
 
-### Vehicle bay and imagery
-Photograph at 16:10, model, make, plate and odometer, Pit Board line. Pressed, the photograph settles to 98.5% scale. No box, no shadow. With no photo: a field of the owner's paint with saturation capped at 30%, make (80% opacity) and model set large at the bottom-left in black or white by lightness; on phones a 104px band with the model only.
+### Tabs
+Pill section tabs on the paper ground: 42px tall (38px desktop), 14px side padding, weight 650, Ink 2 text; hover fills sunk; the active pill is ink with card-coloured text. Count badges are saffron. The strip scrolls horizontally with snap and a mask fade at clipped edges.
 
-### Rows, logbook and documents
-Rows are hairline-separated with a Slab hover and a Petrol Wash active state. A document row is a 40x52 thumbnail (2px, monogram fallback), type as title, validity as secondary, status on the right. The logbook puts the odometer reading and date in a right-aligned margin, a 1px rail with a hollow 9px node, then workshop text with carry-forward lines; no cards. Opening a document on phones slides a full screen in from the right; on desktop it fills the sticky pane.
+### Inputs / Fields
+- **Style:** white, 1.5px strong-seam border, 14px radius, 48px tall, label above in 0.8125rem weight 600 Ink 2.
+- **Focus:** 3px focus ring and ink border. **Error:** overdue-coloured border and message. Figure inputs (odometer) use Barlow at 2.5rem; plate inputs use Barlow, uppercase, 0.08em tracking.
+- **Choice chips:** full-pill, strong-seam border; checked is saffron with an ink border.
 
-### Inputs and choices
-44px (32px desktop), 6px radius, Control Edge border, labels above, 16px text on phones. Focus draws a 2px Petrol outline. Errors are vermilion text beneath the field plus a vermilion border. Figure and plate inputs use Barlow at 36px / 24px. Choices are radios drawn as chips, rows or a two-column grid; checked uses Petrol Wash with a Petrol inset ring.
+### Status
+A line: 9px mark plus a sentence. Only soon and overdue colour the words. A strip variant fills the full width with the status wash, 16px radius, weight 600. Info uses saffron wash. Neutral is a hollow mark.
 
-### Bottom sheet and toast
-Sheet: grabber, title, scrolling body, a footer with the primary action over a hairline; Escape, scrim or drag dismiss. A toast is a Tyre bar (inverted in dark) above the docked button, with an underlined Undo.
+### Plate Chip
+White with an ink 1.5px border, 6px radius, Barlow 600 with 0.08em tracking; always white and ink in both themes, like a real plate. Heights 22 (sidebar), 26, 34, 42px.
 
-### Command palette and sidebar
-The palette is a centred 8px-radius panel with a 52px input, grouped results (selected row in Petrol Wash), and a footer of shortcut hints in small keycaps. The sidebar items are 32px with a Petrol Wash current state.
+### Navigation
+Sidebar items are 40px, 14px radius; current page is ink with card-coloured text; vehicles list a 10px paint swatch, name and plate with a status dot. Command palette: 640px, 24px radius; selected row is saffron. Theme control is a pill segmented control (Light, Dark, System); the active segment is ink.
 
-### Motion
-Fast and exact, ease-out (cubic-bezier 0.22, 1, 0.36, 1), no bounce. Implemented: bottom-sheet rise (260ms) and dialog entry, toast arrival (240ms), the phone document screen sliding in (220ms), the bay press-settle (150ms), disclosure caret rotation (150ms), image fade-in (250ms), 120ms colour transitions on controls. Under reduced motion, movement is dropped and a 120ms fade remains; the spinner breathes in opacity instead of rotating.
-
-### Icons
-Phosphor Regular, one family. Document types use typographic monograms in plate-style lettering.
+### Theming
+Light, Dark and System. Choosing Light or Dark sets `data-theme` on the root and persists it under `pitstop:theme`; System removes the attribute and follows the device. An inline script in the document head applies a stored choice before first paint so there is no flash. Motion uses one ease (`cubic-bezier(0.22, 1, 0.36, 1)`), 140ms on controls, 280ms sheets; reduced motion drops movement and keeps a short fade.
 
 ## Do's and Don'ts
 
 ### Do:
-- **Do** make the vehicle the largest, first, most visual object on the Garage.
-- **Do** write status as a sentence, colouring the words only for soon (amber) and overdue (vermilion).
-- **Do** give every colour exactly one job.
-- **Do** build structure from type scale, spacing and 1px hairlines.
-- **Do** keep the Pit Board to one sentence with at most one action button.
-- **Do** set readings in Barlow with tabular lining figures.
-- **Do** design the phone first, then re-compose, not enlarge, for desktop.
-- **Do** keep Gravel (#5e665f) as the lowest-contrast text, and 13px (12px on desktop) as the smallest.
+- **Do** give each colour one job: saffron acts, ink panel instructs, washes plus words report status, paint identifies.
+- **Do** put the Pit Board sentence in the ink panel with at most one action.
+- **Do** write status as words with a mark, and tint the wash behind it.
+- **Do** give a vehicle with no photo its paint stage: pale oklch tint plus a flat disc, make light over model bold.
+- **Do** use ink text on saffron, and set readings and plates in Barlow with tabular lining figures.
+- **Do** design light and dark together; verify every new surface in both themes.
+- **Do** keep cards at 24px, controls at 14px, tabs and chips as pills.
+- **Do** use the owner's own photographs for imagery.
+- **Do** allow the F1 influence only in naming, microcopy and motion, at most one wink per screen.
 
 ### Don't:
-- **Don't** put vehicles in floating, rounded cards or stack KPI tiles.
-- **Don't** use a bottom tab bar for sections; the strip under the header does that job.
-- **Don't** use red for anything but expired, overdue or an input error.
-- **Don't** use gradients, glass, blur, fake 3D, carbon texture or checkered flags as decoration.
-- **Don't** let a paint field exceed 30% saturation.
-- **Don't** use pill shapes, or a radius above 14px.
-- **Don't** rely on colour alone for any status.
-- **Don't** use abbreviations or percentages where a sentence will do.
-- **Don't** claim motion the build lacks (odometer ticking, Glovebox drop-in, Pit Board cross-fade).
+- **Don't** use gradients, glows or purple/blue AI gradient washes; the tab-strip scroll-fade mask is the only permitted gradient and it paints nothing.
+- **Don't** use glassmorphism, backdrop blur or translucent panels.
+- **Don't** build a racing-game or telemetry UI: no carbon fibre, no checkered flags, no speedometer dials.
+- **Don't** use stock, rendered or silhouette vehicle imagery; a vehicle is a photo or its paint stage.
+- **Don't** make an F1 reference inside a warning, overdue or error state.
+- **Don't** let status rely on colour alone, or let vehicle paint colour buttons, text or status.
+- **Don't** nest cards inside cards or stack KPI tiles.
+- **Don't** use hard offset shadows or coloured shadows.
+- **Don't** use small uppercase tracked labels as headings; headings are real words in sentence case.
