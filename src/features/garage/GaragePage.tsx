@@ -131,7 +131,7 @@ function Bay({ bundle, today, eager }: { bundle: VehicleBundle; today: string; e
       </div>
       <div className="bay__body">
         <h2 className={v.photo_path ? 'bay__model' : 'bay__model sr-only'}>{v.model}</h2>
-        <p className="bay__make">{[v.make, v.variant].filter(Boolean).join(' · ')}</p>
+        {(v.photo_path || v.variant) && <p className="bay__make">{(v.photo_path ? [v.make, v.variant] : [v.variant]).filter(Boolean).join(' · ')}</p>}
         <div className="bay__id">
           {v.registration_number ? <Plate value={v.registration_number} size="sm" /> : <span className="t-label t-ink-3">Not registered yet</span>}
           <span className="bay__odo">
@@ -145,7 +145,7 @@ function Bay({ bundle, today, eager }: { bundle: VehicleBundle; today: string; e
             )}
           </span>
         </div>
-        <PitBoardLine board={board} className="bay__board" />
+        <PitBoardLine board={board} className="status--strip bay__board" />
       </div>
     </Link>
   );

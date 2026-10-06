@@ -5,6 +5,7 @@ import { pitBoard } from '@/lib/status';
 import { Plate } from '@/ui/atoms';
 import { Command, MagnifyingGlass, Plus, User } from '@/ui/icons';
 import { useSheet } from '@/ui/hooks';
+import { ThemeToggle } from '@/ui/theme';
 
 const isMac = typeof navigator !== 'undefined' && /Mac|iPhone|iPad/.test(navigator.platform);
 
@@ -38,7 +39,10 @@ export function Sidebar({ onSearch }: { onSearch: () => void }) {
           return (
             <li key={v.id}>
               <NavLink to={`/vehicles/${v.id}`} className="sidebar__vehicle">
-                <span className="sidebar__vname">{v.model}</span>
+                <span className="sidebar__vname">
+                  <span className="sidebar__swatch" style={v.colour_hex ? ({ '--vc': v.colour_hex } as React.CSSProperties) : undefined} aria-hidden="true" />
+                  {v.model}
+                </span>
                 {board && (board.severity === 'overdue' || board.severity === 'soon') && (
                   <span className={`sidebar__dot sidebar__dot--${board.severity}`} role="img" aria-label={board.severity === 'overdue' ? 'Needs attention' : 'Something coming up'} />
                 )}
@@ -53,6 +57,7 @@ export function Sidebar({ onSearch }: { onSearch: () => void }) {
         <NavLink to="/vehicles/new" className="sidebar__item">
           <Plus size={16} aria-hidden /> Add vehicle
         </NavLink>
+        <div className="sidebar__theme"><ThemeToggle compact /></div>
         <button type="button" className="sidebar__item" onClick={() => sheet.open('account')}>
           <User size={16} aria-hidden /> Account
         </button>

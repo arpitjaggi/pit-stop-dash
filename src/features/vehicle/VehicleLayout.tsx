@@ -70,9 +70,14 @@ export function VehicleLayout() {
     return () => { ul.removeEventListener('scroll', check); window.removeEventListener('resize', check); };
   }, [bundle?.vehicle.id, bundle?.issues]);
 
+  // Keep the current section in view inside the strip without moving the page itself.
   useEffect(() => {
-    document.querySelector('.vtabs__link[aria-current="page"]')?.scrollIntoView({ block: 'nearest', inline: 'center' });
-  }, [pathname]);
+    const ul = tabsRef.current?.querySelector('ul');
+    const current = ul?.querySelector<HTMLElement>('.vtabs__link[aria-current="page"]');
+    if (!ul || !current) return;
+    const left = current.offsetLeft - (ul.clientWidth - current.offsetWidth) / 2;
+    ul.scrollTo({ left: Math.max(0, left), behavior: 'instant' });
+  }, [pathname, bundle?.vehicle.id]);
 
   if (loading) return <div className="page vpage"><div className="vhead__loading skeleton" aria-busy="true" /></div>;
   if (error) return <div className="page vpage stack"><Notice tone="error">We could not load this vehicle. {error.message}</Notice><LinkButton to="/">Back to the garage</LinkButton></div>;
@@ -125,40 +130,42 @@ export function VehicleLayout() {
           {compact && <h1 className="sr-only">{v.make} {v.model}</h1>}
           {!compact && (
             <header className={cx('vhead', strip && 'vhead--strip')}>
-              <div className="vhead__media">
-                <VehicleImage vehicle={v} variant="hero" eager />
-                {!v.photo_path && !strip && (
-                  <button type="button" className="vhead__addphoto" onClick={() => sheet.open('edit-vehicle', { v: v.id })}>
-                    <Camera size={16} aria-hidden /> Add a photo
-                  </button>
-                )}
-              </div>
-              <div className="vhead__id" ref={sentinel}>
-                <h1 className="t-display vhead__model">{v.model}</h1>
-                <p className="vhead__variant t-ink-2">{[v.make, v.variant].filter(Boolean).join(' · ')}</p>
-                <div className="vhead__facts">
-                  {v.registration_number ? <Plate value={v.registration_number} size={desktop && !strip ? 'lg' : 'md'} /> : <span className="t-label t-ink-3">Not registered yet</span>}
-                  <span className="vhead__fuel t-ink-2">{fuelLabel(v.fuel_type)}</span>
-                  <span className="vhead__odo">
-                    {v.current_odometer_km != null ? (
-                      <>
-                        <span className="fig fig-m">{formatNumber(v.current_odometer_km)}</span>
-                        <span className="fig-unit">km</span>
-                      </>
-                    ) : (
-                      <span className="t-label t-ink-3">No reading yet</span>
-                    )}
-                  </span>
+              <div className="vhead__stage">
+                <div className="vhead__media">
+                  <VehicleImage vehicle={v} variant="hero" eager />
+                  {!v.photo_path && !strip && (
+                    <button type="button" className="vhead__addphoto" onClick={() => sheet.open('edit-vehicle', { v: v.id })}>
+                      <Camera size={16} aria-hidden /> Add a photo
+                    </button>
+                  )}
+                </div>
+                <div className="vhead__id" ref={sentinel}>
+                  <h1 className="t-display vhead__model">{v.model}</h1>
+                  <p className="vhead__variant t-ink-2">{[v.make, v.variant].filter(Boolean).join(' · ')}</p>
+                  <div className="vhead__facts">
+                    {v.registration_number ? <Plate value={v.registration_number} size={desktop && !strip ? 'lg' : 'md'} /> : <span className="t-label t-ink-3">Not registered yet</span>}
+                    <span className="vhead__fuel t-ink-2">{fuelLabel(v.fuel_type)}</span>
+                    <span className="vhead__odo">
+                      {v.current_odometer_km != null ? (
+                        <>
+                          <span className="fig fig-m">{formatNumber(v.current_odometer_km)}</span>
+                          <span className="fig-unit">km</span>
+                        </>
+                      ) : (
+                        <span className="t-label t-ink-3">No reading yet</span>
+                      )}
+                    </span>
+                  </div>
                 </div>
               </div>
-              <div className="vhead__board">
+              <div className="vhead__board pitpanel">
                 <Link to={board.tab === 'overview' ? '.' : board.tab} className="vhead__boardlink" aria-label={`${board.sentence} Open details`}>
                   <PitBoardLine board={{ ...board, more: 0 }} className={cx('t-board', long && 't-board--long')} />
                 </Link>
                 {(board.action || board.more > 0) && (
                   <div className="vhead__actions">
                     {board.action && (
-                      <Button variant="secondary" onClick={() => act(board.action as PitAction)}>
+                      <Button variant="primary" onClick={() => act(board.action as PitAction)}>
                         {board.action.label}
                       </Button>
                     )}

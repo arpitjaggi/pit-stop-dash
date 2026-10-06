@@ -2,5 +2,5 @@
 export {
   ArrowLeft, ArrowSquareOut, CaretDown, CaretRight, CaretUpDown, Check, Command, Copy, Camera, DotsThree, DownloadSimple, FilePdf,
   FileText, Gauge, MagnifyingGlass, PencilSimple, Plus, ShareNetwork, SignOut, Trash, UploadSimple, User, Warning, Wrench, X,
-  ArrowCounterClockwise, Image as ImageIcon, MagnifyingGlassPlus, MagnifyingGlassMinus, Folder, ListChecks,
+  ArrowCounterClockwise, Image as ImageIcon, Sun, Moon, Desktop, MagnifyingGlassPlus, MagnifyingGlassMinus, Folder, ListChecks,
 } from '@phosphor-icons/react';

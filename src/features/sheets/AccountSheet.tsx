@@ -4,6 +4,7 @@ import { Button, Notice } from '@/ui/atoms';
 import { SignOut, ArrowCounterClockwise } from '@/ui/icons';
 import { useSheet } from '@/ui/hooks';
 import { Sheet } from '@/ui/Sheet';
+import { ThemeToggle } from '@/ui/theme';
 
 export function AccountSheet() {
   const session = useSession();
@@ -12,6 +13,10 @@ export function AccountSheet() {
   return (
     <Sheet title="Account">
       <div className="stack">
+        <div className="stack stack--tight">
+          <p className="field__label">Appearance</p>
+          <ThemeToggle />
+        </div>
         {session.mode === 'demo' ? (
           <Notice>Demo mode. Everything here is sample data, saved only in this browser.</Notice>
         ) : (

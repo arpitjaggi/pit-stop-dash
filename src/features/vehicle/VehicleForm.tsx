@@ -19,9 +19,9 @@ const MAKES = [
 ];
 
 const SWATCHES = [
-  { name: 'White', hex: '#E4E6E0' }, { name: 'Silver', hex: '#B9BDBA' }, { name: 'Grey', hex: '#5C6360' }, { name: 'Black', hex: '#2B2F2D' },
-  { name: 'Red', hex: '#9A2F2A' }, { name: 'Orange', hex: '#C4622D' }, { name: 'Yellow', hex: '#D9B33A' }, { name: 'Green', hex: '#3C5A45' },
-  { name: 'Blue', hex: '#2F4A6B' }, { name: 'Brown', hex: '#6B4E3A' }, { name: 'Gold', hex: '#B8A27A' },
+  { name: 'White', hex: '#ECE9E1' }, { name: 'Silver', hex: '#B8BDC2' }, { name: 'Grey', hex: '#6B7280' }, { name: 'Black', hex: '#1F1D1A' },
+  { name: 'Red', hex: '#E5383B' }, { name: 'Orange', hex: '#F97316' }, { name: 'Yellow', hex: '#F5B800' }, { name: 'Green', hex: '#1F7A4D' },
+  { name: 'Teal', hex: '#14B8A6' }, { name: 'Blue', hex: '#3B82F6' }, { name: 'Navy', hex: '#1E3A8A' }, { name: 'Brown', hex: '#8B5E3C' },
 ];
 
 interface Values {

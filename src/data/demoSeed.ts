@@ -83,22 +83,22 @@ export async function buildSeed() {
 
   const swift: Vehicle = {
     ...base, id: 'demo-swift', vehicle_type: 'car', make: 'Maruti Suzuki', model: 'Swift', variant: 'VXi', registration_number: 'KA01MN4821',
-    registration_date: d(-1100), purchase_date: d(-1100), fuel_type: 'petrol', colour_name: 'Pearl white', colour_hex: '#E4E6E0',
+    registration_date: d(-1100), purchase_date: d(-1100), fuel_type: 'petrol', colour_name: 'Sky blue', colour_hex: '#3B82F6',
     engine_cc: 1197, transmission: 'Manual', service_interval_km: 10000, service_interval_months: 12, current_odometer_km: 45210, odometer_read_on: d(-6),
   };
   const bike: Vehicle = {
     ...base, id: 'demo-classic', vehicle_type: 'motorcycle', make: 'Royal Enfield', model: 'Classic 350', variant: 'Signals', registration_number: 'KA03HF7710',
-    registration_date: d(-640), purchase_date: d(-640), fuel_type: 'petrol', colour_name: 'Stealth black', colour_hex: '#2B2F2D', engine_cc: 349,
+    registration_date: d(-640), purchase_date: d(-640), fuel_type: 'petrol', colour_name: 'Racing green', colour_hex: '#1F7A4D', engine_cc: 349,
     transmission: 'Manual', wheels: 2, service_interval_km: 5000, service_interval_months: 6, current_odometer_km: 14100, odometer_read_on: d(-41),
   };
   const creta: Vehicle = {
     ...base, id: 'demo-creta', vehicle_type: 'suv', make: 'Hyundai', model: 'Creta', variant: 'SX Diesel', registration_number: 'MH12XY9034',
-    registration_date: d(-900), purchase_date: d(-900), fuel_type: 'diesel', colour_name: 'Titan grey', colour_hex: '#5C6360', engine_cc: 1493,
+    registration_date: d(-900), purchase_date: d(-900), fuel_type: 'diesel', colour_name: 'Sunset orange', colour_hex: '#F97316', engine_cc: 1493,
     transmission: 'Automatic', service_interval_km: 10000, service_interval_months: 12, current_odometer_km: 61840, odometer_read_on: d(-4),
   };
   const activa: Vehicle = {
     ...base, id: 'demo-activa', vehicle_type: 'scooter', make: 'Honda', model: 'Activa 6G', variant: 'Deluxe', registration_number: null,
-    purchase_date: d(-9), fuel_type: 'petrol', colour_name: 'Pearl igneous', colour_hex: '#9A2F2A', engine_cc: 109, wheels: 2,
+    purchase_date: d(-9), fuel_type: 'petrol', colour_name: 'Pearl teal', colour_hex: '#14B8A6', engine_cc: 109, wheels: 2,
     service_interval_km: 5000, service_interval_months: 6, current_odometer_km: 12, odometer_read_on: d(-9),
   };
   vehicles.push(swift, bike, creta, activa);

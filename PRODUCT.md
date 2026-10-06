@@ -135,12 +135,14 @@ Still open:
 - The F1 influence lives in subtle details, naming, composition, and micro-interactions. It must not look like an F1 website, racing game, or motorsport dashboard.
 - Intended personality: premium, personal, practical, automotive, slightly quirky, calm, well organised, fast, information-rich without being overwhelming. It should feel like someone who loves cars cared about it, not like an AI generated a dashboard.
 
-Visual direction volunteered by the user, recorded as binding (not yet expanded into a visual world):
+Visual direction, revised by the owner on 6 Oct 2026 after seeing the first build ("too bland"), recorded as binding:
 
-- **"Bold Linear."** Linear is the strongest reference for information hierarchy, layout discipline, navigation, typography, spacing, density, subtle surfaces, borders, interaction quality, and overall polish. Pit Stop Dash must not look like Linear.
-- Compared with Linear it should have: stronger typographic hierarchy, more prominent vehicle imagery, more confident section headings, slightly more visual contrast, and a little more personality. Automotive character comes from composition and micro-interactions rather than gimmicky graphics. Boldness comes from typography, spacing, scale, contrast and composition, not decoration.
-- Summary: Linear's product discipline plus premium automotive product design plus subtle F1 personality.
-- Avoid: corporate fleet-management aesthetics, generic SaaS dashboards, excessive charts, excessive rounded cards, every element inside a floating card, giant dashboard KPI cards, purple or blue AI gradients, glassmorphism, fake automotive 3D graphics, racing-game graphics, fake telemetry screens, carbon-fibre textures, checkered flags, and excessive red or orange automotive clichés (including red used simply because of motorsport).
+- **Vibrant, warm and confident, in light and dark modes.** The Linear-style restraint is retired. The references the owner supplied (a car-rental tablet UI with a warm ground, saffron-yellow action colour and a dark detail panel; a row of cards where each car owns a large disc of its own paint colour; a car-health phone app) set the mood: colour with a job, soft rounded cards, big friendly type, dark panels for the key action.
+- **Each vehicle owns its colour.** The vehicle's paint colour is its identity across its screens.
+- **No gradients, no glow.** Flat colour only. Explicitly rejected: lavender/blue AI gradients, glassmorphism, soft glows (the health-app reference's gradients were the thing to avoid).
+- Still binding from earlier: not an F1 website, racing game or telemetry screen; no carbon fibre or checkered flags; no stock or fake vehicle imagery (photos are the owner's own); the F1 influence stays in naming, microcopy and motion, at most one wink per screen and never inside a warning.
+- Name and personality are unchanged: "Pit Stop Dash"; personal, practical, calm, well organised, a little quirky.
+- Light and dark are both first-class; the owner can choose Light, Dark or follow the system.
 - The homepage feels like "My Garage", not a fleet dashboard.
 
 ## Evidence on Hand
