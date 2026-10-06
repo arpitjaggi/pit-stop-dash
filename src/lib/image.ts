@@ -63,6 +63,18 @@ export async function prepareImage(file: Blob, spec: ImageSpec): Promise<Prepare
   }
 }
 
+/** A picked document ready to store: images are resized and given a preview, PDFs go as they are. */
+export async function prepareDocumentUpload(file: File): Promise<{ blob: Blob; thumb: Blob | null; mime: string; name: string }> {
+  if (!isImage(file)) return { blob: file, thumb: null, mime: file.type || 'application/pdf', name: file.name };
+  const img = await prepareImage(file, DOCUMENT_SPEC);
+  return {
+    blob: img.full,
+    thumb: img.thumb,
+    mime: img.full.type,
+    name: file.name.replace(/\.[^.]+$/, '') + (img.ext === 'webp' ? '.webp' : '.jpg'),
+  };
+}
+
 export const isPdf = (f: { type: string; name?: string }) => f.type === 'application/pdf' || /\.pdf$/i.test(f.name ?? '');
 export const isImage = (f: { type: string }) => f.type.startsWith('image/');
 

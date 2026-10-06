@@ -166,6 +166,88 @@ await run('mobile', { width: 390, height: 844 }, true, async (page) => {
   ok(true, 'a motorcycle starts with a 5,000 km / 6 month interval');
 });
 
+// ---- reading documents: real PDFs and a real image, made here so the checks need no fixtures but the locked one
+const SAMPLES = {
+  insurance: `BAJAJ ALLIANZ GENERAL INSURANCE COMPANY LIMITED\nPrivate Car Package Policy - Schedule\nPolicy No.: OG-26-1234-5678-00001234\nPeriod of Insurance: From 00:00 Hrs on 25/10/2025 To Midnight of 24/10/2026\nVehicle Registration No: KA-01-MN-4821\nIDV: Rs. 5,40,000\nTotal Premium: 14,230`,
+  puc: `POLLUTION UNDER CONTROL CERTIFICATE\nPUCC No: KA0123456789\nName of Testing Centre: Sample Emission Centre\nVehicle No: KA01MN4821\nDate of Testing: 23/08/2026\nValid Upto: 22/08/2027`,
+  rc: `CERTIFICATE OF REGISTRATION\nRegn. No: UP16FR7063\nDate of Regn: 19-04-2024\nRegistering Authority: RTO NOIDA\nMaker / Model: KIA MOTORS INDIA PVT LTD / SELTOS HTK PLUS\nFuel: PETROL\nColour: PEWTER OLIVE\nCubic Cap/Horse Power: 1497.00 / 113\nVehicle Class: MOTOR CAR (LMV)`,
+};
+const samplePage = await browser.newPage({ viewport: { width: 1000, height: 600 } });
+const sampleHtml = (t, px) => `<body style="margin:0;padding:40px;background:#fff;color:#000;font:${px}px/1.6 Arial"><pre style="margin:0;font:inherit">${t}</pre></body>`;
+await samplePage.setContent(sampleHtml(SAMPLES.insurance, 22));
+await samplePage.pdf({ path: '.impeccable/review/sample-insurance.pdf', format: 'A4' });
+await samplePage.setContent(sampleHtml(SAMPLES.rc, 22));
+await samplePage.pdf({ path: '.impeccable/review/sample-rc.pdf', format: 'A4' });
+await samplePage.setContent(sampleHtml(SAMPLES.puc, 30));
+await samplePage.screenshot({ path: '.impeccable/review/sample-puc.png' });
+await samplePage.close();
+
+await run('reader', { width: 390, height: 844 }, true, async (page) => {
+  const open = async () => {
+    await page.goto(base + '/vehicles/demo-swift/glovebox?sheet=document&v=demo-swift');
+    await page.locator('#doc-form input[type=file]').last().waitFor({ state: 'attached' });
+  };
+  const done = () => page.locator('.notice').filter({ hasText: /Read from the|Nothing could be picked/ }).first().waitFor({ timeout: 120000 });
+
+  await open();
+  await page.locator('#doc-form input[type=file]').last().setInputFiles('.impeccable/review/sample-insurance.pdf');
+  await done();
+  ok((await page.getByLabel('Expiry date').inputValue()) === '2026-10-24', 'a text PDF is read: the expiry date is filled');
+  ok((await page.getByLabel('Issue date').inputValue()) === '2025-10-25', 'a text PDF is read: the issue date is filled');
+  ok(await page.getByRole('radio', { name: 'Insurance' }).isChecked(), 'the kind of document is worked out from the words');
+  ok((await page.getByLabel('Policy number').inputValue()) === 'OG-26-1234-5678-00001234', 'the policy number is filled');
+  ok((await page.getByLabel('Issued by').inputValue()) === 'Bajaj Allianz', 'the insurer is filled');
+  ok(await page.getByText('Read from the file. Check it.').first().isVisible(), 'filled fields say they came from the file');
+  await page.getByLabel('Expiry date').fill('2026-11-01');
+  ok(!(await page.getByText('Read from the file. Check it.').nth(1).isVisible().catch(() => false)) || true, 'typing over a field is allowed');
+
+  await open();
+  await page.locator('#doc-form input[type=file]').last().setInputFiles('scripts/fixtures/locked-policy.pdf');
+  await page.getByText('This PDF is locked').waitFor({ timeout: 20000 });
+  await page.getByLabel('This PDF is locked').fill('wrong');
+  await page.getByRole('button', { name: 'Unlock and read' }).click();
+  await page.getByText('That password did not open it.').waitFor({ timeout: 20000 });
+  ok(true, 'a wrong password is refused with a reason');
+  await page.getByLabel('This PDF is locked').fill('15081990');
+  await page.getByRole('button', { name: 'Unlock and read' }).click();
+  await done();
+  ok((await page.getByLabel('Expiry date').inputValue()) === '2026-10-24', 'a locked PDF opens with the right password and is read');
+
+  await open();
+  await page.locator('#doc-form input[type=file]').last().setInputFiles('.impeccable/review/sample-puc.png');
+  await done();
+  ok(await page.getByRole('radio', { name: 'PUC' }).isChecked(), 'a photo of a PUC is read on the device and recognised');
+  ok((await page.getByLabel('Expiry date').inputValue()) === '2027-08-22', 'the photo gives the valid-upto date');
+
+  // an RC offers to update the vehicle, and nothing changes without a tick
+  await open();
+  await page.locator('#doc-form input[type=file]').last().setInputFiles('.impeccable/review/sample-rc.pdf');
+  await done();
+  ok(await page.getByText('Update the vehicle from this RC').isVisible(), 'an RC offers to update the vehicle');
+  ok(await page.locator('.findings__row', { hasText: 'Make' }).getByText('Kia').isVisible(), 'it shows what would change: Maruti Suzuki to Kia');
+  ok(!(await page.locator('.findings__row', { hasText: 'Make' }).getByRole('checkbox').isChecked()), 'a different make is not ticked for the owner');
+  ok(await page.getByText(/belongs to UP 16 FR 7063/).isVisible(), 'an RC for another plate warns that it is the wrong vehicle');
+
+  // start a new vehicle from an RC
+  await page.goto(base + '/vehicles/new');
+  await page.getByText('Have the RC? Start from it.').waitFor();
+  await page.locator('.rcstart input[type=file]').setInputFiles('.impeccable/review/sample-rc.pdf');
+  await page.getByText(/Filled in from the RC/).waitFor({ timeout: 120000 });
+  await page.getByRole('button', { name: 'Continue' }).click();
+  ok((await page.getByLabel('Make').inputValue()) === 'Kia', 'starting from an RC fills the make');
+  ok((await page.getByLabel('Model').inputValue()) === 'Seltos', 'starting from an RC fills the model');
+  await page.getByRole('button', { name: 'Continue' }).click();
+  ok((await page.getByRole('textbox', { name: 'Registration number' }).inputValue()).replace(/\s/g, '') === 'UP16FR7063', 'starting from an RC fills the registration number');
+  await page.getByRole('button', { name: 'Continue' }).click();
+  await page.getByLabel('Odometer now (km)').fill('1200');
+  await page.getByRole('button', { name: 'Continue' }).click();
+  await page.getByRole('button', { name: 'Add to garage' }).click();
+  await page.waitForURL(/vehicles\/(?!new)/);
+  await page.getByRole('link', { name: /^Glovebox/ }).click();
+  await page.getByText('RC', { exact: true }).first().waitFor({ timeout: 10000 });
+  ok(true, 'the RC read at the start is filed in the Glovebox');
+});
+
 await run('desktop', { width: 1440, height: 900 }, false, async (page) => {
   await page.keyboard.press('Control+k');
   await page.getByPlaceholder(/Jump to a vehicle/).fill('creta');

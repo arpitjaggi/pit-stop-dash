@@ -13,7 +13,7 @@ product rules in `PRODUCT.md`, then sequenced.
 | 4 | Spacing problem in the Glovebox header | **Built** |
 | 7 | Theme in Ferrari scarlet | **Built** (Phase 1). Warnings are yellow, told apart by icon |
 | 6 | Alerts for PUC, insurance, CNG hydro-test | **Built** (Phase 2): Telegram and email. Needs migration `20261006000002_reminders.sql`, two functions, secrets and a schedule (see README) |
-| 5 | Read documents and fill the fields | **Next** (Phase 3) |
+| 5 | Read documents and fill the fields | **Built** (Phase 3): text PDFs, locked PDFs and photos, all on the device. The optional AI reader is not built |
 | 3 | Fetch make and model details from the web | **Scrapped.** Phase 3 covers it: reading an RC fills make, model, fuel, engine and registration date from the document itself |
 
 Decisions taken on 6 Oct 2026: yellow is the colour for overdue and soon, with a warning octagon for overdue and a clock for soon; the rest of the work runs on free resources.
@@ -108,7 +108,7 @@ extension is on for your project.
 
 ---
 
-## Phase 3. Read documents and fill the fields (item 5)
+## Phase 3. Read documents and fill the fields (item 5). Built
 
 Three tiers, tried in order. Anything extracted goes to a **review screen** first. Nothing is
 saved without your tap, and existing values are shown beside the new ones.
@@ -119,9 +119,16 @@ saved without your tap, and existing values are shown beside the new ones.
    password and does not store it.
 2. **Photos and scans, free.** In-browser OCR (Tesseract). Works on clean, flat scans and is
    unreliable on glossy RC cards and angled photos. Marked as lower confidence.
-3. **AI vision, optional.** A Supabase Edge Function sends the file to a vision model and gets
-   structured fields back. Most accurate, costs per document, and sends the file to a third
-   party. It needs your explicit opt-in, a plain explanation of what is sent, and a monthly cap.
+3. **AI vision, optional. Not built.** A Supabase Edge Function would send the file to a vision
+   model and get structured fields back. Most accurate, but it costs per document and sends the
+   file to a third party. Left out because the work is meant to run on free resources; it would
+   need an explicit opt-in, a plain explanation of what is sent, and a monthly cap.
+
+**As built:** tiers 1 and 2, with the reader served from the app itself (no CDN). Starting an
+**Add a vehicle** from an RC is included, and the RC is filed in the Glovebox once the vehicle
+is added. Low-confidence values are shown with a "check this one" note rather than left blank.
+Tested on invented samples of each document type; real documents will vary, so the first real
+RCs and policies are the true test.
 
 Fields by document:
 - **RC:** registration number, make and model, fuel, registration date, engine cc, colour.
@@ -136,8 +143,7 @@ Privacy decisions:
 - A future DigiLocker route is possible, but its API is aimed at registered organisations, not
   individuals. Treat it as a later investigation.
 
-Each extracted value carries a confidence level. Low-confidence values are left blank on the
-review screen, not guessed.
+Each extracted value carries a confidence level, and the unsure ones say so.
 
 ---
 

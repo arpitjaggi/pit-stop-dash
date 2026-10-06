@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { loadPdfjs } from '@/lib/pdfjs';
 import { Notice, Spinner } from '@/ui/atoms';
 
 /**
@@ -18,9 +19,7 @@ export function PdfPages({ url, onFail }: { url: string; onFail?: () => void }) 
 
     (async () => {
       try {
-        const pdfjs = await import('pdfjs-dist');
-        const worker = (await import('pdfjs-dist/build/pdf.worker.min.mjs?url')).default;
-        pdfjs.GlobalWorkerOptions.workerSrc = worker;
+        const pdfjs = await loadPdfjs();
         const doc = await pdfjs.getDocument({ url }).promise;
         const width = el.clientWidth || 360;
         const dpr = Math.min(window.devicePixelRatio || 1, 2.5);

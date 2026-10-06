@@ -427,3 +427,26 @@ details > summary::-webkit-details-marker { display: none; }
 .crop__zoom input { width: 100%; accent-color: var(--brand); height: 32px; }
 .crop__actions { display: flex; gap: var(--sp-3); justify-content: flex-end; }
 .crop__actions .btn--primary { flex: 1; max-width: 240px; }
+
+/* ------------------------------------------------------------ reading a document */
+
+.reader { display: grid; grid-template-columns: auto 1fr; gap: var(--sp-3); align-items: center; padding: var(--sp-4); background: var(--well); border-radius: var(--r-inner); }
+.reader--ask { grid-template-columns: 1fr; }
+.reader__text { display: grid; gap: 4px; min-width: 0; }
+.reader__stage { font-weight: 650; }
+.reader__note { font-size: 0.8125rem; line-height: 1.125rem; }
+.reader__track { display: block; height: 6px; margin-top: 6px; border-radius: var(--r-full); background: var(--sunk); overflow: hidden; }
+.reader__fill { display: block; height: 100%; border-radius: var(--r-full); background: var(--brand); transition: width 0.3s var(--ease); }
+
+.findings { display: grid; gap: var(--sp-3); margin: 0; padding: var(--sp-4); border: 0; background: var(--well); border-radius: var(--r-inner); }
+.findings__list { display: grid; gap: var(--sp-1); margin: 0; padding: 0; list-style: none; }
+.findings__row { display: grid; grid-template-columns: 24px 1fr; gap: var(--sp-3); align-items: start; min-height: var(--tap); padding: var(--sp-2) 0; cursor: pointer; }
+.findings__row input { width: 22px; height: 22px; margin-top: 2px; accent-color: var(--brand); }
+.findings__text { display: grid; gap: 2px; min-width: 0; }
+.findings__label { font-size: 0.8125rem; font-weight: 650; color: var(--ink-3); }
+.findings__change { overflow-wrap: anywhere; }
+.findings__note { font-size: 0.8125rem; }
+
+.vform__stack { display: grid; gap: var(--sp-6); }
+.rcstart { display: grid; gap: var(--sp-3); justify-items: start; padding: var(--sp-5); background: var(--surface); border-radius: var(--r-card); box-shadow: var(--shadow-card); }
+.rcstart .reader, .rcstart .notice { justify-self: stretch; }

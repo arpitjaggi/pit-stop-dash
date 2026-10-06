@@ -64,6 +64,15 @@ The app can message you before insurance, PUC or a CNG hydro-test runs out, by e
 
 What is sent: for the latest insurance, PUC and CNG certificate of each vehicle, one message at each chosen lead time (30, 14, 7 or 1 day before, or on the day). If a day is missed the reminder is caught up, and nothing is sent twice. SMS and WhatsApp are not built: SMS in India needs sender registration with no free route, and WhatsApp business messages are paid.
 
+### Reading documents
+
+Uploading an insurance policy, PUC, CNG certificate or RC reads it on your device and fills in the issuer, number and dates for you to check. An RC also offers to update the vehicle (make, model, fuel, engine, registration number and date, colour), and **Add a vehicle** can start from an RC.
+
+- **PDFs with text** (most insurer and parivahan downloads) are read directly. Locked PDFs ask for the password, which is used once and never stored. Insurers usually use your date of birth or registration number.
+- **Photos and scanned PDFs** go through Tesseract OCR in a background worker. The engine and English data are copied from `node_modules` into `public/ocr/` by `scripts/copy-ocr.mjs` (run automatically before `dev`, `build` and after `install`), so nothing is fetched from a CDN and it works offline. About 21 MB of static files, loaded only when a photo is read.
+- Nothing leaves the device. The owner's name, address, chassis and engine numbers are never picked out or stored. Every suggestion is shown for you to check; nothing is saved without your tap, and fields filled from the file are marked "From the document" in the viewer.
+- OCR on a photo is far less reliable than on a text PDF, especially glossy RC cards and angled shots. A flat, well-lit photo helps. An AI reader for hard photos is not built: it would send the file to a third party and cost money per use.
+
 ### Deploy
 
 `npm run build` produces a static site in `dist/`. Host it anywhere that serves static files with a single-page-app fallback to `index.html` (Vercel, Netlify, Cloudflare Pages). Set the same two environment variables in the host.

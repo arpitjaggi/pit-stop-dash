@@ -9,22 +9,16 @@ import { formatNumber, parseNumber } from '@/lib/format';
 import { PHOTO_SPEC, prepareImage } from '@/lib/image';
 import { looksLikeRegistration, normaliseRegistration, plateTone, validRegistrationShape } from '@/lib/plate';
 import { Button, Choice, Field, Input, Notice, Plate, TextArea, cx } from '@/ui/atoms';
-import { ArrowLeft, Camera, Crop as CropIcon, Plus, X } from '@/ui/icons';
+import { ArrowLeft, Camera, Crop as CropIcon, Plus, UploadSimple, X } from '@/ui/icons';
 import { CropDialog } from '../shared/CropDialog';
+import { ReaderPanel } from '../shared/ReaderPanel';
+import { useDocumentReader } from '../shared/useDocumentReader';
+import { parseDocument } from '@/lib/docread/parse';
+import { swatchForName } from '@/lib/swatches';
 import { normaliseHex } from '@/lib/hex';
+import { MAKES } from '@/lib/makes';
+import { SWATCHES } from '@/lib/swatches';
 import { useSignedUrl } from '@/data/hooks';
-
-/** Popular Indian makes, as suggestions only. There is deliberately no vehicle database. */
-const MAKES = [
-  'Maruti Suzuki', 'Hyundai', 'Tata', 'Mahindra', 'Honda', 'Toyota', 'Kia', 'Renault', 'Volkswagen', 'Skoda', 'MG', 'Nissan', 'Ford', 'Jeep',
-  'Hero', 'Bajaj', 'TVS', 'Royal Enfield', 'Yamaha', 'Suzuki', 'KTM', 'Ather', 'Ola Electric', 'Jawa', 'Kawasaki', 'Triumph', 'Harley-Davidson',
-];
-
-const SWATCHES = [
-  { name: 'White', hex: '#ECE9E1' }, { name: 'Silver', hex: '#B8BDC2' }, { name: 'Grey', hex: '#6B7280' }, { name: 'Black', hex: '#1F1D1A' },
-  { name: 'Red', hex: '#E5383B' }, { name: 'Orange', hex: '#F97316' }, { name: 'Yellow', hex: '#F5B800' }, { name: 'Green', hex: '#1F7A4D' },
-  { name: 'Teal', hex: '#14B8A6' }, { name: 'Blue', hex: '#3B82F6' }, { name: 'Navy', hex: '#1E3A8A' }, { name: 'Brown', hex: '#8B5E3C' },
-];
 
 interface Values {
   type: VehicleType;
@@ -74,9 +68,18 @@ function initial(v?: Vehicle): Values {
   };
 }
 
+/** An RC read while adding the vehicle, to be filed in the Glovebox once the vehicle exists. */
+export interface RcToFile {
+  file: File;
+  issued_on: string | null;
+  issuer: string | null;
+  extracted_fields: string[];
+}
+
 export interface VehicleSubmit {
   vehicle: NewVehicle;
   photo: PreparedImage | 'remove' | null;
+  rc?: RcToFile | null;
 }
 
 interface Props {
@@ -118,6 +121,11 @@ export function VehicleForm({ existing, submitLabel, formId, busy, onSubmit, ser
   // A picked picture waits in the cropper; the last one picked is kept so it can be framed again.
   const [cropSource, setCropSource] = useState<File | null>(null);
   const [sourceFile, setSourceFile] = useState<File | null>(null);
+  // An RC read at the start fills the form, and is filed in the Glovebox when the vehicle is added.
+  const reader = useDocumentReader();
+  const rcInput = useRef<HTMLInputElement>(null);
+  const [rc, setRc] = useState<RcToFile | null>(null);
+  const [rcFound, setRcFound] = useState<string[]>([]);
   const [hexText, setHexText] = useState(() => (existing?.colour_hex && !SWATCHES.some((s) => s.hex === existing.colour_hex) ? existing.colour_hex : ''));
   const fileRef = useRef<HTMLInputElement>(null);
   const existingUrl = useSignedUrl('photos', existing?.photo_path);
@@ -128,6 +136,49 @@ export function VehicleForm({ existing, submitLabel, formId, busy, onSubmit, ser
 
   const norm = normaliseRegistration(v.registration);
   const shown = photo === 'remove' ? null : preview ?? (photo ? null : existingUrl ?? null);
+
+  const rcFileRef = useRef<File | null>(null);
+  function pickRc(file: File | undefined) {
+    if (!file) return;
+    rcFileRef.current = file;
+    setRc(null);
+    setRcFound([]);
+    void reader.read(file);
+  }
+
+  // When the RC has been read, fill the form with what it says. Everything stays editable.
+  const readerText = reader.state.phase === 'done' ? reader.state.text : null;
+  useEffect(() => {
+    if (readerText == null || !rcFileRef.current) return;
+    const p = parseDocument(readerText, 'rc');
+    const veh = p.vehicle;
+    const sw = veh.colour_name ? swatchForName(veh.colour_name.value) : null;
+    const found = [
+      veh.vehicle_type && 'Type', veh.make && 'Make', veh.model && 'Model', veh.variant && 'Variant', veh.registration_number && 'Registration number',
+      veh.fuel_type && 'Fuel', veh.engine_cc && 'Engine', veh.registration_date && 'Registration date', sw && 'Colour',
+    ].filter(Boolean) as string[];
+    setV((x) => {
+      const next = { ...x };
+      if (veh.vehicle_type) next.type = veh.vehicle_type.value;
+      if (veh.make) next.make = veh.make.value;
+      if (veh.model) next.model = veh.model.value;
+      if (veh.variant) next.variant = veh.variant.value;
+      if (veh.registration_number) next.registration = veh.registration_number.value;
+      if (veh.fuel_type) next.fuel = veh.fuel_type.value;
+      if (veh.engine_cc) next.engineCc = String(veh.engine_cc.value);
+      if (veh.registration_date) next.registered = veh.registration_date.value;
+      if (sw) next.colour = sw;
+      const d = defaultIntervals(next.type);
+      return { ...next, intervalKm: String(d.km), intervalMonths: String(d.months), wheels: isTwoWheeler(next.type) ? '2' : next.wheels };
+    });
+    setRcFound(found);
+    setRc({
+      file: rcFileRef.current,
+      issued_on: p.issued_on?.value ?? null,
+      issuer: p.issuer?.value ?? null,
+      extracted_fields: [p.issued_on && 'issued_on', p.issuer && 'issuer'].filter(Boolean) as string[],
+    });
+  }, [readerText]);
 
   function pick(file: File | undefined) {
     if (!file) return;
@@ -228,7 +279,7 @@ export function VehicleForm({ existing, submitLabel, formId, busy, onSubmit, ser
       service_interval_months: num(v.intervalMonths),
       odometer_km: editing ? null : odo,
     };
-    onSubmit({ vehicle, photo });
+    onSubmit({ vehicle, photo, rc });
   }
 
   const showBattery = v.fuel === 'electric' || v.fuel === 'hybrid';
@@ -429,7 +480,25 @@ export function VehicleForm({ existing, submitLabel, formId, busy, onSubmit, ser
   if (wizard) {
     const meta = STEPS[step];
     const panels = [
-      <section key="type" className="vform__section">{typeBlock}</section>,
+      <div key="type" className="vform__stack">
+        <section className="rcstart" aria-labelledby="rc-start-h">
+          <h3 className="t-title" id="rc-start-h">Have the RC? Start from it.</h3>
+          <p className="t-ink-2">A photo or PDF of the RC fills in the make, model, fuel and the rest. It is read on this device, and filed in the Glovebox once the vehicle is added.</p>
+          <Button variant="secondary" onClick={() => rcInput.current?.click()} disabled={reader.state.phase === 'reading'}>
+            <UploadSimple size={18} aria-hidden /> {rc ? 'Read a different RC' : 'Read an RC'}
+          </Button>
+          <input ref={rcInput} type="file" accept="image/*,application/pdf" hidden onChange={(e) => { pickRc(e.target.files?.[0]); e.target.value = ''; }} />
+          <ReaderPanel state={reader.state} onPassword={(pw) => rcFileRef.current && reader.read(rcFileRef.current, pw)} />
+          {reader.state.phase === 'done' && (
+            <Notice>
+              {rcFound.length
+                ? `Filled in from the RC: ${rcFound.join(', ').toLowerCase().replace(/^./, (c) => c.toUpperCase())}. Check each step.`
+                : 'Nothing could be picked out of that file. You can fill the details in by hand.'}
+            </Notice>
+          )}
+        </section>
+        <section className="vform__section">{typeBlock}</section>
+      </div>,
       <section key="which" className="vform__section">{whichBlock}</section>,
       <>
         <section className="vform__section">{registrationBlock}</section>

@@ -370,3 +370,4 @@ body:has(dialog[open]) { overflow: hidden; }
 .toggle input:focus-visible + .toggle__track { outline: 3px solid var(--focus); outline-offset: 3px; }
 .toggle input:disabled { cursor: progress; }
 .toggle input:disabled + .toggle__track { opacity: 0.6; }
+.field-row > * { min-width: 0; } .input[type='date'] { min-width: 0; width: 100%; }
