@@ -337,6 +337,7 @@ details > summary::-webkit-details-marker { display: none; }
   .vhead__odo { margin-left: auto; }
   .vhead__board { padding: var(--sp-6); align-content: end; gap: var(--sp-5); }
   .vhead__board .t-board { font-size: 2.5rem; line-height: 1.08; }
+  .vhead__board .status__mark--overdue, .vhead__board .status__mark--soon, .vhead__board .status__mark--clear { font-size: 0.7em; }
   .vtabs { top: 0; padding: var(--sp-5) 0 var(--sp-3); }
   .vtabs ul { padding: 0; }
   .vtabs__link { height: 38px; padding: 0 16px; font-size: 0.8125rem; }

@@ -213,6 +213,20 @@ select pg_temp.assert((select count(*) from public.due_reminders('2026-10-12') w
 -- Expired documents are not reminded.
 select pg_temp.assert((select count(*) from public.due_reminders('2026-10-14') where doc_type = 'insurance') = 0, 'expired documents are left to the app');
 reset role;
+-- The same policy uploaded twice is reminded once.
+insert into public.documents (user_id, vehicle_id, doc_type, file_path, file_name, mime_type, size_bytes, expires_on)
+select user_id, vehicle_id, 'puc', 'a/puc-copy.pdf', 'puc-copy.pdf', 'application/pdf', 1, expires_on from public.documents where doc_type = 'puc';
+set role service_role;
+select pg_temp.assert((select count(distinct document_id) from public.due_reminders('2026-11-14') where doc_type = 'puc') = 1, 'duplicate certificates are reminded once');
+reset role;
+-- Linking Telegram does not switch email on.
+delete from public.reminder_settings;
+select set_config('request.jwt.claim.sub', '00000000-0000-0000-0000-00000000000a', false);
+set role authenticated;
+select length(public.start_telegram_link()) as tok2 \gset
+select pg_temp.assert((select email_enabled from public.reminder_settings) = false, 'linking Telegram leaves email off');
+reset role;
+update public.reminder_settings set email_enabled = true, telegram_chat_id = 4242, telegram_link_token = null;
 -- A renewed policy replaces the old one.
 insert into public.documents (user_id, vehicle_id, doc_type, file_path, file_name, mime_type, size_bytes, expires_on)
 select user_id, vehicle_id, 'insurance', 'a/ins2.pdf', 'ins2.pdf', 'application/pdf', 1, '2027-10-12' from public.documents where doc_type = 'insurance' limit 1;

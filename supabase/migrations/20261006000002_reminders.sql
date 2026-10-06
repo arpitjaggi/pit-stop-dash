@@ -13,11 +13,15 @@ create table if not exists public.reminder_settings (
   telegram_chat_id        bigint,
   telegram_link_token     text,
   telegram_link_expires_at timestamptz,
+  -- Throttles the "Send a test message" button; only the Edge Function writes it.
+  last_test_at            timestamptz,
   created_at              timestamptz not null default now(),
   updated_at              timestamptz not null default now(),
   check (cardinality(lead_days) between 1 and 7),
   check (lead_days <@ array[0, 1, 3, 7, 14, 30, 60])
 );
+alter table public.reminder_settings
+  add column if not exists last_test_at timestamptz;
 alter table public.reminder_settings
   add column if not exists telegram_connected boolean generated always as (telegram_chat_id is not null) stored;
 
@@ -72,8 +76,9 @@ declare
   token text := replace(gen_random_uuid()::text, '-', '');
 begin
   if uid is null then raise exception 'Not signed in'; end if;
-  insert into public.reminder_settings (user_id, telegram_link_token, telegram_link_expires_at)
-  values (uid, token, now() + interval '15 minutes')
+  -- Linking Telegram must not quietly switch email on, so a new row starts with email off.
+  insert into public.reminder_settings (user_id, email_enabled, telegram_link_token, telegram_link_expires_at)
+  values (uid, false, token, now() + interval '15 minutes')
   on conflict (user_id) do update
     set telegram_link_token = excluded.telegram_link_token,
         telegram_link_expires_at = excluded.telegram_link_expires_at;
@@ -94,7 +99,7 @@ revoke execute on function public.start_telegram_link(), public.disconnect_teleg
 grant execute on function public.start_telegram_link(), public.disconnect_telegram() to authenticated;
 
 -- What the daily job should send today. Only the latest insurance, PUC and CNG certificate of each
--- vehicle count. For each, the reminder is the tightest lead time the document has reached (so a
+-- vehicle count (when two share an expiry date, one of them). For each, the reminder is the tightest lead time the document has reached (so a
 -- missed day is caught up, and nothing is sent twice). Expired documents are the app's job to show.
 create or replace function public.due_reminders(
   on_date date default ((now() at time zone 'Asia/Kolkata')::date)
@@ -118,7 +123,8 @@ language sql stable security definer set search_path = public, pg_temp as $$
      and not exists (
        select 1 from public.documents n
         where n.vehicle_id = d.vehicle_id and n.user_id = d.user_id
-          and n.doc_type = d.doc_type and n.expires_on > d.expires_on)
+          and n.doc_type = d.doc_type
+          and (n.expires_on > d.expires_on or (n.expires_on = d.expires_on and n.id > d.id)))
      and ((c.channel = 'email' and s.email_enabled and u.email is not null)
        or (c.channel = 'telegram' and s.telegram_enabled and s.telegram_chat_id is not null))
      and not exists (
