@@ -7,3 +7,4 @@ dist
 .impeccable/mocks
 .vite
 public/ocr/
+tsconfig.tsbuildinfo

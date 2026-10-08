@@ -75,7 +75,19 @@ Uploading an insurance policy, PUC, CNG certificate or RC reads it on your devic
 
 ### Deploy
 
-`npm run build` produces a static site in `dist/`. Host it anywhere that serves static files with a single-page-app fallback to `index.html` (Vercel, Netlify, Cloudflare Pages). Set the same two environment variables in the host.
+`npm run build` produces a static site in `dist/` (about 35 MB, most of it the OCR engine, which loads only when a photo is read). Any static host works. The repo ships a `vercel.json` (single-page-app fallback, security headers, long caching for hashed assets) and a `public/_redirects` for Netlify and Cloudflare Pages.
+
+**Vercel (recommended; every push to a branch also gets its own preview address, which is handy for testing):**
+
+1. vercel.com, **Add New, Project**, import `pit-stop-dash`, production branch `main`. The framework is detected as Vite; leave the build command and output folder as they are.
+2. Under **Environment Variables** add `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` (the same two values as in `.env.local`). Add `VITE_TELEGRAM_BOT_USERNAME` too if you set up the reminder bot. Do **not** set `VITE_DEMO`.
+3. Deploy. You get an address like `https://pit-stop-dash.vercel.app`.
+4. In Supabase, **Authentication, URL Configuration**: set **Site URL** to that address and add it (and `https://*.vercel.app` if you want previews to sign in) to **Redirect URLs**. Without this, email confirmation links point at localhost.
+5. If you use reminders, set the function secret `APP_URL` to that address so links in messages open the right place.
+
+Netlify and Cloudflare Pages work the same way: build command `npm run build`, output folder `dist`, the same environment variables.
+
+**What the deployed site needs from Supabase:** all four migrations in `supabase/migrations/` applied, the same project as in `.env.local`. The anon key is meant to be public; the row-level security in the migrations is what protects each person's data.
 
 ### Backups
 
