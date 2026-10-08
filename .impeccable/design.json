@@ -1,0 +1,534 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-06T12:00:00Z",
+  "title": "Design System: Pit Stop: Vehicle Management Portal",
+  "extensions": {
+    "colorMeta": {
+      "brand": {
+        "role": "primary",
+        "displayName": "Scarlet",
+        "canonical": "#dc0000",
+        "tonalRamp": [
+          "#3f1512",
+          "#6e0a0a",
+          "#930000",
+          "#b80000",
+          "#dc0000",
+          "#ff5a4d",
+          "#ffa89f",
+          "#ffe4e0"
+        ]
+      },
+      "accent": {
+        "role": "secondary",
+        "displayName": "Modena Yellow",
+        "canonical": "#ffd21f",
+        "tonalRamp": [
+          "#4d3d00",
+          "#7a6000",
+          "#a88700",
+          "#d9ae00",
+          "#ffd21f",
+          "#ffe27a",
+          "#fff0b3",
+          "#fff8d9"
+        ]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Paper",
+        "canonical": "#f2eee6",
+        "tonalRamp": [
+          "#12100d",
+          "#26221d",
+          "#433d34",
+          "#8a8272",
+          "#d3cbbb",
+          "#e4ded2",
+          "#ece7dc",
+          "#f8f5ef"
+        ]
+      },
+      "card": {
+        "role": "neutral",
+        "displayName": "Card White",
+        "canonical": "#ffffff",
+        "tonalRamp": [
+          "#1d1a16",
+          "#26221d",
+          "#433d34",
+          "#8a8272",
+          "#d3cbbb",
+          "#ece7dc",
+          "#f8f5ef",
+          "#ffffff"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "#17140f",
+        "tonalRamp": [
+          "#17140f",
+          "#2e2a24",
+          "#4b463d",
+          "#665f52",
+          "#8a8272",
+          "#a0988a",
+          "#c4bcad",
+          "#f6f1e8"
+        ]
+      },
+      "panel": {
+        "role": "neutral",
+        "displayName": "Pit Board Ink",
+        "canonical": "#1b1814",
+        "tonalRamp": [
+          "#0a0908",
+          "#1b1814",
+          "#3a352d",
+          "#4a4439",
+          "#665f52",
+          "#8a8272",
+          "#cfc7b8",
+          "#ffffff"
+        ]
+      },
+      "clear": {
+        "role": "status",
+        "displayName": "Clear Green",
+        "canonical": "#067647",
+        "tonalRamp": [
+          "#123626",
+          "#044d2e",
+          "#067647",
+          "#12b76a",
+          "#6edba0",
+          "#7ee2a8",
+          "#b0eccb",
+          "#d9f5e4"
+        ]
+      },
+      "soon": {
+        "role": "status",
+        "displayName": "Soon Amber",
+        "canonical": "#7a4a00",
+        "tonalRamp": [
+          "#33270a",
+          "#5a3700",
+          "#7a4a00",
+          "#c77d00",
+          "#f2b66b",
+          "#f8cf93",
+          "#fff0c2",
+          "#fff8e0"
+        ]
+      },
+      "overdue": {
+        "role": "status",
+        "displayName": "Overdue Yellow Tile",
+        "canonical": "#ffd93d",
+        "tonalRamp": [
+          "#17140f",
+          "#4d3d00",
+          "#7a6000",
+          "#b38f00",
+          "#f5b800",
+          "#ffd21f",
+          "#ffd93d",
+          "#fff3b0"
+        ]
+      },
+      "danger": {
+        "role": "error",
+        "displayName": "Error Red",
+        "canonical": "#b42318",
+        "tonalRamp": [
+          "#3f1814",
+          "#6e1a12",
+          "#8a1d14",
+          "#b42318",
+          "#d6493c",
+          "#ff9a8c",
+          "#ffc7be",
+          "#ffe1dd"
+        ]
+      },
+      "plate-commercial": {
+        "role": "identity",
+        "displayName": "Commercial Plate Yellow",
+        "canonical": "#f7c600",
+        "tonalRamp": [
+          "#4d3d00",
+          "#7a6000",
+          "#a88700",
+          "#d4a900",
+          "#f7c600",
+          "#ffd84d",
+          "#ffe78f",
+          "#fff4c7"
+        ]
+      },
+      "plate-ev": {
+        "role": "identity",
+        "displayName": "EV Plate Green",
+        "canonical": "#0a6b36",
+        "tonalRamp": [
+          "#032e17",
+          "#064d26",
+          "#0a6b36",
+          "#17934f",
+          "#4bb67d",
+          "#86d1a6",
+          "#bfe8d0",
+          "#e6f6ed"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Vehicle model on its page and garage titles; Bricolage 700."
+      },
+      "pit-board": {
+        "displayName": "Pit Board",
+        "purpose": "The one-sentence verdict on the ink panel; long sentences step down to 1.25rem."
+      },
+      "section": {
+        "displayName": "Section",
+        "purpose": "Real-word section headings."
+      },
+      "make": {
+        "displayName": "Make",
+        "purpose": "Make in weight 300, always paired with a bold model."
+      },
+      "model": {
+        "displayName": "Model",
+        "purpose": "Model in weight 700 on the paint stage and vehicle names."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Row and document titles; Geist 600."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Prose and inputs; 16px on phones, 14px on desktop."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Field labels and metadata; sentence case."
+      },
+      "figure-xl": {
+        "displayName": "Figure XL",
+        "purpose": "Current odometer (3.75rem; 4.75rem on desktop), Barlow tabular lining."
+      },
+      "figure-m": {
+        "displayName": "Figure M",
+        "purpose": "Readings in cards, lists and the logbook margin."
+      },
+      "plate": {
+        "displayName": "Plate",
+        "purpose": "Registration lettering on the HSRP plate: 0.9375, 1.125 or 1.5rem."
+      }
+    },
+    "shadows": [
+      {
+        "name": "card",
+        "value": "0 1px 2px rgb(23 20 15 / 0.05), 0 10px 28px rgb(23 20 15 / 0.07)",
+        "purpose": "Every white card. Dark theme: 0 0 0 1px line."
+      },
+      {
+        "name": "pop",
+        "value": "0 12px 36px rgb(23 20 15 / 0.18)",
+        "purpose": "Palette, desktop dialogs, toasts, docked Add. Dark theme: 0 0 0 1px line-strong, 0 16px 40px rgb(0 0 0 / 0.5)."
+      },
+      {
+        "name": "sheet",
+        "value": "0 -12px 40px rgb(23 20 15 / 0.2)",
+        "purpose": "Phone bottom sheets. Dark theme: 0 0 0 1px line-strong."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease",
+        "value": "cubic-bezier(0.22, 1, 0.36, 1)",
+        "purpose": "Single easing for every transition."
+      },
+      {
+        "name": "control-state",
+        "value": "140ms",
+        "purpose": "Colour, border and press-scale on buttons, choices and tabs."
+      },
+      {
+        "name": "switch",
+        "value": "160ms track, 180ms thumb",
+        "purpose": "Switch toggle."
+      },
+      {
+        "name": "sheet-rise",
+        "value": "280ms transform, 200ms opacity",
+        "purpose": "Bottom sheet entry (40px rise on phone, 8px from 640px)."
+      },
+      {
+        "name": "toast-in",
+        "value": "260ms",
+        "purpose": "Toast arrival, 12px rise."
+      },
+      {
+        "name": "screen-slide",
+        "value": "240ms",
+        "purpose": "Document viewer slides in 24px from the right."
+      },
+      {
+        "name": "reader-progress",
+        "value": "300ms transform on the one ease",
+        "purpose": "Document reader progress fill scales with scaleX from the left; width is never animated."
+      },
+      {
+        "name": "wizard-step",
+        "value": "260ms, 18px slide in the direction of travel",
+        "purpose": "Add vehicle wizard panel change."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "movement dropped; 120ms colour and opacity fade kept; spinner breathes",
+        "purpose": "prefers-reduced-motion behaviour."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sheet-dialog",
+        "value": "640px",
+        "purpose": "Bottom sheets become centred dialogs."
+      },
+      {
+        "name": "gate",
+        "value": "900px",
+        "purpose": "Sign-in page splits into two columns."
+      },
+      {
+        "name": "desktop",
+        "value": "1024px",
+        "purpose": "Sidebar, stage and ink panel side by side, rail, master-detail panes. Fine pointer also shrinks controls to 36px and body to 14px."
+      },
+      {
+        "name": "narrow-phone",
+        "value": "379px",
+        "purpose": "Tab pills tighten to 11px padding."
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Scarlet fill with white text; one per view.",
+      "html": "<button class=\"ds-btn-primary\">Add vehicle</button>",
+      "css": ".ds-btn-primary{min-height:48px;padding:0 24px;border:1.5px solid transparent;border-radius:14px;background:var(--brand,#dc0000);color:var(--on-brand,#fff);font:650 15px/1.2 'Geist Variable',system-ui,sans-serif;transition:background-color .14s cubic-bezier(.22,1,.36,1),transform .14s cubic-bezier(.22,1,.36,1);} .ds-btn-primary:hover{background:var(--brand-press,#b80000);} .ds-btn-primary:active{transform:scale(.98);} .ds-btn-primary:focus-visible{outline:3px solid var(--focus,#17140f);outline-offset:2px;}"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "White fill, strong seam border; border goes ink on hover.",
+      "html": "<button class=\"ds-btn-secondary\">Log service</button>",
+      "css": ".ds-btn-secondary{min-height:48px;padding:0 24px;border:1.5px solid var(--line-strong,#d3cbbb);border-radius:14px;background:var(--surface,#fff);color:var(--ink,#17140f);font:650 15px/1.2 'Geist Variable',system-ui,sans-serif;transition:border-color .14s cubic-bezier(.22,1,.36,1);} .ds-btn-secondary:hover{border-color:var(--ink,#17140f);} .ds-btn-secondary:focus-visible{outline:3px solid var(--focus,#17140f);outline-offset:2px;}"
+    },
+    {
+      "name": "Docked Add",
+      "kind": "button",
+      "refersTo": "button-docked-add",
+      "description": "The single floating primary on phones.",
+      "html": "<button class=\"ds-docked\">+ Add reading</button>",
+      "css": ".ds-docked{height:54px;padding:0 22px 0 18px;border:0;border-radius:18px;background:var(--brand,#dc0000);color:var(--on-brand,#fff);font:700 16px 'Geist Variable',system-ui,sans-serif;box-shadow:0 12px 36px rgb(23 20 15/.18);transition:background-color .14s cubic-bezier(.22,1,.36,1),transform .14s cubic-bezier(.22,1,.36,1);} .ds-docked:hover{background:var(--brand-press,#b80000);} .ds-docked:active{transform:scale(.96);} .ds-docked:focus-visible{outline:3px solid var(--focus,#17140f);outline-offset:2px;}"
+    },
+    {
+      "name": "Text Input",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "48px field, strong seam border, label above.",
+      "html": "<label class=\"ds-field\"><span>Odometer reading</span><input class=\"ds-input\" value=\"45,210\"></label>",
+      "css": ".ds-field{display:grid;gap:6px;font:600 13px/1 'Geist Variable',system-ui,sans-serif;color:var(--ink-2,#4b463d);} .ds-input{min-height:48px;padding:0 16px;border:1.5px solid var(--line-strong,#d3cbbb);border-radius:14px;background:var(--surface,#fff);color:var(--ink,#17140f);font:400 16px 'Geist Variable',system-ui,sans-serif;} .ds-input:hover{border-color:var(--edge,#8a8272);} .ds-input:focus{outline:3px solid var(--focus,#17140f);outline-offset:0;border-color:var(--ink,#17140f);}"
+    },
+    {
+      "name": "Choice Chip",
+      "kind": "chip",
+      "refersTo": "input",
+      "description": "Pill choice; checked is scarlet with white text and an ink border.",
+      "html": "<span class=\"ds-chip ds-chip--on\">Petrol</span> <span class=\"ds-chip\">Diesel</span>",
+      "css": ".ds-chip{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border:1.5px solid var(--line-strong,#d3cbbb);border-radius:999px;background:var(--surface,#fff);font:600 15px 'Geist Variable',system-ui,sans-serif;color:var(--ink,#17140f);} .ds-chip:hover{border-color:var(--ink,#17140f);} .ds-chip--on{background:var(--brand,#dc0000);border-color:var(--ink,#17140f);color:var(--on-brand,#fff);}"
+    },
+    {
+      "name": "Switch",
+      "kind": "custom",
+      "refersTo": "switch-on",
+      "description": "52 by 32px pill switch; scarlet track when on.",
+      "html": "<label class=\"ds-toggle\"><input type=\"checkbox\" checked><span class=\"ds-track\"></span></label>",
+      "css": ".ds-toggle{position:relative;display:inline-block;width:52px;height:32px;cursor:pointer;} .ds-toggle input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer;} .ds-track{position:absolute;inset:0;border-radius:999px;background:var(--sunk,#ece7dc);border:1.5px solid var(--edge,#8a8272);transition:background-color .16s cubic-bezier(.22,1,.36,1),border-color .16s cubic-bezier(.22,1,.36,1);} .ds-track::after{content:'';position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:var(--ink,#17140f);transition:transform .18s cubic-bezier(.22,1,.36,1),background-color .16s;} .ds-toggle input:checked + .ds-track{background:var(--brand,#dc0000);border-color:var(--brand,#dc0000);} .ds-toggle input:checked + .ds-track::after{transform:translateX(20px);background:#fff;} .ds-toggle input:focus-visible + .ds-track{outline:3px solid var(--focus,#17140f);outline-offset:3px;}"
+    },
+    {
+      "name": "HSRP Plate",
+      "kind": "custom",
+      "refersTo": "plate-commercial",
+      "description": "Registration number as an HSRP plate with a blue IND strip; shown here in commercial yellow. Tone follows use and fuel.",
+      "html": "<span class=\"ds-plate\"><span class=\"ds-ind\"><svg viewBox=\"0 0 16 16\" width=\"10\" height=\"10\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.1\"><circle cx=\"8\" cy=\"8\" r=\"5.6\"/><path d=\"M8 2.4v11.2M2.4 8h11.2M4 4l8 8M12 4l-8 8\" stroke-width=\".8\"/></svg><b>IND</b></span><span class=\"ds-num\">KA 01 AB 1234</span></span>",
+      "css": ".ds-plate{display:inline-flex;align-items:stretch;overflow:hidden;height:34px;border:1.5px solid #17140f;border-radius:6px;background:#f7c600;color:#17140f;font:600 18px/1 'Barlow Semi Condensed',sans-serif;letter-spacing:.08em;font-variant-numeric:lining-nums;white-space:nowrap;} .ds-ind{display:grid;align-content:center;justify-items:center;gap:1px;padding:0 4px;background:#1b3a8a;color:#fff;} .ds-ind b{font:700 6px/1 'Geist Variable',sans-serif;letter-spacing:.06em;} .ds-num{display:inline-flex;align-items:center;padding:1px 8px 0;}"
+    },
+    {
+      "name": "Pit Board",
+      "kind": "card",
+      "refersTo": "pit-panel",
+      "description": "The ink panel holding the verdict sentence and its one action. Overdue shown: octagon on a solid yellow tile.",
+      "html": "<div class=\"ds-panel\"><p class=\"ds-board\"><span class=\"ds-tile\"><svg viewBox=\"0 0 256 256\" width=\"100%\" height=\"100%\" fill=\"currentColor\"><path d=\"M165.9 28H90.1L36 82.1v75.8L90.1 212h75.8l54.1-54.1V82.1zM128 176a12 12 0 1 1 12-12 12 12 0 0 1-12 12zm8-48a8 8 0 0 1-16 0V80a8 8 0 0 1 16 0z\"/></svg></span>Insurance ran out 3 days ago</p><button class=\"ds-act\">Upload renewal</button></div>",
+      "css": ".ds-panel{display:grid;gap:16px;justify-items:start;padding:24px;border:1px solid var(--panel-line,#3a352d);border-radius:24px;background:var(--panel,#1b1814);color:#fff;} .ds-board{display:flex;align-items:center;gap:.6em;margin:0;color:#ffd21f;font:600 26px/32px 'Bricolage Grotesque Variable','Geist Variable',system-ui,sans-serif;letter-spacing:-.025em;} .ds-tile{flex:none;display:inline-grid;place-items:center;width:1.5em;height:1.5em;padding:.2em;border-radius:.4em;background:#ffd21f;color:#17140f;} .ds-act{min-height:48px;padding:0 24px;border:0;border-radius:14px;background:#dc0000;color:#fff;font:650 15px 'Geist Variable',system-ui,sans-serif;} .ds-act:hover{background:#b80000;} .ds-act:focus-visible{outline:3px solid #ffd21f;outline-offset:2px;}"
+    },
+    {
+      "name": "Paint Stage",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "No-photo vehicle card: pale paint tint, flat paint disc, make light over model bold.",
+      "html": "<div class=\"ds-card\"><div class=\"ds-stage\" style=\"--vc:#c0392b\"><span class=\"ds-disc\"></span><span class=\"ds-name\"><span class=\"ds-make\">Royal Enfield</span><span class=\"ds-model\">Meteor</span></span></div></div>",
+      "css": ".ds-card{overflow:hidden;border-radius:24px;background:var(--surface,#fff);box-shadow:0 1px 2px rgb(23 20 15/.05),0 10px 28px rgb(23 20 15/.07);} .ds-stage{position:relative;overflow:hidden;isolation:isolate;aspect-ratio:16/9;background:color-mix(in oklch,var(--vc) 34%,var(--surface,#fff));} .ds-disc{position:absolute;z-index:-1;width:54%;aspect-ratio:1;right:-12%;top:-44%;border-radius:50%;background:var(--vc);} .ds-name{position:absolute;left:0;right:0;bottom:0;display:grid;padding:16px 16px 14px;color:var(--ink,#17140f);font-family:'Bricolage Grotesque Variable','Geist Variable',system-ui,sans-serif;} .ds-make{font-size:16px;line-height:20px;font-weight:300;letter-spacing:-.01em;} .ds-model{font-size:40px;line-height:1;font-weight:700;letter-spacing:-.04em;}"
+    },
+    {
+      "name": "Section Tabs",
+      "kind": "nav",
+      "refersTo": "tab-pill",
+      "description": "Pill tab strip; the active pill is ink, counts are yellow.",
+      "html": "<nav class=\"ds-tabs\"><a aria-current=\"page\">Overview</a><a>Glovebox</a><a>Service</a><a>Issues <b>2</b></a><a>Odometer</a></nav>",
+      "css": ".ds-tabs{display:flex;gap:6px;padding:12px 16px 8px;background:var(--bg,#f2eee6);overflow-x:auto;} .ds-tabs a{display:inline-flex;align-items:center;gap:6px;height:42px;padding:0 14px;border-radius:999px;color:var(--ink-2,#4b463d);font:650 14px 'Geist Variable',system-ui,sans-serif;white-space:nowrap;transition:background-color .14s cubic-bezier(.22,1,.36,1),color .14s cubic-bezier(.22,1,.36,1);} .ds-tabs a:hover{background:var(--sunk,#ece7dc);color:var(--ink,#17140f);} .ds-tabs a[aria-current]{background:var(--ink,#17140f);color:var(--surface,#fff);} .ds-tabs b{display:inline-grid;place-items:center;min-width:22px;height:22px;padding:0 6px;border-radius:999px;background:#ffd21f;color:#17140f;font-size:15px;}"
+    },
+    {
+      "name": "Status Strip",
+      "kind": "custom",
+      "refersTo": "status-strip",
+      "description": "Soon: amber clock, pale yellow wash, words carry the state.",
+      "html": "<p class=\"ds-strip\"><svg viewBox=\"0 0 256 256\" width=\"20\" height=\"20\" fill=\"currentColor\"><path d=\"M128 24a104 104 0 1 0 104 104A104.1 104.1 0 0 0 128 24zm0 192a88 88 0 1 1 88-88 88.1 88.1 0 0 1-88 88zm64-88a8 8 0 0 1-8 8h-56a8 8 0 0 1-8-8V72a8 8 0 0 1 16 0v48h48a8 8 0 0 1 8 8z\"/></svg><span>PUC is due in 6 days</span></p>",
+      "css": ".ds-strip{display:flex;align-items:flex-start;gap:.5em;margin:0;padding:12px 16px;border-radius:16px;background:var(--soon-wash,#fff0c2);color:var(--soon,#7a4a00);font:600 16px/1.375 'Geist Variable',system-ui,sans-serif;} .ds-strip svg{flex:none;margin-top:1px;color:var(--soon-mark,#c77d00);}"
+    },
+    {
+      "name": "Custom Colour",
+      "kind": "input",
+      "refersTo": "swatch-custom",
+      "description": "Dashed custom swatch beside preset paint swatches, with a Barlow hex field.",
+      "html": "<div class=\"ds-swatches\"><span class=\"ds-sw\" style=\"background:#c0392b\"></span><span class=\"ds-sw ds-sw--on\" style=\"background:#1b3a8a\"></span><span class=\"ds-sw ds-sw--custom\">+</span></div><label class=\"ds-field\"><span>Or type a hex code</span><input class=\"ds-hex\" value=\"#E5383B\" maxlength=\"7\"></label>",
+      "css": ".ds-swatches{display:flex;gap:8px;margin-bottom:12px;} .ds-sw{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;border:1px solid var(--line-strong,#d3cbbb);} .ds-sw--on{box-shadow:0 0 0 3px var(--surface,#fff),0 0 0 5px var(--ink,#17140f);} .ds-sw--custom{border:1.5px dashed var(--edge,#8a8272);color:var(--ink-2,#4b463d);background:transparent;} .ds-field{display:grid;gap:6px;font:600 13px/1 'Geist Variable',system-ui,sans-serif;color:var(--ink-2,#4b463d);} .ds-hex{min-height:48px;max-width:200px;padding:0 16px;border:1.5px solid var(--line-strong,#d3cbbb);border-radius:14px;background:var(--surface,#fff);color:var(--ink,#17140f);font:600 16px 'Barlow Semi Condensed',sans-serif;letter-spacing:.08em;text-transform:uppercase;} .ds-hex:focus{outline:3px solid var(--focus,#17140f);border-color:var(--ink,#17140f);}"
+    },
+    {
+      "name": "Photo Cropper",
+      "kind": "custom",
+      "refersTo": "crop-dialog",
+      "description": "Centred 28px dialog with a 16:9 drag frame, thirds grid, zoom slider and two actions.",
+      "html": "<div class=\"ds-crop\"><h2>Crop the photo</h2><p>Drag to move it, slide to zoom. The garage shows photos wide, like this frame.</p><div class=\"ds-frame\"><i class=\"ds-l ds-v1\"></i><i class=\"ds-l ds-v2\"></i><i class=\"ds-l ds-h1\"></i><i class=\"ds-l ds-h2\"></i></div><label class=\"ds-zoom\"><span>Zoom</span><input type=\"range\"></label><div class=\"ds-acts\"><button class=\"ds-sec\">Cancel</button><button class=\"ds-pri\">Use this crop</button></div></div>",
+      "css": ".ds-crop{display:grid;gap:16px;width:min(560px,94vw);padding:24px;border-radius:28px;background:var(--surface,#fff);color:var(--ink,#17140f);box-shadow:0 12px 36px rgb(23 20 15/.18);font:400 16px/1.5 'Geist Variable',system-ui,sans-serif;} .ds-crop h2{margin:0;font:700 24px/28px 'Bricolage Grotesque Variable','Geist Variable',system-ui,sans-serif;letter-spacing:-.03em;} .ds-crop p{margin:0;color:var(--ink-2,#4b463d);} .ds-frame{position:relative;aspect-ratio:16/9;border-radius:16px;overflow:hidden;background:var(--sunk,#ece7dc);cursor:grab;} .ds-l{position:absolute;background:rgb(255 255 255/.7);mix-blend-mode:difference;} .ds-v1,.ds-v2{top:0;bottom:0;width:1px;} .ds-h1,.ds-h2{left:0;right:0;height:1px;} .ds-v1{left:33.333%;} .ds-v2{left:66.666%;} .ds-h1{top:33.333%;} .ds-h2{top:66.666%;} .ds-zoom{display:grid;gap:4px;font:600 13px 'Geist Variable',system-ui,sans-serif;color:var(--ink-2,#4b463d);} .ds-zoom input{width:100%;height:32px;accent-color:var(--brand,#dc0000);} .ds-acts{display:flex;gap:12px;justify-content:flex-end;} .ds-sec,.ds-pri{min-height:48px;padding:0 24px;border-radius:14px;font:650 15px 'Geist Variable',system-ui,sans-serif;border:1.5px solid var(--line-strong,#d3cbbb);background:var(--surface,#fff);color:var(--ink,#17140f);} .ds-pri{flex:1;max-width:240px;border-color:transparent;background:var(--brand,#dc0000);color:var(--on-brand,#fff);} .ds-pri:hover{background:var(--brand-press,#b80000);} .ds-sec:hover{border-color:var(--ink,#17140f);} .ds-sec:focus-visible,.ds-pri:focus-visible{outline:3px solid var(--focus,#17140f);outline-offset:2px;}"
+    },
+    {
+      "name": "Document Reader",
+      "kind": "custom",
+      "refersTo": "reader-panel",
+      "description": "Well panel with stage line, note and a 6px track whose scarlet fill scales with a transform.",
+      "html": "<div class=\"ds-reader\"><span class=\"ds-text\"><span class=\"ds-stage\">Reading page 1 of 2</span><span class=\"ds-note\">Read on this device. The file is not sent anywhere to be read.</span><span class=\"ds-track\"><span class=\"ds-fill\"></span></span></span></div>",
+      "css": ".ds-reader{display:grid;padding:16px;border-radius:16px;background:var(--well,#f8f5ef);font:400 16px/1.5 'Geist Variable',system-ui,sans-serif;color:var(--ink,#17140f);} .ds-text{display:grid;gap:4px;} .ds-stage{font-weight:650;} .ds-note{font-size:13px;line-height:18px;color:var(--ink-3,#665f52);} .ds-track{display:block;height:6px;margin-top:6px;border-radius:999px;background:var(--sunk,#ece7dc);overflow:hidden;} .ds-fill{display:block;width:100%;height:100%;border-radius:999px;background:var(--brand,#dc0000);transform:scaleX(.45);transform-origin:left center;transition:transform .3s cubic-bezier(.22,1,.36,1);}"
+    },
+    {
+      "name": "Findings List",
+      "kind": "custom",
+      "refersTo": "findings-list",
+      "description": "Update the vehicle from this RC: opt-in rows with a native scarlet-accent checkbox, label and proposed change.",
+      "html": "<fieldset class=\"ds-find\"><h3>Update the vehicle from this RC</h3><label class=\"ds-row\"><input type=\"checkbox\" checked><span class=\"ds-t\"><span class=\"ds-lab\">Fuel</span><span>Petrol to CNG</span></span></label><label class=\"ds-row\"><input type=\"checkbox\"><span class=\"ds-t\"><span class=\"ds-lab\">Colour</span><span>Pearl white</span><span class=\"ds-n\">Check this one.</span></span></label></fieldset>",
+      "css": ".ds-find{display:grid;gap:12px;margin:0;padding:16px;border:0;border-radius:16px;background:var(--well,#f8f5ef);color:var(--ink,#17140f);font:400 16px/1.5 'Geist Variable',system-ui,sans-serif;} .ds-find h3{margin:0;font:600 13px 'Geist Variable',system-ui,sans-serif;color:var(--ink-2,#4b463d);} .ds-row{display:grid;grid-template-columns:24px 1fr;gap:12px;align-items:start;min-height:44px;padding:8px 0;cursor:pointer;} .ds-row input{width:22px;height:22px;margin-top:2px;accent-color:var(--brand,#dc0000);} .ds-row input:focus-visible{outline:3px solid var(--focus,#17140f);outline-offset:2px;} .ds-t{display:grid;gap:2px;} .ds-lab{font-size:13px;font-weight:650;color:var(--ink-3,#665f52);} .ds-n{font-size:13px;color:var(--ink-3,#665f52);}"
+    },
+    {
+      "name": "RC Start Block",
+      "kind": "card",
+      "refersTo": "rc-start",
+      "description": "Have the RC? Start from it. White card at the top of the Add vehicle wizard.",
+      "html": "<section class=\"ds-rc\"><h3>Have the RC? Start from it.</h3><p>A photo or PDF of the RC fills in the make, model, fuel and the rest. It is read on this device, and filed in the Glovebox once the vehicle is added.</p><button class=\"ds-sec\">Read an RC</button></section>",
+      "css": ".ds-rc{display:grid;gap:12px;justify-items:start;padding:24px;border-radius:24px;background:var(--surface,#fff);color:var(--ink,#17140f);box-shadow:0 1px 2px rgb(23 20 15/.05),0 10px 28px rgb(23 20 15/.07);font:400 16px/1.5 'Geist Variable',system-ui,sans-serif;} .ds-rc h3{margin:0;font:600 17px/22px 'Geist Variable',system-ui,sans-serif;} .ds-rc p{margin:0;color:var(--ink-2,#4b463d);} .ds-sec{min-height:48px;padding:0 24px;border:1.5px solid var(--line-strong,#d3cbbb);border-radius:14px;background:var(--surface,#fff);color:var(--ink,#17140f);font:650 15px 'Geist Variable',system-ui,sans-serif;} .ds-sec:hover{border-color:var(--ink,#17140f);} .ds-sec:focus-visible{outline:3px solid var(--focus,#17140f);outline-offset:2px;}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Pit Wall",
+    "overview": "A personal garage run from the pit wall: a warm paper ground, white rounded cards, one ink Pit Board that says what to do next, and a scarlet brand that acts. Every vehicle still wears its own paint as a large flat disc over a pale tint of the same colour, so the owner recognises their vehicles by colour before reading a word, then reads one plain sentence each. The chequered-flag logomark is the only place the motorsport world shows up as an image.\n\nColour has one job each. Scarlet acts and selects, the ink panel instructs, yellow means look at this (counts, warnings, dark-mode focus), green means clear, and a vehicle's paint identifies it. Red is deliberately kept off due dates: an overdue item is a warning octagon on a solid yellow tile, soon is an amber clock, clear is a green tick, and red is spent only on failed forms and destructive actions.\n\nThe system is phone-first and warm, confident rather than clinical. Desktop re-composes the same surfaces (sidebar, stage and ink panel side by side, properties rail, master-detail panes) instead of enlarging them. Light, Dark and System are all first-class. Fills are flat: no gradient and no glow, apart from the mask fade at the edges of the scrolling tab strip.",
+    "keyCharacteristics": [
+      "Warm paper ground, white cards at 24px radius, ink text, soft low shadows in light and hairline rings in dark.",
+      "Scarlet (#dc0000) for actions and selection with white text; yellow (#ffd21f) for counts, warnings and dark-mode focus with ink text.",
+      "One ink Pit Board panel per vehicle holding the verdict sentence and its single action.",
+      "Status is a shape plus words: octagon on yellow tile, clock, tick. Colour reinforces and never carries it alone.",
+      "Each vehicle's own paint: flat disc over a pale oklch tint, or the owner's photo.",
+      "HSRP registration plates in true colours by use, with a blue IND strip, stacked on two lines for two-wheelers.",
+      "Pill section tabs with an ink active pill, a five-step Add vehicle wizard, a pill switch, and a Reminders sheet.",
+      "Photo and document tools stay in the same vocabulary: a 28px cropper dialog with a thirds grid, a well-coloured reader panel whose scarlet progress bar scales with a transform, and a well-coloured findings list of opt-in checkboxes."
+    ],
+    "rules": [
+      {
+        "name": "The One Job Rule",
+        "body": "Scarlet acts and selects. Yellow says look. Ink panels instruct. Green says clear. Paint identifies a vehicle. A colour doing a second job is wrong.",
+        "section": "colors"
+      },
+      {
+        "name": "The Red Is For Errors Rule",
+        "body": "Red appears as a failure or a delete, never as a due date, overdue state or warning. Overdue is yellow with an octagon.",
+        "section": "colors"
+      },
+      {
+        "name": "The Shape Carries It Rule",
+        "body": "Overdue and soon are both yellow family, so they differ by shape and words: octagon on a solid tile, plain clock, tick. Status is never colour alone.",
+        "section": "colors"
+      },
+      {
+        "name": "The Paint Is Theirs Rule",
+        "body": "A vehicle's colour appears only as its tint and disc, plus the small swatch and thumbnail. It never leaks into buttons, text or status.",
+        "section": "colors"
+      },
+      {
+        "name": "The Instrument Rule",
+        "body": "A reading of the vehicle (odometer, plate, kilometre figure) is set in Barlow with tabular lining figures. A count or date inside prose is body text.",
+        "section": "typography"
+      },
+      {
+        "name": "The Make-Light Rule",
+        "body": "Wherever make and model appear as a pair in display type, the make is weight 300 and the model weight 700.",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat Colour Rule",
+        "body": "Fills are flat. No gradients, glows, blurs or glass. The single exception is the mask-image fade on the scrolling tab strip, which reveals clipped tabs and paints nothing.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Soft Shadow Rule",
+        "body": "Shadows are low, diffuse and ink-tinted. Never hard offset, never coloured.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do give each colour one job: scarlet acts, yellow says look, ink panel instructs, green says clear, paint identifies.",
+      "Do put the Pit Board sentence in the ink panel with at most one action.",
+      "Do write status as words with a shape: octagon on a solid yellow tile for overdue, amber clock for soon, green tick for clear.",
+      "Do reserve red (#b42318, dark #ff9a8c) for failed forms and destructive actions.",
+      "Do show registration numbers as HSRP plates in their true colours, two lines on two-wheelers.",
+      "Do give a vehicle with no photo its paint stage: pale oklch tint plus a flat disc, make light over model bold.",
+      "Do put white text on scarlet and ink text on yellow; set readings and plates in Barlow with tabular lining figures.",
+      "Do design light and dark together; verify every new surface in both themes.",
+      "Do keep cards at 24px, controls at 14px, tabs and chips as pills.",
+      "Do use the owner's own photographs for imagery.",
+      "Do animate progress with a transform (scaleX from the left) on the one ease, and keep reading and cropping tools in well, sunk and scarlet.",
+      "Do allow the F1 influence only in naming, microcopy and motion, at most one wink per screen."
+    ],
+    "donts": [
+      "Don't use purple or blue AI gradients, glows or any gradient fill; the tab-strip scroll-fade mask is the only gradient and it paints nothing.",
+      "Don't use glassmorphism, backdrop blur or translucent panels.",
+      "Don't build a racing-game or telemetry UI: no carbon fibre, no speedometer dials, no chequered patterns.",
+      "Don't use stock, rendered or silhouette vehicle imagery; a vehicle is a photo or its paint stage.",
+      "Don't use the chequered flag for anything but the logo.",
+      "Don't put an F1 wink inside a warning, overdue or error state.",
+      "Don't use red for a due date, overdue or soon state.",
+      "Don't let status rely on colour alone, or let vehicle paint colour buttons, text or status.",
+      "Don't nest cards inside cards or stack KPI tiles.",
+      "Don't use hard offset shadows or coloured shadows.",
+      "Don't use small uppercase tracked labels as headings; headings are real words in sentence case."
+    ]
+  }
+}

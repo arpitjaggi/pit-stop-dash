@@ -1,0 +1,15 @@
+{
+  "name": "Pit Stop: Vehicle Management Portal",
+  "short_name": "Pit Stop",
+  "description": "Everything you need to know about your vehicles, in one place.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F2EEE6",
+  "theme_color": "#DC0000",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

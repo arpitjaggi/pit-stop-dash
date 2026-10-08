@@ -1,0 +1,183 @@
+/* Pit Stop design tokens: in scarlet.
+   Warm paper ground, white cards, an ink panel for the one thing to do, Ferrari-style scarlet for
+   actions, yellow for everything that needs a look, and each vehicle's own paint colour as its identity. Flat colour only: no gradients, no glow.
+   Light and dark are both designed; the choice (Light, Dark, System) sets data-theme on <html>. */
+
+@font-face {
+  font-family: 'Barlow Fallback';
+  src: local('Arial Narrow'), local('Roboto Condensed'), local('Arial');
+  size-adjust: 88%;
+}
+
+:root {
+  color-scheme: light dark;
+
+  /* Surfaces */
+  --bg: #f2eee6;
+  --surface: #ffffff;
+  --well: #f8f5ef;       /* quiet wells inside a card */
+  --sunk: #ece7dc;       /* pressed and skeleton */
+  --line: #e4ded2;
+  --line-strong: #d3cbbb;
+  --edge: #8a8272;       /* control borders (3:1 on the card) */
+
+  /* Ink */
+  --ink: #17140f;
+  --ink-2: #4b463d;
+  --ink-3: #665f52;
+
+  /* Brand: scarlet. Fills actions and selection; white text on it is 5.5:1. */
+  --brand: #dc0000;
+  --brand-press: #b80000;
+  --brand-wash: #ffe4e0;
+  --on-brand: #ffffff;
+  --focus: #17140f;
+
+  /* Accent: the yellow behind a Modena badge. Counts, warnings, the focus ring in dark. Ink on it is 13:1. */
+  --accent: #ffd21f;
+  --on-accent: #17140f;
+
+  /* The ink panel: the Pit Board and other "do this" moments */
+  --panel: #1b1814;
+  --on-panel: #ffffff;
+  --on-panel-2: #cfc7b8;
+  --panel-line: #3a352d;
+  --p-clear: #7ee2a8;
+  --p-soon: #f2b66b;
+  --p-overdue: #ffd21f;
+
+  /* Status: words always carry it; colour reinforces */
+  --clear: #067647;
+  --clear-mark: #12b76a;
+  --clear-wash: #d9f5e4;
+  /* Warnings are yellow. Overdue is the solid yellow with a warning octagon; soon is the pale
+     yellow with a clock. Shape and words tell them apart, not hue. */
+  --soon: #7a4a00;
+  --soon-mark: #c77d00;
+  --soon-wash: #fff0c2;
+  --overdue: #17140f;
+  --overdue-mark: #f5b800;
+  --overdue-wash: #ffd93d;
+
+  /* Errors and destructive actions only: a form that failed, a delete. Never a due date. */
+  --danger: #b42318;
+  --danger-wash: #ffe1dd;
+
+  --scrim: rgb(23 20 15 / 0.45);
+  --shadow-card: 0 1px 2px rgb(23 20 15 / 0.05), 0 10px 28px rgb(23 20 15 / 0.07);
+  --shadow-pop: 0 12px 36px rgb(23 20 15 / 0.18);
+  --shadow-sheet: 0 -12px 40px rgb(23 20 15 / 0.2);
+
+  /* Type */
+  --font-ui: 'Geist Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Bricolage Grotesque Variable', 'Geist Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-fig: 'Barlow Semi Condensed', 'Barlow Fallback', ui-sans-serif, system-ui, sans-serif;
+
+  /* Space: 4px base */
+  --sp-0: 2px; --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px;
+  --sp-5: 24px; --sp-6: 32px; --sp-7: 48px; --sp-8: 72px;
+
+  /* Shape */
+  --r-doc: 6px;
+  --r-plate: 6px;
+  --r-ctl: 14px;
+  --r-inner: 16px;
+  --r-card: 24px;
+  --r-pop: 18px;
+  --r-sheet: 28px;
+  --r-full: 999px;
+
+  /* Sizing */
+  --gutter: 16px;
+  --tap: 44px;
+  --ctl-h: 48px;
+  --bar-h: 56px;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+:root[data-theme='dark'] { color-scheme: dark; }
+:root[data-theme='light'] { color-scheme: light; }
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --bg: #12100d;
+    --surface: #1d1a16;
+    --well: #26221d;
+    --sunk: #171512;
+    --line: #2e2a24;
+    --line-strong: #433d34;
+    --edge: #7d7567;
+    --ink: #f6f1e8;
+    --ink-2: #c4bcad;
+    --ink-3: #a0988a;
+    --brand: #e5231c;
+    --brand-press: #c91a14;
+    --brand-wash: #3f1512;
+    --on-brand: #ffffff;
+    --accent: #ffd21f;
+    --focus: #ffd21f;
+    --panel: #0a0908;
+    --panel-line: #4a4439;
+    --stage-mix: 44%;
+    --clear: #6edba0;
+    --clear-mark: #6edba0;
+    --clear-wash: #123626;
+    --soon: #f2b66b;
+    --soon-mark: #f2b66b;
+    --soon-wash: #33270a;
+    --overdue: #ffd21f;
+    --overdue-mark: #ffd21f;
+    --overdue-wash: #ffd21f;
+    --danger: #ff9a8c;
+    --danger-wash: #3f1814;
+    --scrim: rgb(0 0 0 / 0.62);
+    --shadow-card: 0 0 0 1px var(--line);
+    --shadow-pop: 0 0 0 1px var(--line-strong), 0 16px 40px rgb(0 0 0 / 0.5);
+    --shadow-sheet: 0 0 0 1px var(--line-strong);
+  }
+}
+
+:root[data-theme='dark'] {
+  --bg: #12100d;
+  --surface: #1d1a16;
+  --well: #26221d;
+  --sunk: #171512;
+  --line: #2e2a24;
+  --line-strong: #433d34;
+  --edge: #7d7567;
+  --ink: #f6f1e8;
+  --ink-2: #c4bcad;
+  --ink-3: #a0988a;
+  --brand: #e5231c;
+  --brand-press: #c91a14;
+  --brand-wash: #3f1512;
+  --on-brand: #ffffff;
+  --accent: #ffd21f;
+  --focus: #ffd21f;
+  --panel: #0a0908;
+  --panel-line: #4a4439;
+  --stage-mix: 44%;
+  --clear: #6edba0;
+  --clear-mark: #6edba0;
+  --clear-wash: #123626;
+  --soon: #f2b66b;
+  --soon-mark: #f2b66b;
+  --soon-wash: #33270a;
+  --overdue: #ffd21f;
+  --overdue-mark: #ffd21f;
+  --overdue-wash: #ffd21f;
+  --danger: #ff9a8c;
+  --danger-wash: #3f1814;
+  --scrim: rgb(0 0 0 / 0.62);
+  --shadow-card: 0 0 0 1px var(--line);
+  --shadow-pop: 0 0 0 1px var(--line-strong), 0 16px 40px rgb(0 0 0 / 0.5);
+  --shadow-sheet: 0 0 0 1px var(--line-strong);
+}
+
+@media (min-width: 1024px) and (pointer: fine) {
+  :root {
+    --ctl-h: 36px;
+    --tap: 36px;
+    --gutter: 24px;
+  }
+}
